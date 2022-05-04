@@ -9,6 +9,7 @@ library(grid)
 library(gridExtra)
 library(plotly)
 library(viridis)
+library(broom)
 
 # Summary of the data
 desc_summ <- describe(data[,3:ncol(data)])
@@ -36,11 +37,15 @@ data_long_rev$Resp
 Qsn_Name <- c("^SA.", "^REC.", "^PC.", "^SS.", "^ER.", "^ES.", "^RES.", "^CON.")
 Plot_Nmaes <- c("Recycling", "Environmental Safety", "Percieved Control", "Social Support", "Environmental Reductionism", "Environmental Sensitivity", "Reuse", "Conservation")
 
-gen_stacked_barplots <- function(plot_data = data_long) {
-  stacked_bar_plot <- list()
-  for (i in seq_along(Qsn_Name)) {
-    stacked_bar_plot[[i]] <- plot_data %>%
-      filter(str_detect(Qsn, Qsn_Name[i])) %>%
+Plot_Nmaes1 <- c("Environmental Safety", "Recycling", "Percieved Control", "Social Support", "Environmental Reductionism", "Environmental Sensitivity", "Reuse", "Conservation")
+gen_stacked_barplots <- function(plot_data = data_long, reverse = FALSE) {
+  stacked_bar_plot <<- list()
+  loop <- ifelse(reverse, length(rev_order), length(Qsn_Name))
+  rows <- ifelse(reverse, 1, 4)
+  loop_cols <- ifelse(reverse, rev_order, Qsn_Name)
+  for (i in 1:loop) {
+    stacked_bar_plot[[i]] <<- plot_data %>%
+      filter(str_detect(Qsn, ifelse(reverse, rev_order[i], Qsn_Name[i]))) %>%
       ggplot() +
       geom_bar(aes(Qsn, fill = Resp), position = "fill")  +
       labs(
@@ -50,7 +55,7 @@ gen_stacked_barplots <- function(plot_data = data_long) {
       theme_bw() +
       theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
-      ggtitle(Plot_Nmaes[[i]]) +
+      ggtitle(Plot_Nmaes1[[i]]) +
       theme(
         panel.border = element_blank(),
         panel.grid.major = element_blank(),
@@ -62,12 +67,13 @@ gen_stacked_barplots <- function(plot_data = data_long) {
       scale_fill_viridis(discrete = TRUE) +
       coord_flip()
   }
-  
+   
   stacked_bar_plot <- ggarrange(
     plotlist = stacked_bar_plot, 
-    ncol = 2, nrow = 4, 
+    ncol = 2, nrow = 4,
     common.legend = TRUE, legend = "bottom"
   )
+  
   
   annotate_figure(
     stacked_bar_plot,
@@ -81,7 +87,7 @@ gen_stacked_barplots <- function(plot_data = data_long) {
 gen_stacked_barplots()
 
 # Generate Stacked bar plots for reverse scored questions
-gen_stacked_barplots(data_long_rev)
+gen_stacked_barplots(data_long_rev, TRUE)
 
 # Generate Pair Plots for Net Score of Items
 my_fn <- function(data, mapping, ...){
@@ -126,4 +132,68 @@ corrplots <- ggarrange(
 annotate_figure(
   corrplots,
   top = text_grob("Correlation Plots", face = "bold", size = 16)
+)
+
+# Fit Normal Distribution to Net Scores
+
+fit_distribution <- function(data, title_name = "Model & Data", qqtitle = NULL){
+  fit_n <<- invisible(fitdistrplus::fitdist(data, "norm"))
+  
+  plot.legend <- c("normal")
+  gof <<- fitdistrplus::gofstat(fit_n, fitnames = plot.legend)
+  print(gof)
+  print(gof$chisqpvalue)
+  
+  p1 <- fitdistrplus::denscomp(list(fit_n), legendtext = plot.legend, fitlwd = c(2,2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") 
+
+  p2 <- fitdistrplus::qqcomp  (list(fit_n), legendtext = plot.legend, plotstyle = "ggplot", fitpch = 19) + geom_point(size = 2)
+  
+  p1 <- p1 +
+    theme(legend.justification = c(1, 1), legend.position = c(1, 1)) + ggtitle(title_name) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+  
+  p2 <- p2  +
+    theme(legend.position = "None") + ggtitle(qqtitle)
+
+  print(list(fit_n)[as.numeric(which.min(gof$ks))])
+  p <- ggarrange(p1, p2, ncol = 2)
+  print(p)
+  return(p)
+}
+
+proper_fit_distribution <- function(data, heading = "Model & Data", qqtitle = "QQPlot"){
+  
+  invisible(capture.output(p <- fit_distribution(data, heading, qqtitle)))
+  
+  tf <<- (map_df(list(list(fit_n)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
+    spread(key = names, value = x) %>% 
+    mutate(across(where(is.numeric), ~ round(., digits = 2)))
+  
+  table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
+  
+  data_sum <- describe(data)
+    
+  tablea <-  ggtexttable(tibble(Data = c("Mean", round(data_sum$mean, digits = 2), "sd", round(data_sum$sd, digits = 2), "median", round(data_sum$median, digits = 2), "skew", round(data_sum$skew, digits = 2), "kurt", round(data_sum$kurtosis, digits = 2), "min", round(data_sum$min, digits = 2), "max", round(data_sum$max, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
+  
+  table <- ggarrange(table, tablea, nrow = 2, heights = c(2, 10))
+  
+  p <- ggarrange(p, table, nrow = 1, ncol = 2, widths = c(10,1))
+  return(p)
+}
+
+normal_fit <- list()
+for (i in seq_along(data_net_score[,3:ncol(data_net_score)])) {
+  normal_fit[[i]] <- annotate_figure(
+    proper_fit_distribution(data_net_score[[i]]),
+    top = text_grob(Plot_Nmaes[i], size = 14)
+  )
+}
+
+normal_fit <- ggarrange(
+  plotlist = normal_fit, 
+  ncol = 1, nrow = 8
+)
+
+annotate_figure(
+  normal_fit,
+  top = text_grob("MLE Fit of Normal Distribution", face = "bold", size = 16)
 )
