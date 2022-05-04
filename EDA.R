@@ -197,3 +197,50 @@ annotate_figure(
   normal_fit,
   top = text_grob("MLE Fit of Normal Distribution", face = "bold", size = 16)
 )
+
+# Mean and CI of each Qsn for each item
+
+desc_sum <- describe(data_enc[,3:ncol(data_enc)])
+desc_sum <- as_tibble(desc_sum) %>%
+  mutate(Qsn = rownames(desc_sum))
+
+mean_bar_plot <- list()
+
+for (i in seq_along(Qsn_Name)) {
+  mean_bar_plot[[i]] <- desc_sum %>%
+    filter(str_detect(Qsn, Qsn_Name[i])) %>%
+    ggplot() +
+    geom_bar(aes(Qsn, mean, fill = Qsn), stat = "identity")  +
+    geom_errorbar(aes(x=Qsn, ymin=mean-se, ymax=mean+se), width=0.4, colour="black", alpha=0.5, size=1.5) +
+    labs(
+      x = NULL,
+      y = NULL
+    ) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(Plot_Nmaes1[[i]]) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank(),
+      legend.position = "none"
+    ) +
+    scale_fill_viridis(discrete = TRUE) +
+    coord_flip()
+}
+  
+mean_bar_plot <- ggarrange(
+  plotlist = mean_bar_plot, 
+  ncol = 2, nrow = 4
+)
+  
+  
+annotate_figure(
+  mean_bar_plot,
+  left = text_grob("Question Codes", rot = 90),
+  bottom = text_grob("Average Response"),
+  top = text_grob("Average Response and Confidence Intervals for Each Question", face = "bold", size = 16)
+)
