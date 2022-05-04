@@ -114,7 +114,7 @@ Qsn_Name_Cont <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
 corrplots <- list()
 for (i in seq_along(Qsn_Name_Cont)) {
   corrplots[[i]] <- data_enc %>%
-    select(contains(Qsn_Name_Cont[[i]])) %>%
+    select(matches(Qsn_Name[[i]])) %>%
     ggcorr(label = TRUE) +
     scale_fill_viridis() +
     theme_bw() +
