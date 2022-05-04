@@ -107,7 +107,7 @@ data_net_score %>%
                  panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
            ggtitle("Scatterplot Matrix for Score of Items")
 
-# Tile Plots for correlation
+# Tile Plots for correlation for each Qsn in each Category
 Qsn_Name_Cont <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
 
 
@@ -133,6 +133,15 @@ annotate_figure(
   corrplots,
   top = text_grob("Correlation Plots", face = "bold", size = 16)
 )
+
+# Correlation between Net Scores
+data_net_score[,3:ncol(data_net_score)] %>%
+  ggcorr(label = TRUE) +
+  scale_fill_viridis() +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank(), panel.border = element_blank(), line = element_blank()) +
+  ggtitle("Correlation Plot for Total Scores in Each Category")
 
 # Fit Normal Distribution to Net Scores
 
@@ -220,6 +229,7 @@ for (i in seq_along(Qsn_Name)) {
     theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
     ggtitle(Plot_Nmaes1[[i]]) +
+    geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
     theme(
       panel.border = element_blank(),
       panel.grid.major = element_blank(),
@@ -244,3 +254,34 @@ annotate_figure(
   bottom = text_grob("Average Response"),
   top = text_grob("Average Response and Confidence Intervals for Each Question", face = "bold", size = 16)
 )
+
+# Mean and CI Bar Plot for Net Scores
+desc_score_sum <- as_tibble(desc_score_summ) %>%
+  mutate(Qsn = rownames(desc_score_summ))
+
+Q_Name <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
+
+desc_score_sum %>%
+  ggplot() +
+  geom_bar(aes(Qsn, mean, fill = Qsn), stat = "identity")  +
+  geom_errorbar(aes(x=Qsn, ymin=mean-se, ymax=mean+se), width=0.4, colour="black", alpha=0.5, size=1.5) +
+  labs(
+    x = "Category",
+    y = "Average Total Score"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  ggtitle("Average Response and Confidence Intervals for Each Category") +
+  geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank(),
+    legend.position = "none"
+  ) +
+  scale_fill_viridis(discrete = TRUE) +
+  coord_flip()
+
