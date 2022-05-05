@@ -105,7 +105,7 @@ data_net_score %>%
            theme_bw() +
            theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
                  panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
-           ggtitle("Scatterplot Matrix for Score of Items")
+           ggtitle("Scatterplot Matrix for Total Score of Categories")
 
 # Tile Plots for correlation for each Qsn in each Category
 Qsn_Name_Cont <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
