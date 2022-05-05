@@ -40,7 +40,7 @@ data_enc <- data %>%
   map_df(~as.numeric(.))
 data_enc
 
-# Net Score Data
+# Net Score Data for each category
 data_net_score <- data_enc %>%
   transmute(
     Sex = Sex,
@@ -55,3 +55,9 @@ data_net_score <- data_enc %>%
     CON = CON1+CON2+CON3+CON4+CON5
   )
 data_net_score
+
+# Total Score
+data_tot_score <- data_net_score %>%
+  mutate(Score = REC+SA+PC+SS+ER+ES+RES+CON) %>%
+  select(Sex, Family, Score)
+data_tot_score
