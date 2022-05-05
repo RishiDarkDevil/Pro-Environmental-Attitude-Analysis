@@ -3,6 +3,8 @@ library(lavaan)
 # Exploratory Factor Analysis
 fa.parallel(data_enc[,3:ncol(data_enc)])
 
+fa.parallel(data_enc[,10:ncol(data_enc)])
+
 # Two-Factor seems to be fitting good as we can attribute one factor to Pro-Environmental Mindset and another to Self-Care(Personal Behaviour) Mindset
 
 # Fit Factor
@@ -36,4 +38,22 @@ model <- "f1 =~ REC5 + PC4 + SA5 + SA4 + SA6 + SS5 + ER5 + RES4 + REC6 + ER2 + P
           f1 ~~ 0*f2"
 
 cfa_fit <- cfa(model, data_enc[,3:ncol(data_enc)], std.lv=TRUE)
+summary(cfa_fit, fit.measures=TRUE, standardized=TRUE)
+
+model <- "f1 =~ ER4 + RES4 + ES2 + PC1 + ES5 + SA5 + ER2 + SA2 + RES2 + CON4 + SA5
+          f2 =~ RES5 + CON2 + CON5 + RES1 + ES4 + PC3 + PC6 + ES3
+          f3 =~ SA4 + PC4 +SA6 + ER3 + SA3 + PC5 + ER5 + CON3
+          f4 =~ SS2 + SS3 + SS5 + SS4 + ER1 + ES1 + CON1 + SS1 + PC3" 
+
+model <- "SA =~ SA1 + SA2 + SA3 + SA4 + SA5 + SA6
+          PC =~ PC1 + PC2 + PC3 + PC4 + PC5 + PC6
+          SS =~ SS1 + SS2 + SS3 + SS4 + SS5
+          ER =~ ER1 + ER2 + ER3 + ER4 + ER5
+          ES =~ ES1 + ES2 + ES3 + ES4 + ES5
+          RES =~ RES1 + RES2 + RES3 + RES4 + RES5
+          CON =~ CON1 + CON2 + CON3 + CON4 + CON5" 
+
+model <- "SA =~ SA1 + SA2 + SA3 + SA4 + SA5 + SA6
+          PC =~ PC1 + PC2 + PC3 + PC4 + PC5 + PC6"
+cfa_fit <- cfa(model, data_enc[,10:ncol(data_enc)], std.lv=TRUE)
 summary(cfa_fit, fit.measures=TRUE, standardized=TRUE)
