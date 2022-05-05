@@ -143,6 +143,16 @@ data_net_score[,3:ncol(data_net_score)] %>%
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank(), panel.border = element_blank(), line = element_blank()) +
   ggtitle("Correlation Plot for Total Scores in Each Category")
 
+# Correlation between All Qsn Scores
+data_enc[,3:ncol(data_enc)] %>%
+  ggcorr() +
+  scale_fill_viridis() +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank(), panel.border = element_blank(), line = element_blank()) +
+  ggtitle("Correlation Plot for All Questions")
+
+
 # Fit Normal Distribution to Net Scores
 
 fit_distribution <- function(data, title_name = "Model & Data", qqtitle = NULL){
@@ -284,4 +294,40 @@ desc_score_sum %>%
   ) +
   scale_fill_viridis(discrete = TRUE) +
   coord_flip()
+
+#Each Qsn Count Balloon Plot
+response_count <- data %>%
+  select(-c("Sex", "Family")) %>%
+  gather(everything(), key = "Qsns", value = "Resp") %>%
+  group_by(Qsns, Resp) %>%
+  count()
+
+response_count %>%
+  ggballoonplot(x = "Resp", y = "Qsns", size = "n", fill = "n") +
+  guides(size = "none") +
+  scale_fill_viridis() +
+  labs(fill = "Count")
+
+# Too Big To Plot
+Contingency_Tiles <- list()
+i <- 1
+var_done <- c()
+for(var1 in colnames(data)[3:ncol(data)]) {
+  var_done <- c(var_done, var1)
+  for (var2 in setdiff(colnames(data)[3:ncol(data)], var_done)) {
+    Contingency_Tiles[[i]] <- data %>%
+      select(-c("Sex", "Family")) %>%
+      group_by(across(all_of(c(var1, var2)))) %>%
+      count() %>%
+      ggplot(aes(.data[[var1]], .data[[var2]], fill = n)) +
+      geom_tile() +
+      geom_text(aes(label = n), color = "pink", size = 5) +
+      guides(size = "none") +
+      labs(fill = "Count")
+    i <- i+1
+  }
+}
+length(Contingency_Tiles)
+
+cor.plot(data_enc[,3:ncol(data)])
 
