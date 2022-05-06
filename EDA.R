@@ -155,67 +155,99 @@ data_enc[,3:ncol(data_enc)] %>%
   ggtitle("Correlation Plot for All Questions")
 
 
-# Fit Normal Distribution to Net Scores
+# Fit PDFs to Net Scores
+
+ev_finder <- function(transform = identity) {
+  function(f, ..., from = -Inf, to = Inf) {
+    integrate(function(x) transform(x) * f(x, ...), from, to)
+  }
+}
+
+moment_finder <- function(n, c = 0) {
+  ev_finder(function(x) (x - c) ^ n)
+}
+
+find_mean <- moment_finder(1)
+find_variance <- function(f, ...) {
+  mu <- find_mean(f, ...)$value
+  moment_finder(2, mu)(f, ...)
+}
 
 fit_distribution <- function(data, title_name = "Model & Data", qqtitle = NULL){
+  fit_g <<- invisible(fitdistrplus::fitdist(data, "gamma"))
+  fit_l <<- invisible(fitdistrplus::fitdist(data, "lnorm"))
+  fit_w <<- invisible(fitdistrplus::fitdist(data, "weibull"))
   fit_n <<- invisible(fitdistrplus::fitdist(data, "norm"))
+  fit_e <<- invisible(fitdistrplus::fitdist(data, "exp"))
   
-  plot.legend <- c("normal")
-  gof <<- fitdistrplus::gofstat(fit_n, fitnames = plot.legend)
-  print(gof)
-  print(gof$chisqpvalue)
+  plot.legend <- c("gamma", "lognormal", "weibull", "normal", "exponential")
+  gof <<- fitdistrplus::gofstat(list(fit_g, fit_l, fit_w, fit_n, fit_e), fitnames = plot.legend)
   
-  p1 <- fitdistrplus::denscomp(list(fit_n), legendtext = plot.legend, fitlwd = c(2,2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") 
+  p1 <- fitdistrplus::denscomp(list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, fitlwd = c(2,2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") #, fit_e), legendtext = plot.legend, fitlwd = c(3,3.5,4,4.5,1), xlegend = 0.007)
 
-  p2 <- fitdistrplus::qqcomp  (list(fit_n), legendtext = plot.legend, plotstyle = "ggplot", fitpch = 19) + geom_point(size = 2)
+  p2 <- fitdistrplus::qqcomp  (list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, plotstyle = "ggplot")
   
   p1 <- p1 +
     theme(legend.justification = c(1, 1), legend.position = c(1, 1)) + ggtitle(title_name) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
   
   p2 <- p2  +
-    theme(legend.position = "None") + ggtitle(qqtitle)
+    theme(legend.position = "None") + ggtitle(qqtitle) + labs(subtitle = paste(rownames(as.data.frame(gof$ks[which.min(gof$ks)])), "seems to fit the data better.")) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
 
-  print(list(fit_n)[as.numeric(which.min(gof$ks))])
   p <- ggarrange(p1, p2, ncol = 2)
-  print(p)
   return(p)
 }
 
-proper_fit_distribution <- function(data, heading = "Model & Data", qqtitle = "QQPlot"){
+proper_fit_distribution <- function(data, heading = "Model & Data"){
   
-  invisible(capture.output(p <- fit_distribution(data, heading, qqtitle)))
+  invisible(capture.output(p <- fit_distribution(data, heading)))
   
-  tf <<- (map_df(list(list(fit_n)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
+  tf <<- (map_df(list(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
     spread(key = names, value = x) %>% 
     mutate(across(where(is.numeric), ~ round(., digits = 2)))
   
-  table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
+    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]))), theme = ttheme("mCyan"), rows = NULL)
+  else
+    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
+  
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "weibull")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "lnorm")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(exp(as.numeric(tf[1]) + 0.5*as.numeric(tf[2])^2), digits = 2), "Var", round(exp(as.numeric(tf[1])*2 + 0.5*4*as.numeric(tf[2])^2) - (exp(as.numeric(tf[1])*1 + 0.5*as.numeric(tf[2])^2))^2, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "gamma")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "norm")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(1/as.numeric(tf[1]), digits = 2), "Var", round(1/(as.numeric(tf[1]))^2, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
+  
+  table <- ggarrange(table, tablea, nrow = 1, ncol = 2)
   
   data_sum <- describe(data)
     
-  tablea <-  ggtexttable(tibble(Data = c("Mean", round(data_sum$mean, digits = 2), "sd", round(data_sum$sd, digits = 2), "median", round(data_sum$median, digits = 2), "skew", round(data_sum$skew, digits = 2), "kurt", round(data_sum$kurtosis, digits = 2), "min", round(data_sum$min, digits = 2), "max", round(data_sum$max, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
+  tableab <-  ggtexttable(tibble(Obsvd = c("Mean", round(data_sum$mean, digits = 2), "sd", round(data_sum$sd, digits = 2), "median", round(data_sum$median, digits = 2), "skew", round(data_sum$skew, digits = 2)), Data = c("kurt", round(data_sum$kurtosis, digits = 2), "min", round(data_sum$min, digits = 2), "max", round(data_sum$max, digits = 2), "se", round(data_sum$se, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
   
-  table <- ggarrange(table, tablea, nrow = 2, heights = c(2, 10))
+  table <- ggarrange(table, tableab, nrow = 2, heights = c(5, 7))
   
   p <- ggarrange(p, table, nrow = 1, ncol = 2, widths = c(10,1))
   return(p)
 }
 
-normal_fit <- list()
+fit_pdf <- list()
 for (i in seq_along(data_net_score[,3:ncol(data_net_score)])) {
-  normal_fit[[i]] <- annotate_figure(
-    proper_fit_distribution(data_net_score[[i]]),
+  fit_pdf[[i]] <- annotate_figure(
+    proper_fit_distribution(data_net_score[[i+2]]),
     top = text_grob(Plot_Nmaes[i], size = 14)
   )
 }
 
-normal_fit <- ggarrange(
-  plotlist = normal_fit, 
+fit_pdf <- ggarrange(
+  plotlist = fit_pdf, 
   ncol = 1, nrow = 8
 )
 
 annotate_figure(
-  normal_fit,
+  fit_pdf,
   top = text_grob("MLE Fit of Normal Distribution", face = "bold", size = 16)
 )
 
