@@ -2,7 +2,7 @@
 
 Here we will take a look at the structure of the data visually and through various tools available to us known as descriptive statistics and will also infer about these results. We will seek for hidden patterns, trends and dependence of variables in our data. We will examine the overall, item-wise per domain and domain-wise data and correlations. Our goal as before would be to extract as much information as possible, about pro-environmental attitude of college students of India from the response data.
 
-## Descriptive Statistics
+## Visualization
 
 ```{r EDA_data_prep, warning=FALSE}
 # Summary of the data
@@ -115,7 +115,7 @@ data_net_score %>%
            ggtitle("Scatterplot Matrix for Total Score of Domains")
 ```
 
--   Now, after seeing the correlation between the net score of the domains. We take a closer look at each domain's items and how they correlate among themselves. We got a rough idea of it from the first correlation plot of each item.
+-   Now, after seeing the correlation between the net score of the domains. We take a closer look at each domain's items and how they correlate among themselves. We got a rough idea of it from the first correlation plot of each item. This reveals that there is **all the items in each domain are highly positively correlated with each other**. There is no negative correlation observed between items of the same domain, which is consistent with what is expected.
 
 ```{r corr_plot_each_item_each_domain, fig.asp=1.2, fig.width=14}
 # Tile Plots for correlation for each Qsn in each Category
@@ -142,4 +142,198 @@ annotate_figure(
   corrplots,
   top = text_grob("Correlation Plots", face = "bold", size = 16)
 )
+```
+
+With this we have an overall idea of the correlation among items and domains as well as the proportion of subjects in the response data we collected. We will now move to the next section to infer something from the data. We will nonetheless carry on with visualizing the data wherever possible and necessary.
+
+## Inference
+
+Here in this section, we will conduct several hypothesis testings to find out statistically significant results i.e. if there is enough evidence to say that the population we are targeting posses pro-environmental attitude using the limited sample we have.
+
+We will also estimate several statistical measures like mean, give confidence intervals and fit probability density functions.
+
+**In the following analysis, quite obviously higher score implies more inclined towards Pro-Environmental Attitude and lower score implies the opposite i.e. less inclined to Pro-Environmental Attitude**.
+
+-   We have already seen in the previous section how our sample shows inclination pro-environmental attitude i.e. the larger proportion of people agreeing to pro-environmental items. Even though mean and median give good amount of information of the average behavior of the population using the sample, a good fit of probability density functions would reveal the behavior of the entire population and what overall shape of response histogram we can expect. We see that **weibull distribution fit all the scores the best out of our choice of probability density functions**. Weibull distribution is similar to normal distribution but it accounts for the skewness or bias seen in the data whereas normal distribution is symmetric. **The fact that Weibull fits better than normal is an evidence that the underlying distribution of the population is skewed towards higher score i.e. our population shows tendency towards high pro-environmental attitude**. One important thing to note is that **the observed skewness of all the domain net scores is negative implying that most of the data is skewed towards higher scores and hence higher pro-environmental attitude**. We also observe **high average and median score**. The QQ-Plot shown beside the data histogram agrees with our fit.
+
+```{r fit_pdfs, fig.asp=3.2, fig.width=16, warning=FALSE}
+ev_finder <- function(transform = identity) {
+  function(f, ..., from = -Inf, to = Inf) {
+    integrate(function(x) transform(x) * f(x, ...), from, to)
+  }
+}
+
+moment_finder <- function(n, c = 0) {
+  ev_finder(function(x) (x - c) ^ n)
+}
+
+find_mean <- moment_finder(1)
+find_variance <- function(f, ...) {
+  mu <- find_mean(f, ...)$value
+  moment_finder(2, mu)(f, ...)
+}
+
+fit_distribution <- function(data, title_name = "Model & Data", qqtitle = NULL){
+  fit_g <<- invisible(fitdistrplus::fitdist(data, "gamma"))
+  fit_l <<- invisible(fitdistrplus::fitdist(data, "lnorm"))
+  fit_w <<- invisible(fitdistrplus::fitdist(data, "weibull"))
+  fit_n <<- invisible(fitdistrplus::fitdist(data, "norm"))
+  fit_e <<- invisible(fitdistrplus::fitdist(data, "exp"))
+  
+  plot.legend <- c("gamma", "lognormal", "weibull", "normal", "exponential")
+  gof <<- fitdistrplus::gofstat(list(fit_g, fit_l, fit_w, fit_n, fit_e), fitnames = plot.legend)
+  
+  p1 <- fitdistrplus::denscomp(list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, fitlwd = c(2,2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") #, fit_e), legendtext = plot.legend, fitlwd = c(3,3.5,4,4.5,1), xlegend = 0.007)
+
+  p2 <- fitdistrplus::qqcomp  (list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, plotstyle = "ggplot")
+  
+  p1 <- p1 +
+    theme(legend.justification = c(1, 1), legend.position = c(1, 1)) + ggtitle(title_name) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+  
+  p2 <- p2  +
+    theme(legend.position = "None") + ggtitle(qqtitle) + labs(subtitle = paste(rownames(as.data.frame(gof$ks[which.min(gof$ks)])), "seems to fit the data better.")) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+
+  p <- ggarrange(p1, p2, ncol = 2)
+  return(p)
+}
+
+proper_fit_distribution <- function(data, heading = "Model & Data"){
+  
+  invisible(capture.output(p <- fit_distribution(data, heading)))
+  
+  tf <<- (map_df(list(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
+    spread(key = names, value = x) %>% 
+    mutate(across(where(is.numeric), ~ round(., digits = 2)))
+  
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
+    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]))), theme = ttheme("mCyan"), rows = NULL)
+  else
+    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
+  
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "weibull")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "lnorm")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(exp(as.numeric(tf[1]) + 0.5*as.numeric(tf[2])^2), digits = 2), "Var", round(exp(as.numeric(tf[1])*2 + 0.5*4*as.numeric(tf[2])^2) - (exp(as.numeric(tf[1])*1 + 0.5*as.numeric(tf[2])^2))^2, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "gamma")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "norm")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
+  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
+    tablea <-  ggtexttable(tibble(Moments = c("Mean", round(1/as.numeric(tf[1]), digits = 2), "Var", round(1/(as.numeric(tf[1]))^2, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
+  
+  table <- ggarrange(table, tablea, nrow = 1, ncol = 2)
+  
+  data_sum <- describe(data)
+    
+  tableab <-  ggtexttable(tibble(Obsvd = c("Mean", round(data_sum$mean, digits = 2), "sd", round(data_sum$sd, digits = 2), "median", round(data_sum$median, digits = 2), "skew", round(data_sum$skew, digits = 2)), Data = c("kurt", round(data_sum$kurtosis, digits = 2), "min", round(data_sum$min, digits = 2), "max", round(data_sum$max, digits = 2), "se", round(data_sum$se, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
+  
+  table <- ggarrange(table, tableab, nrow = 2, heights = c(5, 7))
+  
+  p <- ggarrange(p, table, nrow = 1, ncol = 2, widths = c(10,1))
+  return(p)
+}
+
+fit_pdf <- list()
+for (i in seq_along(data_net_score[,3:ncol(data_net_score)])) {
+  fit_pdf[[i]] <- annotate_figure(
+    proper_fit_distribution(data_net_score[[i+2]]),
+    top = text_grob(Plot_Nmaes[i], size = 14)
+  )
+}
+
+fit_pdf <- ggarrange(
+  plotlist = fit_pdf, 
+  ncol = 1, nrow = 8
+)
+
+annotate_figure(
+  fit_pdf,
+  top = text_grob("MLE Fit of Probability Density Functions to Total Score of Each Domain", face = "bold", size = 16)
+)
+```
+
+-   We will now look at the mean response score for each item in each domain and we have also mentioned the confidence interval for these scores. As expected from the above analysis and overall pro-environmental attitude inclined sample. The mean score for each item is more than 3(about 4 or above, which is above 80% of the total score that can be obtained out of a total of 5). The standard error(which gives the confidence interval as the 95% confidence interval is nothing but the interval [mean-1.96\*se, mean+1.96\*se]) is low. So, **looking at the 95% C.I. for the scores we can be sure that our sample definitely gives good estimate that the mean for each item is much above 3 i.e. on an average the population is more inclined towards pro-environmental attitude**.
+
+```{r each_item_each_domain, fig.asp=1.2, fig.width=14}
+# Mean and CI of each Qsn for each item
+
+desc_sum <- describe(data_enc[,3:ncol(data_enc)])
+desc_sum <- as_tibble(desc_sum) %>%
+  mutate(Qsn = rownames(desc_sum))
+
+mean_bar_plot <- list()
+
+for (i in seq_along(Qsn_Name)) {
+  mean_bar_plot[[i]] <- desc_sum %>%
+    filter(str_detect(Qsn, Qsn_Name[i])) %>%
+    ggplot() +
+    geom_bar(aes(Qsn, mean, fill = Qsn), stat = "identity")  +
+    geom_errorbar(aes(x=Qsn, ymin=mean-1.96*se, ymax=mean+1.96*se), width=0.4, colour="black", alpha=0.5, size=1.5) +
+    labs(
+      x = NULL,
+      y = NULL
+    ) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(Plot_Nmaes1[[i]]) +
+    geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank(),
+      legend.position = "none"
+    ) +
+    scale_fill_viridis(discrete = TRUE) +
+    coord_flip()
+}
+  
+mean_bar_plot <- ggarrange(
+  plotlist = mean_bar_plot, 
+  ncol = 2, nrow = 4
+)
+  
+  
+annotate_figure(
+  mean_bar_plot,
+  left = text_grob("Question Codes", rot = 90),
+  bottom = text_grob("Average Response"),
+  top = text_grob("Average Response and Confidence Intervals for Each Item", face = "bold", size = 16)
+)
+```
+
+-   We see similar results as the above one from the net score in each domain. We see that that the average net score in each domain is just 5 less than than the total score that can be obtained in that domain. The small 95% confidence interval makes us believe more that the sample average is very good standing at above 80% of the total score. Hence, in **every domain we see high levels of awareness and hence high pro-environmental attitude.**
+
+```{r each_domain, fig.asp=0.618, fig.width=14}
+# Mean and CI Bar Plot for Net Scores
+desc_score_sum <- as_tibble(desc_score_summ) %>%
+  mutate(Qsn = rownames(desc_score_summ))
+
+Q_Name <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
+
+desc_score_sum %>%
+  ggplot() +
+  geom_bar(aes(Qsn, mean, fill = Qsn), stat = "identity")  +
+  geom_errorbar(aes(x=Qsn, ymin=mean-1.96*se, ymax=mean+1.96*se), width=0.4, colour="black", alpha=0.5, size=1.5) +
+  labs(
+    x = "Category",
+    y = "Average Total Score"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  ggtitle("Average Response and Confidence Intervals for Each Category") +
+  geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank(),
+    legend.position = "none"
+  ) +
+  scale_fill_viridis(discrete = TRUE) +
+  coord_flip()
 ```
