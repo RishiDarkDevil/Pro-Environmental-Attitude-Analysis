@@ -21,7 +21,7 @@ library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-```{r raw_data}
+```{r raw_data, include=FALSE}
 # Importing Data
 data <- read_csv("PEAData.csv")
 ```

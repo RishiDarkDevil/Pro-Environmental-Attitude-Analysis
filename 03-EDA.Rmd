@@ -1,4 +1,4 @@
-# Results 
+# Results
 
 Here we will take a look at the structure of the data visually and through various tools available to us known as descriptive statistics and will also infer about these results. We will seek for hidden patterns, trends and dependence of variables in our data. We will examine the overall, item-wise per domain and domain-wise data and correlations. Our goal as before would be to extract as much information as possible, about pro-environmental attitude of college students of India from the response data.
 
@@ -32,9 +32,9 @@ Plot_Nmaes1 <- c("Environmental Safety", "Recycling", "Percieved Control", "Soci
 
 I avoid presenting tables throughout the analysis as I believe the mere numbers presented as they are provide no information by just looking at them until and unless coupled with plots and necessary remarks and have kept them to be presented in the Appendix section, if needed. I tried presenting all the results of the data directly in the plots and have kept away from presenting too much cumbersome information. Every plot is coupled with necessary remarks and insight to be drawn.
 
--   Let's look at the response proportion for each question.
+-   Let's look at the response proportion for each positively scored questions. We see a **very large proportion of people have filled Agree and Strongly Agree for all the postively scored items in every domain**, this hints us towards the fact that our sample shows inclination towards pro-environmental attitude. We will see more on this further in the study.
 
-```{r stacked_bar_plot, fig.asp=1, fig.width=12, warning=FALSE}
+```{r stacked_bar_plot_postive_scored, fig.asp=1.2, fig.width=14, warning=FALSE}
 gen_stacked_barplots <- function(plot_data = data_long, title = "", reverse = FALSE) {
   stacked_bar_plot <<- list()
   loop <- ifelse(reverse, length(rev_order), length(Qsn_Name))
@@ -82,7 +82,35 @@ gen_stacked_barplots <- function(plot_data = data_long, title = "", reverse = FA
 
 # Generate Stacked bar plots for non-reverse scored questions
 gen_stacked_barplots(title = "Response Proportions for Each Positively Scored Question")
+```
 
+-   We observe the same thing for the reverse scored items also i.e. **very high proportion of subjects Agree or Strongly Agree with the reverse scored items** as shown below. I strongly believe that these items are not reverse scored.
+
+```{r stacked_bar_plot_reverse_scored, fig.asp=0.68, fig.width=14, warning=FALSE}
 # Generate Stacked bar plots for reverse scored questions
 gen_stacked_barplots(data_long_rev, "Response Proportions for Each Reverse Scored Question", TRUE)
+```
+
+Now, we look at the pro-environmental score that our subjects obtained in the Survey Questionnaire, where a **high score implies higher inclination towards pro-environmental attitude and a low score implies a lower inclination towards pro-environmental attitude**.
+
+-   First we look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender's domain scores correlate. Since, **all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall** (see later for verification of this claim from the sample) **and hence have high scores in the other domains too.** Thus, **we see all the domain scores are highly correlated for both the genders and the correlation strength are similar for both the genders**. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.
+
+```{r pair_plot, fig.asp=0.8, fig.width=14}
+# Generate Pair Plots for Net Score of Items
+my_fn <- function(data, mapping, ...){
+  p <- ggplot(data = data, mapping = mapping) + 
+    geom_point() + 
+    geom_smooth(method=lm, formula = y~x, size = 1, se = FALSE, ...)
+  p
+}
+
+# Colored on the basis of Sex
+data_net_score %>%
+           mutate(Sex = as.factor(Sex)) %>%
+           ggpairs(columns = c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON"), aes(color = Sex), lower = list(continuous = my_fn), progress = FALSE) +
+           scale_color_viridis(discrete = TRUE) +
+           theme_bw() +
+           theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+                 panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+           ggtitle("Scatterplot Matrix for Total Score of Domains")
 ```
