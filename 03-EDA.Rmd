@@ -35,7 +35,7 @@ I avoid presenting tables throughout the analysis as I believe the mere numbers 
 -   Let's look at the response proportion for each question.
 
 ```{r stacked_bar_plot, fig.asp=1, fig.width=12, warning=FALSE}
-gen_stacked_barplots <- function(plot_data = data_long, reverse = FALSE) {
+gen_stacked_barplots <- function(plot_data = data_long, title = "", reverse = FALSE) {
   stacked_bar_plot <<- list()
   loop <- ifelse(reverse, length(rev_order), length(Qsn_Name))
   rows <- ifelse(reverse, 1, 4)
@@ -76,13 +76,13 @@ gen_stacked_barplots <- function(plot_data = data_long, reverse = FALSE) {
     stacked_bar_plot,
     left = text_grob("Question Codes", rot = 90),
     bottom = text_grob("Proportion"),
-    top = text_grob("Response Proportions for Each Question", face = "bold", size = 16)
+    top = text_grob(title, face = "bold", size = 16)
   )
 }
 
 # Generate Stacked bar plots for non-reverse scored questions
-gen_stacked_barplots()
+gen_stacked_barplots(title = "Response Proportions for Each Positively Scored Question")
 
 # Generate Stacked bar plots for reverse scored questions
-gen_stacked_barplots(data_long_rev, TRUE)
+gen_stacked_barplots(data_long_rev, "Response Proportions for Each Reverse Scored Question", TRUE)
 ```
