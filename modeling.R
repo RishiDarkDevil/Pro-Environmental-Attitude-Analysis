@@ -25,3 +25,21 @@ plot_summs(
         plot.subtitle = element_text(size=13, hjust=0.5, face="italic", color="black")) +
   ggtitle("Linear Model for Dependence of Each Category Score on All Other") +
   labs(subtitle = "Multiple Linear Regression of Each Category Scores on All other Category Scores, including only the significant variables(By both forward and backward model selection)")
+
+# Linear Model Dependence of the Catgories with Total Score
+data_net_tot_score <- data_net_score %>%
+  mutate(TOT = REC + SA + PC + SS + ER + RES + CON)
+data_net_tot_score
+
+lin_mod_cats_on_tot <- Qsn_Name_Cont %>%
+  map(~str_c("TOT~",.)) %>%
+  map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
+
+sig_lin_mod_cats_on_tot <- lin_mod_cats_on_tot %>%
+  map(~step(., direction = "both", trace = 0))
+
+sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
+  map(~summary(.))
+
+lin_mod_cats_on_tot %>%
+  map(~summary(.))
