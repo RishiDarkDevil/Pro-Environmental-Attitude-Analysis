@@ -1,0 +1,88 @@
+# Results 
+
+Here we will take a look at the structure of the data visually and through various tools available to us known as descriptive statistics and will also infer about these results. We will seek for hidden patterns, trends and dependence of variables in our data. We will examine the overall, item-wise per domain and domain-wise data and correlations. Our goal as before would be to extract as much information as possible, about pro-environmental attitude of college students of India from the response data.
+
+## Descriptive Statistics
+
+```{r EDA_data_prep, warning=FALSE}
+# Summary of the data
+desc_summ <- describe(data[,3:ncol(data)])
+
+# Summary of the net_score data
+desc_score_summ <- describe(data_net_score[,3:ncol(data_net_score)])
+
+# Converting Data from Wide to Long Form
+# Factoring the non-reverse score responses
+data_long <- data[,3:ncol(data)] %>%
+  select(-all_of(rev_order)) %>%
+  gather(everything(), key = "Qsn", value = "Resp")
+data_long$Resp <- factor(data_long$Resp, levels = levels)
+
+# Factoring the reverse score responses
+data_long_rev <- data[,rev_order] %>%
+  gather(everything(), key = "Qsn", value = "Resp")
+data_long_rev$Resp <- factor(data_long_rev$Resp, levels = rev(levels))
+
+# Making Stacked Bar Plots for Grouped Qsns and Response
+Qsn_Name <- c("^SA.", "^REC.", "^PC.", "^SS.", "^ER.", "^ES.", "^RES.", "^CON.")
+Plot_Nmaes <- c("Recycling", "Environmental Safety", "Percieved Control", "Social Support", "Environmental Reductionism", "Environmental Sensitivity", "Reuse", "Conservation")
+
+Plot_Nmaes1 <- c("Environmental Safety", "Recycling", "Percieved Control", "Social Support", "Environmental Reductionism", "Environmental Sensitivity", "Reuse", "Conservation")
+```
+
+I avoid presenting tables throughout the analysis as I believe the mere numbers presented as they are provide no information by just looking at them until and unless coupled with plots and necessary remarks and have kept them to be presented in the Appendix section, if needed. I tried presenting all the results of the data directly in the plots and have kept away from presenting too much cumbersome information. Every plot is coupled with necessary remarks and insight to be drawn.
+
+-   Let's look at the response proportion for each question.
+
+```{r stacked_bar_plot, fig.asp=1, fig.width=12, warning=FALSE}
+gen_stacked_barplots <- function(plot_data = data_long, reverse = FALSE) {
+  stacked_bar_plot <<- list()
+  loop <- ifelse(reverse, length(rev_order), length(Qsn_Name))
+  rows <- ifelse(reverse, 1, 4)
+  loop_cols <- ifelse(reverse, rev_order, Qsn_Name)
+  for (i in 1:loop) {
+    stacked_bar_plot[[i]] <<- plot_data %>%
+      filter(str_detect(Qsn, ifelse(reverse, rev_order[i], Qsn_Name[i]))) %>%
+      ggplot() +
+      geom_bar(aes(Qsn, fill = Resp), position = "fill")  +
+      labs(
+        x = NULL,
+        y = NULL
+      ) +
+      theme_bw() +
+      theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+      ggtitle(Plot_Nmaes1[[i]]) +
+      theme(
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        strip.background = element_blank(),
+        legend.position = "none"
+      ) +
+      scale_fill_viridis(discrete = TRUE) +
+      coord_flip()
+  }
+   
+  stacked_bar_plot <- ggarrange(
+    plotlist = stacked_bar_plot, 
+    ncol = 2, nrow = 4,
+    common.legend = TRUE, legend = "bottom"
+  )
+  
+  
+  annotate_figure(
+    stacked_bar_plot,
+    left = text_grob("Question Codes", rot = 90),
+    bottom = text_grob("Proportion"),
+    top = text_grob("Response Proportions for Each Question", face = "bold", size = 16)
+  )
+}
+
+# Generate Stacked bar plots for non-reverse scored questions
+gen_stacked_barplots()
+
+# Generate Stacked bar plots for reverse scored questions
+gen_stacked_barplots(data_long_rev, TRUE)
+```

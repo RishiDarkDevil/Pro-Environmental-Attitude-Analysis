@@ -21,12 +21,12 @@ library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-```{r raw_data, cache=TRUE, include=FALSE}
+```{r raw_data}
 # Importing Data
 data <- read_csv("PEAData.csv")
 ```
 
-```{r processed_data, cache=TRUE, dependson="raw_data", include=FALSE}
+```{r processed_data}
 # Removing unnecessary features
 data <- data %>%
   select(-c(Education, Major, Institution))
