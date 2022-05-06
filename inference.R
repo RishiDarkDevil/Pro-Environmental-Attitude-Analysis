@@ -100,12 +100,19 @@ boxplot3 <- data_net_score[,3:ncol(data_net_score)] %>%
 Cat_Score_aov <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
                        gather(everything(), key = "Category", value = "Score") %>%
                        mutate(Category = as.factor(Category)) %>%
-                       filter(Category %in% c("PC", "RES", "CON", "ES")))
+                       filter(Category %in% c("SS", "RES", "CON", "ES")))
 
-Cat_Score_aov <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova for PC, RES, CON, ES Scores", digs = 2)
+Cat_Score_aov <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova for SS, RES, CON, ES Scores", digs = 2)
+
+Cat_Score_aov2 <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
+                       gather(everything(), key = "Category", value = "Score") %>%
+                       mutate(Category = as.factor(Category)) %>%
+                       filter(Category %in% c("SA", "PC")))
+
+Cat_Score_aov2 <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova for SA, PC Scores", digs = 2)
 
 
-tests <- ggarrange(gen_v_tot_score_t_test, fam_v_tot_score_t_test, Cat_Score_aov, ncol = 1, nrow = 3)
+tests <- ggarrange(gen_v_tot_score_t_test, fam_v_tot_score_t_test, Cat_Score_aov, Cat_Score_aov2, ncol = 1, nrow = 4)
 
 p <- ggarrange(boxplot1, boxplot2, boxplot3, tests, ncol = 2, nrow = 2)
 
