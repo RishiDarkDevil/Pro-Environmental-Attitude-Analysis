@@ -91,7 +91,8 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#descriptive-statistics"><i class="fa fa-check"></i><b>3.1</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#visualization"><i class="fa fa-check"></i><b>3.1</b> Visualization</a></li>
+<li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#inference"><i class="fa fa-check"></i><b>3.2</b> Inference</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -114,13 +115,6 @@
             <section class="normal" id="section-">
 <div id="data-overview" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data Overview<a href="data-overview.html#data-overview" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<pre><code>## Rows: 48 Columns: 49
-## -- Column specification -----------------------------------------------------------------------------------------------------------------------
-## Delimiter: &quot;,&quot;
-## chr (49): Sex, Education, Major, Institution, Family, REC1, SA1, PC1, SS1, ER1, ES1, RES1, CON1, REC2, SA2, PC2, SS2, ER2, ES2, RES2, CON2,...
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Here we shall explore the data we have collected from the 48 college students of India as a response to a survey form given to them. First we shall look at the survey form, then look at the actual data we have collected and as the last part of this section we shall see the different variables and domains involved in this study.</p>
 <div id="survey-form" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Survey Form<a href="data-overview.html#survey-form" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -142,7 +136,7 @@
 </div>
 <div id="questions" class="section level3 hasAnchor" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Questions<a href="data-overview.html#questions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Here we will see the actual questions asked in the Survey Questionaire Form.</p>
+<p>Here we will see the actual questions asked in the Survey Questionnaire Form.</p>
 <ul>
 <li><p><strong>REC</strong></p>
 <ul>
@@ -154,9 +148,6 @@
 <li><p><strong>REC6</strong>: I believe recycling reduces waste production.</p></li>
 <li><p><strong>REC7</strong>: I believe recycling promotes sustainable living.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>SA</strong></p>
 <ul>
 <li><p><strong>SA1</strong>: Safe disposal of waste products is costly.</p></li>
@@ -166,32 +157,23 @@
 <li><p><strong>SA5</strong>: Precautionary measures should be undertaken in a firm manner with regard to natural disasters.</p></li>
 <li><p><strong>SA6</strong>: I feel policies should be put in place to increase environmental safety.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>PC</strong></p>
 <ul>
 <li><p><strong>PC1</strong>: I feel I am adept at managing waste around my surroundings.</p></li>
-<li><p><strong>PC2</strong>: <em>I often feel as though one single person cannot change the environment.</em> <em>(R)</em></p></li>
-<li><p><strong>PC3</strong>: <em>I believe my actions are responsible for climate change.</em> <em>(R)</em></p></li>
+<li><p><strong>PC2</strong>: I often feel as though one single person cannot change the environment.</p></li>
+<li><p><strong>PC3</strong>: I believe my actions are responsible for climate change.</p></li>
 <li><p><strong>PC4</strong>: I think environmental conservation is everyone’s responsibility.</p></li>
 <li><p><strong>PC5</strong>: I believe our cumulative efforts can reduce global warming.</p></li>
 <li><p><strong>PC6</strong>: I believe that I can control environmental pollution.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>SS</strong></p>
 <ul>
-<li><p><strong>SS1</strong>: <em>I believe that an individual alone cannot help in conserving the environment without social support. (R)</em></p></li>
+<li><p><strong>SS1</strong>: I believe that an individual alone cannot help in conserving the environment without social support.</p></li>
 <li><p><strong>SS2</strong>: I prefer participating in mass clean-up drives to reduce pollution.</p></li>
 <li><p><strong>SS3</strong>: Creating nature clubs can help generate awareness about environmental issues.</p></li>
 <li><p><strong>SS4</strong>: I like volunteering my services for habitat management work.</p></li>
 <li><p><strong>SS5</strong>: I believe in social support for environment protection through the local clubs and NGOs.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>ER</strong></p>
 <ul>
 <li><p><strong>ER1</strong>: I believe closing the taps when we brush can help save water.</p></li>
@@ -200,9 +182,6 @@
 <li><p><strong>ER4</strong>: I feel all products (like shampoo and soap) should be used till the very end.</p></li>
 <li><p><strong>ER5</strong>: I feel everyone should switch to eco-friendly methods more frequently.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>ES</strong></p>
 <ul>
 <li><p><strong>ES1</strong>: I like working in well-illuminated, airy places.</p></li>
@@ -211,9 +190,6 @@
 <li><p><strong>ES4</strong>: Very loud noise or music makes me uncomfortable.</p></li>
 <li><p><strong>ES5</strong>: I feel irritated when I see garbage thrown on the road and the roadside.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>RES</strong></p>
 <ul>
 <li><p><strong>RES1</strong>: I find new ways to use waste products.</p></li>
@@ -222,9 +198,6 @@
 <li><p><strong>RES4</strong>: Reuse preserves natural resources.</p></li>
 <li><p><strong>RES5</strong>: I look for new ways to reuse old products.</p></li>
 </ul></li>
-</ul>
-<!-- -->
-<ul>
 <li><p><strong>CON</strong></p>
 <ul>
 <li><p><strong>CON1</strong>: Regular awareness programs can help conserve the natural environment.</p></li>
@@ -233,18 +206,18 @@
 <li><p><strong>CON4</strong>: I feel social media platforms can be used to promote nature conservation.</p></li>
 <li><p><strong>CON5</strong>: I intend to save natural resources whenever possible.</p></li>
 </ul></li>
+<li><p><strong>END</strong></p></li>
 </ul>
-<p>Note: <em>(R)</em> Indicates the Items which are reverse-scored.</p>
 </div>
 <div id="response" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Response<a href="data-overview.html#response" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>All the items accepted response in the form of a Likert Scale having 5 levels, which are</p>
 <ul>
-<li><p><strong>Strongly Disagree</strong>(Score: 1, Reverse Score: 5)</p></li>
-<li><p><strong>Disagree</strong>(Score: 2, Reverse Score: 4)</p></li>
-<li><p><strong>Neutral</strong>(Score: 3, Reverse Score: 3)</p></li>
-<li><p><strong>Strongly Agree</strong>(Score: 4, Reverse Score: 2)</p></li>
-<li><p><strong>Agree</strong>(Score: 5, Reverse Score: 1)</p></li>
+<li><p><strong>Strongly Disagree</strong>(Score: 1)</p></li>
+<li><p><strong>Disagree</strong>(Score: 2)</p></li>
+<li><p><strong>Neutral</strong>(Score: 3)</p></li>
+<li><p><strong>Strongly Agree</strong>(Score: 4)</p></li>
+<li><p><strong>Agree</strong>(Score: 5)</p></li>
 </ul>
 <p>We also asked the same question in different manner to check the consistency of individual towards pro-environmental attitude.</p>
 </div>
@@ -360,28 +333,28 @@ ER5
 ES1
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-RES1
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 ES2
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-RES2
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 ES3
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-RES3
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 ES4
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-RES4
+ES5
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ES5
+RES1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+RES2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+RES3
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+RES4
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 RES5
@@ -502,18 +475,6 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
@@ -524,6 +485,18 @@ Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -642,16 +615,16 @@ Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
 Neutral
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -782,7 +755,7 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -803,7 +776,7 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -920,27 +893,27 @@ Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Disagree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
 Disagree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -1062,22 +1035,22 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -1205,19 +1178,19 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Disagree
-</td>
-<td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Neutral
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Disagree
 </td>
 <td style="text-align:left;">
 Agree
@@ -1345,19 +1318,19 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -1482,19 +1455,19 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Disagree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -1625,25 +1598,25 @@ Strongly Agree
 Strongly Disagree
 </td>
 <td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
 Strongly Disagree
 </td>
 <td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Disagree
 </td>
 <td style="text-align:left;">
 Disagree
@@ -1762,25 +1735,25 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -1902,10 +1875,13 @@ Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -1914,16 +1890,13 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -2042,18 +2015,6 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
@@ -2064,6 +2025,18 @@ Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -2182,6 +2155,18 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
@@ -2192,18 +2177,6 @@ Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -2322,13 +2295,10 @@ Disagree
 Strongly Disagree
 </td>
 <td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
 Strongly Disagree
 </td>
 <td style="text-align:left;">
-Disagree
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -2337,13 +2307,16 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
 Neutral
+</td>
+<td style="text-align:left;">
+Disagree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -2462,18 +2435,21 @@ Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
@@ -2481,9 +2457,6 @@ Agree
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -2611,53 +2584,6 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-Nuclear Family
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
@@ -2671,99 +2597,6 @@ Agree
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -2795,6 +2628,146 @@ Nuclear Family
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+Nuclear Family
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
@@ -2882,25 +2855,25 @@ Strongly Agree
 Disagree
 </td>
 <td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
 Strongly Agree
-</td>
-<td style="text-align:left;">
-Neutral
 </td>
 <td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -3022,6 +2995,12 @@ Neutral
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
@@ -3031,19 +3010,13 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Neutral
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -3302,28 +3275,28 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Neutral
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -3451,10 +3424,10 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -3582,25 +3555,25 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Disagree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -3725,19 +3698,19 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Neutral
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -3862,6 +3835,9 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
@@ -3874,16 +3850,13 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -4002,7 +3975,13 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -4011,19 +3990,13 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -4145,10 +4118,7 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Neutral
@@ -4157,7 +4127,10 @@ Neutral
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -4285,10 +4258,7 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -4297,13 +4267,16 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Neutral
 </td>
 <td style="text-align:left;">
 Agree
@@ -4422,25 +4395,25 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -4565,22 +4538,22 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -4702,22 +4675,22 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -4842,16 +4815,13 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -4860,10 +4830,13 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Neutral
 </td>
 <td style="text-align:left;">
 Agree
@@ -4982,22 +4955,22 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Disagree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -5122,25 +5095,25 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -5262,13 +5235,13 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -5277,10 +5250,10 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Agree
@@ -5402,13 +5375,16 @@ Agree
 Disagree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Neutral
@@ -5417,10 +5393,7 @@ Neutral
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
+Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -5542,10 +5515,19 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
 Agree
+</td>
+<td style="text-align:left;">
+Neutral
+</td>
+<td style="text-align:left;">
+Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -5554,16 +5536,7 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Neutral
 </td>
 <td style="text-align:left;">
 Disagree
@@ -5685,22 +5658,22 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -5834,13 +5807,13 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -5968,7 +5941,10 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Agree
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -5977,13 +5953,10 @@ Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -6102,22 +6075,22 @@ Strongly Agree
 Agree
 </td>
 <td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Strongly Agree
 </td>
 <td style="text-align:left;">
 Disagree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Neutral
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -6248,22 +6221,22 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
-Agree
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -6388,7 +6361,10 @@ Agree
 Agree
 </td>
 <td style="text-align:left;">
-Neutral
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -6397,10 +6373,7 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
+Neutral
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -6522,7 +6495,10 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Neutral
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -6531,19 +6507,16 @@ Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
+Neutral
+</td>
+<td style="text-align:left;">
+Neutral
 </td>
 <td style="text-align:left;">
 Disagree
 </td>
 <td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
-Neutral
 </td>
 <td style="text-align:left;">
 Neutral
@@ -6662,22 +6635,22 @@ Strongly Agree
 Strongly Agree
 </td>
 <td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
 Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
@@ -6802,16 +6775,7 @@ Strongly Agree
 Neutral
 </td>
 <td style="text-align:left;">
-Agree
-</td>
-<td style="text-align:left;">
 Neutral
-</td>
-<td style="text-align:left;">
-Neutral
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Agree
@@ -6820,10 +6784,19 @@ Agree
 Strongly Disagree
 </td>
 <td style="text-align:left;">
+Strongly Disagree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
-Strongly Disagree
+Neutral
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
+Agree
 </td>
 <td style="text-align:left;">
 Disagree
@@ -6945,25 +6918,25 @@ Neutral
 Agree
 </td>
 <td style="text-align:left;">
+Disagree
+</td>
+<td style="text-align:left;">
+Strongly Agree
+</td>
+<td style="text-align:left;">
+Agree
+</td>
+<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Neutral
 </td>
 <td style="text-align:left;">
-Disagree
-</td>
-<td style="text-align:left;">
 Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree
-</td>
-<td style="text-align:left;">
-Strongly Agree
-</td>
-<td style="text-align:left;">
-Agree
 </td>
 <td style="text-align:left;">
 Strongly Agree

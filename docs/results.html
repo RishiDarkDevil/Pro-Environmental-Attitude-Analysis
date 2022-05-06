@@ -91,7 +91,8 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>3</b> Results</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#descriptive-statistics"><i class="fa fa-check"></i><b>3.1</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#visualization"><i class="fa fa-check"></i><b>3.1</b> Visualization</a></li>
+<li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#inference"><i class="fa fa-check"></i><b>3.2</b> Inference</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -115,13 +116,48 @@
 <div id="results" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Results<a href="results.html#results" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Here we will take a look at the structure of the data visually and through various tools available to us known as descriptive statistics and will also infer about these results. We will seek for hidden patterns, trends and dependence of variables in our data. We will examine the overall, item-wise per domain and domain-wise data and correlations. Our goal as before would be to extract as much information as possible, about pro-environmental attitude of college students of India from the response data.</p>
-<div id="descriptive-statistics" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Descriptive Statistics<a href="results.html#descriptive-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="visualization" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Visualization<a href="results.html#visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>I avoid presenting tables throughout the analysis as I believe the mere numbers presented as they are provide no information by just looking at them until and unless coupled with plots and necessary remarks and have kept them to be presented in the Appendix section, if needed. I tried presenting all the results of the data directly in the plots and have kept away from presenting too much cumbersome information. Every plot is coupled with necessary remarks and insight to be drawn.</p>
 <ul>
-<li>Let’s look at the response proportion for each question.</li>
+<li>Let’s look at the response proportion for each questions(we refer them as items). We see a <strong>very large proportion of people have filled Agree and Strongly Agree for all the items in every domain</strong>, this hints us towards the fact that our sample shows inclination towards pro-environmental attitude. We will see more on this further in the study though several other plots and analysis.</li>
 </ul>
-<p><img src="bookdownproj_files/figure-html/stacked_bar_plot-1.png" width="1152" /><img src="bookdownproj_files/figure-html/stacked_bar_plot-2.png" width="1152" /></p>
+<p><img src="bookdownproj_files/figure-html/stacked_bar_plot-1.png" width="1344" /></p>
+<p>We will now look at the correlation between several variables in our data i.e. the correlation between the items and the correlation between the domains and will draw necessary insight from them. <strong>After going through the questionnaire one can think that the questions all revolve around the same topic of environmental attitude so, we expect that the items and domains should be having strong correlation among themselves</strong>. We will see the validity of this in the analysis below.</p>
+<ul>
+<li>We take a look at the correlation between all the item’s response. We observe that there is a <strong>high positive correlation between all the items from all the domains.</strong> It means that people who Agree on one item are likely to Agree with most of the other items and vice-versa. The negatively correlated items(the darker cells) are very few in number and even if they are negatively correlated the strength is very low maxing out at -0.25(only one or two items) mostly between -0.1 and 0.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/corplot_all_items-1.png" width="1344" /></p>
+<ul>
+<li>We now look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender’s domain scores correlate. Since, <strong>all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall</strong> (see later for verification of this claim from the sample) <strong>and hence have high scores in the other domains too.</strong> Thus, <strong>we see all the domain scores are highly correlated and the correlation strength are similar for both the genders</strong>. The regression line fit also reveals positive slope. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/pair_plot-1.png" width="1344" /></p>
+<ul>
+<li>Now, after seeing the correlation between the net score of the domains. We take a closer look at each domain’s items and how they correlate among themselves. We got a rough idea of it from the first correlation plot of each item. This reveals that there is <strong>all the items in each domain are highly positively correlated with each other</strong>. There is no negative correlation observed between items of the same domain, which is consistent with what is expected.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/corr_plot_each_item_each_domain-1.png" width="1344" /></p>
+<p>With this we have an overall idea of the correlation among items and domains as well as the proportion of subjects in the response data we collected. We will now move to the next section to infer something from the data. We will nonetheless carry on with visualizing the data wherever possible and necessary.</p>
+</div>
+<div id="inference" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Inference<a href="results.html#inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here in this section, we will conduct several hypothesis testings to find out statistically significant results i.e. if there is enough evidence to say that the population we are targeting posses pro-environmental attitude using the limited sample we have.</p>
+<p>We will also estimate several statistical measures like mean, give confidence intervals and fit probability density functions.</p>
+<p><strong>In the following analysis, quite obviously higher score implies more inclined towards Pro-Environmental Attitude and lower score implies the opposite i.e. less inclined to Pro-Environmental Attitude</strong>.</p>
+<ul>
+<li>We have already seen in the previous section how our sample shows inclination pro-environmental attitude i.e. the larger proportion of people agreeing to pro-environmental items. Even though mean and median give good amount of information of the average behavior of the population using the sample, a good fit of probability density functions would reveal the behavior of the entire population and what overall shape of response histogram we can expect. We see that <strong>weibull distribution fit all the scores the best out of our choice of probability density functions</strong>. Weibull distribution is similar to normal distribution but it accounts for the skewness or bias seen in the data whereas normal distribution is symmetric. <strong>The fact that Weibull fits better than normal is an evidence that the underlying distribution of the population is skewed towards higher score i.e. our population shows tendency towards high pro-environmental attitude</strong>. One important thing to note is that <strong>the observed skewness of all the domain net scores is negative implying that most of the data is skewed towards higher scores and hence higher pro-environmental attitude</strong>. We also observe <strong>high average and median score</strong>. The QQ-Plot shown beside the data histogram agrees with our fit.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/fit_pdfs-1.png" width="1536" /></p>
+<ul>
+<li>We will now look at the mean response score for each item in each domain and we have also mentioned the confidence interval for these scores. As expected from the above analysis and overall pro-environmental attitude inclined sample. The mean score for each item is more than 3(about 4 or above, which is above 80% of the total score that can be obtained out of a total of 5). The standard error(which gives the confidence interval as the 95% confidence interval is nothing but the interval [mean-1.96*se, mean+1.96*se]) is low. So, <strong>looking at the 95% C.I. for the scores we can be sure that our sample definitely gives good estimate that the mean for each item is much above 3 i.e. on an average the population is more inclined towards pro-environmental attitude</strong>.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/each_item_each_domain-1.png" width="1344" /></p>
+<ul>
+<li>We see similar results as the above one from the net score in each domain. We see that that the average net score in each domain is just 5 less than than the total score that can be obtained in that domain. The small 95% confidence interval makes us believe more that the sample average is very good standing at above 80% of the total score. Hence, in <strong>every domain we see high levels of awareness and hence high pro-environmental attitude.</strong></li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/each_domain-1.png" width="1344" /></p>
+<ul>
+<li>We will now see whether the males and females have different take on pro-environmental attitude. To do this analysis we frame our null hypothesis that males and females on an average don’t differ in pro-environmental attitude. We test this null against a two-sided alternative. We carried a two-sample t-test and found out that we are not able to reject the null hypothesis. Hence, we conclude that <strong>there is not enough statistical evidence that male and female differ on their take in pro-environmental attitude</strong>. So, just as were doing from the start, we won’t differentiate between male and female scores. We also made</li>
+</ul>
 
 </div>
 </div>
