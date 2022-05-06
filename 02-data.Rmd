@@ -247,11 +247,11 @@ All the items accepted response in the form of a Likert Scale having 5 levels, w
 
 We also asked the same question in different manner to check the consistency of individual towards pro-environmental attitude.
 
-### Population
+## Population
 
 The Data is collected from only the college and university students of India, who are in the age range of approimately 18 to 25. We have students participating from various colleges and universities and various majors or areas of study fill this Survey Questionaire Form. We are hence, targeting to study the pro-environmental behavior of this population using our sample.
 
-### Data
+## Data
 
 Here we present the collected data from `r nrow(data)` college students.
 
