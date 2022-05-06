@@ -115,7 +115,9 @@ corrplots <- list()
 for (i in seq_along(Qsn_Name_Cont)) {
   corrplots[[i]] <- data_enc %>%
     select(matches(Qsn_Name[[i]])) %>%
-    ggcorr(label = TRUE) +
+    gcorr(label = TRUE) +
+    # ggpairs(columns = c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON"), aes(color = Sex), lower = list(continuous = my_fn)) +
+    # scale_color_viridis(discrete = TRUE) +
     scale_fill_viridis() +
     theme_bw() +
     theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),

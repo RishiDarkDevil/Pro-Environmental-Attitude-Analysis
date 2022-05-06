@@ -37,15 +37,16 @@ levels <- c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree
 data_opinion <- data[,3:ncol(data)] %>%
   map_df(~factor(.,levels = levels))
 
+# Skipping this part as we do not want reverse scoring
 # Converting the columns of reverse scored ones to factors(i.e. change the level ordering of them)
-rev_order <- c("SS1", "PC2", "PC3")
+# rev_order <- c("SS1", "PC2", "PC3")
 
-for (rev_col in rev_order) {
-  data_opinion[[rev_col]] <- fct_rev(data_opinion[[rev_col]])
-}
+# for (rev_col in rev_order) {
+#   data_opinion[[rev_col]] <- fct_rev(data_opinion[[rev_col]])
+# }
 
 data_opinion <- data_opinion %>%
-  select(contains("REC"), contains("SA"), contains("PC"), contains("SS"), contains("ER"), contains("ES"), contains("RES"), contains("CON"))
+  select(matches("^REC."), matches("^SA."), matches("^PC."), matches("^SS."), matches("^ER."), matches("^ES."), matches("^RES."), matches("^CON."))
 
 # Converting personal info to factors
 data_personal <- data[,1:2] %>%
@@ -109,7 +110,7 @@ This can also be referred to as the study variable and we have collected data on
 
 ### Questions
 
-Here we will see the actual questions asked in the Survey Questionaire Form.
+Here we will see the actual questions asked in the Survey Questionnaire Form.
 
 -   **REC**
 
@@ -127,8 +128,6 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **REC7**: I believe recycling promotes sustainable living.
 
-<!-- -->
-
 -   **SA**
 
     -   **SA1**: Safe disposal of waste products is costly.
@@ -143,15 +142,13 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **SA6**: I feel policies should be put in place to increase environmental safety.
 
-<!-- -->
-
 -   **PC**
 
     -   **PC1**: I feel I am adept at managing waste around my surroundings.
 
-    -   **PC2**: *I often feel as though one single person cannot change the environment.* *(R)*
+    -   **PC2**: I often feel as though one single person cannot change the environment.
 
-    -   **PC3**: *I believe my actions are responsible for climate change.* *(R)*
+    -   **PC3**: I believe my actions are responsible for climate change.
 
     -   **PC4**: I think environmental conservation is everyone's responsibility.
 
@@ -159,11 +156,9 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **PC6**: I believe that I can control environmental pollution.
 
-<!-- -->
-
 -   **SS**
 
-    -   **SS1**: *I believe that an individual alone cannot help in conserving the environment without social support. (R)*
+    -   **SS1**: I believe that an individual alone cannot help in conserving the environment without social support.
 
     -   **SS2**: I prefer participating in mass clean-up drives to reduce pollution.
 
@@ -172,8 +167,6 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
     -   **SS4**: I like volunteering my services for habitat management work.
 
     -   **SS5**: I believe in social support for environment protection through the local clubs and NGOs.
-
-<!-- -->
 
 -   **ER**
 
@@ -187,8 +180,6 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **ER5**: I feel everyone should switch to eco-friendly methods more frequently.
 
-<!-- -->
-
 -   **ES**
 
     -   **ES1**: I like working in well-illuminated, airy places.
@@ -200,8 +191,6 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
     -   **ES4**: Very loud noise or music makes me uncomfortable.
 
     -   **ES5**: I feel irritated when I see garbage thrown on the road and the roadside.
-
-<!-- -->
 
 -   **RES**
 
@@ -215,8 +204,6 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **RES5**: I look for new ways to reuse old products.
 
-<!-- -->
-
 -   **CON**
 
     -   **CON1**: Regular awareness programs can help conserve the natural environment.
@@ -229,21 +216,21 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **CON5**: I intend to save natural resources whenever possible.
 
-Note: *(R)* Indicates the Items which are reverse-scored.
+-   **END**
 
 ### Response
 
 All the items accepted response in the form of a Likert Scale having 5 levels, which are
 
--   **Strongly Disagree**(Score: 1, Reverse Score: 5)
+-   **Strongly Disagree**(Score: 1)
 
--   **Disagree**(Score: 2, Reverse Score: 4)
+-   **Disagree**(Score: 2)
 
--   **Neutral**(Score: 3, Reverse Score: 3)
+-   **Neutral**(Score: 3)
 
--   **Strongly Agree**(Score: 4, Reverse Score: 2)
+-   **Strongly Agree**(Score: 4)
 
--   **Agree**(Score: 5, Reverse Score: 1)
+-   **Agree**(Score: 5)
 
 We also asked the same question in different manner to check the consistency of individual towards pro-environmental attitude.
 
