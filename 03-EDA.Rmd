@@ -338,4 +338,5 @@ desc_score_sum %>%
   coord_flip()
 ```
 
--   We will now see whether the males and females have different take on pro-environmental attitude. To do this analysis we frame our null hypothesis that males and females on an average don't differ in pro-environmental attitude. We test this null against a two-sided alternative. We carried a two-sample t-test and found out that we are not able to reject the null hypothesis. Hence, we conclude that **there is not enough statistical evidence that male and female differ on their take in pro-environmental attitude**. So, just as were doing from the start, we won't differentiate between male and female scores. We also made
+- We will now see whether the males and females have different take on pro-environmental attitude. To do this analysis we frame our null hypothesis that males and females on an average don't differ in pro-environmental attitude. We test this null against a two-sided alternative. We carried a two-sample t-test and found out that we are not able to reject the null hypothesis. Hence, we conclude that **there is not enough statistical evidence that male and female differ on their take in pro-environmental attitude**. So, just as were doing from the start, we won't differentiate between male and female scores. We also made
+
