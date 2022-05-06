@@ -118,17 +118,19 @@ data_net_score %>%
 -   Now, after seeing the correlation between the net score of the domains. We take a closer look at each domain's items and how they correlate among themselves. We got a rough idea of it from the first correlation plot of each item.
 
 ```{r corr_plot_each_item_each_domain, fig.asp=1.2, fig.width=14}
+# Tile Plots for correlation for each Qsn in each Category
+Qsn_Name_Cont <- c("REC", "SA", "PC", "SS", "ER", "ES", "RES", "CON")
+
 corrplots <- list()
 for (i in seq_along(Qsn_Name_Cont)) {
-  corrplots[[i]] <- data_enc %>%
+  suppressMessages(corrplots[[i]] <- data_enc %>%
     select(matches(Qsn_Name[[i]])) %>%
-    gcorr(label = TRUE) +
+    ggcorr(label = TRUE) +
     scale_fill_viridis() +
     theme_bw() +
     theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank(), panel.border = element_blank(), line = element_blank()) +
-    ggtitle(Plot_Nmaes[[i]])
-    
+    ggtitle(Plot_Nmaes1[[i]]))
 }
 
 corrplots <- ggarrange(
