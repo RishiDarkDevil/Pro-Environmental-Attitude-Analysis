@@ -85,18 +85,15 @@ Here we shall explore the data we have collected from the \`r nrow(data_enc)\` c
 
 To conduct the pro-environmental attitude study, we circulated a survey form among college students of India through Google Forms. The Survey form comprised of 8 sections, each section pertaining to a particular domain of pro-environmental attitude. Each section comprised of 5-6 questions framed to test the attitude towards that particular aspect of pro-environmental attitude among students of India. Let's look at the sections and the questions asked in the form itself.
 
-### Domains 
+### Domains
 
 This can also be referred to as the study variable and we have collected data on the following 8 domains of pro-environmental attitude.
 
--   **Recycling(abbv. as REC)**: Recycling is the process of converting waste materials into new materials and objects. The recovery of energy of waste material is often included in this concept. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to "conventional" waste disposal that can save material and help lower greenhouse gas emission.
-    It can also prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, reducing energy use, air pollution (from incineration) and water pollution (from landfiling).
+-   **Recycling(abbv. as REC)**: Recycling is the process of converting waste materials into new materials and objects. The recovery of energy of waste material is often included in this concept. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to "conventional" waste disposal that can save material and help lower greenhouse gas emission. It can also prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, reducing energy use, air pollution (from incineration) and water pollution (from landfiling).
 
     Recycling is a key component of modern waste reduction and is the third component of the "Reduce, Reuse, and Recycle" waste hierarchy. It promotes environmental sustainability by removing raw material input and redirecting waste output in the economic system.
 
--   **Environmental Safety(SA)**: Environmental safety is defined by the guidance, policies, and practices
-    enforced in order to ensure that the surrounding environment is free from hazards that will warrant the safety and well-being of workers and employees, residents near industrial operations, as well as the prevention of accidental environmental damage. The surrounding areas include industrial facilities, work areas, and laboratories. Environmental safety is a crucial issue for any industrial
-    activity as negligence and non-compliance heighten the risk resulting in injuries, illnesses, and accidental environmental releases.
+-   **Environmental Safety(SA)**: Environmental safety is defined by the guidance, policies, and practices enforced in order to ensure that the surrounding environment is free from hazards that will warrant the safety and well-being of workers and employees, residents near industrial operations, as well as the prevention of accidental environmental damage. The surrounding areas include industrial facilities, work areas, and laboratories. Environmental safety is a crucial issue for any industrial activity as negligence and non-compliance heighten the risk resulting in injuries, illnesses, and accidental environmental releases.
 
 -   **Perceived Control(PC)**: An individual's perceived control is the degree to which they believe that they have control over themselves and the place, people, things, feelings and activities surrounding them.
 
@@ -104,11 +101,9 @@ This can also be referred to as the study variable and we have collected data on
 
 -   **Environmental Reductionism(ER)**: Environmental Reductionism is a set of processes and practices intended to reduce the amount of waste produced. By reducing or eliminating the generation of harmful and persistent wastes, environmental reductionism supports efforts to promote a more sustainable society. It involves redesigning products and processes and/or changing societal patterns of consmption and production.
 
--   **Environmental Sensitivity(ES)**: Environmental Sensitivity describes the ability of an individual to perceive and process information about their environment. It is a basic trait found in many organisms that enables an individual to adapt to different environmental conditions. Levels of Environmental
-    Sensitivity often vary considerably from individual to individual, with some being more and others less sensitive to the same conditions.
+-   **Environmental Sensitivity(ES)**: Environmental Sensitivity describes the ability of an individual to perceive and process information about their environment. It is a basic trait found in many organisms that enables an individual to adapt to different environmental conditions. Levels of Environmental Sensitivity often vary considerably from individual to individual, with some being more and others less sensitive to the same conditions.
 
--   **Reuse(RES)**: **Reuse** is the action or practice of using an item, whether for its original purpose (conventional reuse) or to fulfill a different function (creative reuse or repurposing). It should be distinguished from recycling, which is the breaking down of used items to make raw materials for the manufacture of new products. Reuse -- by taking, but not reprocessing, previously used items -- helps save time, money, energy and resources. In broader economic terms, it can make quality products
-    available to people and organizations with limited means, while protecting environmental load.
+-   **Reuse(RES)**: **Reuse** is the action or practice of using an item, whether for its original purpose (conventional reuse) or to fulfill a different function (creative reuse or repurposing). It should be distinguished from recycling, which is the breaking down of used items to make raw materials for the manufacture of new products. Reuse -- by taking, but not reprocessing, previously used items -- helps save time, money, energy and resources. In broader economic terms, it can make quality products available to people and organizations with limited means, while protecting environmental load.
 
 -   **Conservation(CON)**: Conservation is the act of protecting over-exploitation of natural resources which may lead to environmental load of sustaining the further human generations. It may refer to the act of saving the natural resources as much as possible.
 
@@ -132,9 +127,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **REC7**: I believe recycling promotes sustainable living.
 
-```{=html}
 <!-- -->
-```
+
 -   **SA**
 
     -   **SA1**: Safe disposal of waste products is costly.
@@ -149,9 +143,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **SA6**: I feel policies should be put in place to increase environmental safety.
 
-```{=html}
 <!-- -->
-```
+
 -   **PC**
 
     -   **PC1**: I feel I am adept at managing waste around my surroundings.
@@ -166,9 +159,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **PC6**: I believe that I can control environmental pollution.
 
-```{=html}
 <!-- -->
-```
+
 -   **SS**
 
     -   **SS1**: *I believe that an individual alone cannot help in conserving the environment without social support. (R)*
@@ -181,9 +173,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **SS5**: I believe in social support for environment protection through the local clubs and NGOs.
 
-```{=html}
 <!-- -->
-```
+
 -   **ER**
 
     -   **ER1**: I believe closing the taps when we brush can help save water.
@@ -196,9 +187,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **ER5**: I feel everyone should switch to eco-friendly methods more frequently.
 
-```{=html}
 <!-- -->
-```
+
 -   **ES**
 
     -   **ES1**: I like working in well-illuminated, airy places.
@@ -211,9 +201,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **ES5**: I feel irritated when I see garbage thrown on the road and the roadside.
 
-```{=html}
 <!-- -->
-```
+
 -   **RES**
 
     -   **RES1**: I find new ways to use waste products.
@@ -226,9 +215,8 @@ Here we will see the actual questions asked in the Survey Questionaire Form.
 
     -   **RES5**: I look for new ways to reuse old products.
 
-```{=html}
 <!-- -->
-```
+
 -   **CON**
 
     -   **CON1**: Regular awareness programs can help conserve the natural environment.
