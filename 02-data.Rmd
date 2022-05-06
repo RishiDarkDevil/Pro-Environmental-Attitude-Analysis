@@ -256,7 +256,7 @@ The Data is collected from only the college and university students of India, wh
 Here we present the collected data from `r nrow(data)` college students.
 
 ```{r display_raw_data}
-kable(head(data), caption = "First few rows of the Pro-Environmental Attitude Survey Response Data") %>%
+kable(data, caption = "First few rows of the Pro-Environmental Attitude Survey Response Data") %>%
   kable_styling(position = "center") %>%
   scroll_box(width = "100%", height = "500px")
 ```
