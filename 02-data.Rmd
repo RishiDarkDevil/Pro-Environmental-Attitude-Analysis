@@ -79,7 +79,7 @@ data_tot_score <- data_net_score %>%
   select(Sex, Family, Score)
 ```
 
-Here we shall explore the data we have collected from the \`r nrow(data_enc)\` college students of India as a response to a survey form given to them. First we shall look at the survey form, then look at the actual data we have collected and as the last part of this section we shall see the different variables and domains involved in this study.
+Here we shall explore the data we have collected from the `r nrow(data_enc)` college students of India as a response to a survey form given to them. First we shall look at the survey form, then look at the actual data we have collected and as the last part of this section we shall see the different variables and domains involved in this study.
 
 ## Survey Form
 
@@ -253,7 +253,7 @@ The Data is collected from only the college and university students of India, wh
 
 ### Data
 
-Here we present the collected data from \`r nrow(data)\` college students.
+Here we present the collected data from `r nrow(data)` college students.
 
 ```{r display_raw_data}
 kable(head(data), caption = "First few rows of the Pro-Environmental Attitude Survey Response Data") %>%
