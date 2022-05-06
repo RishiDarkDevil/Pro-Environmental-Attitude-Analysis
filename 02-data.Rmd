@@ -1,0 +1,278 @@
+# Data Overview
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(forcats)
+library(stringr)
+library(ggpubr)
+library(GGally)
+library(ggcorrplot)
+library(psych)
+library(grid)
+library(gridExtra)
+library(plotly)
+library(viridis)
+library(broom)
+library(jtools)
+library(lavaan)
+library(kableExtra)
+options(dplyr.summarise.inform = FALSE)
+```
+
+```{r raw_data, cache=TRUE, include=FALSE}
+# Importing Data
+data <- read_csv("PEAData.csv")
+```
+
+```{r processed_data, cache=TRUE, dependson="raw_data", include=FALSE}
+# Removing unnecessary features
+data <- data %>%
+  select(-c(Education, Major, Institution))
+
+# Converting the columns except reverse scored ones to factors
+levels <- c("Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree")
+
+data_opinion <- data[,3:ncol(data)] %>%
+  map_df(~factor(.,levels = levels))
+
+# Converting the columns of reverse scored ones to factors(i.e. change the level ordering of them)
+rev_order <- c("SS1", "PC2", "PC3")
+
+for (rev_col in rev_order) {
+  data_opinion[[rev_col]] <- fct_rev(data_opinion[[rev_col]])
+}
+
+data_opinion <- data_opinion %>%
+  select(contains("REC"), contains("SA"), contains("PC"), contains("SS"), contains("ER"), contains("ES"), contains("RES"), contains("CON"))
+
+# Converting personal info to factors
+data_personal <- data[,1:2] %>%
+  map_df(~factor(.))
+
+# Putting all together
+data <- as_tibble(cbind(data_personal, data_opinion))
+
+# Encoded Data
+data_enc <- data %>%
+  map_df(~as.numeric(.))
+
+# Net Score Data for each category
+data_net_score <- data_enc %>%
+  transmute(
+    Sex = Sex,
+    Family = Family,
+    REC = REC1+REC2+REC3+REC4+REC5+REC6+REC7,
+    SA = SA1+SA2+SA3+SA4+SA5+SA6,
+    PC = PC1+PC2+PC3+PC4+PC5+PC6,
+    SS = SS1+SS2+SS3+SS4+SS5,
+    ER = ER1+ER2+ER3+ER4+ER5,
+    ES = ES1+ES2+ES3+ES4+ES5,
+    RES = RES1+RES2+RES3+RES4+RES5,
+    CON = CON1+CON2+CON3+CON4+CON5
+  )
+
+# Total Score
+data_tot_score <- data_net_score %>%
+  mutate(Score = REC+SA+PC+SS+ER+ES+RES+CON) %>%
+  select(Sex, Family, Score)
+```
+
+Here we shall explore the data we have collected from the \`r nrow(data_enc)\` college students of India as a response to a survey form given to them. First we shall look at the survey form, then look at the actual data we have collected and as the last part of this section we shall see the different variables and domains involved in this study.
+
+## Survey Form
+
+To conduct the pro-environmental attitude study, we circulated a survey form among college students of India through Google Forms. The Survey form comprised of 8 sections, each section pertaining to a particular domain of pro-environmental attitude. Each section comprised of 5-6 questions framed to test the attitude towards that particular aspect of pro-environmental attitude among students of India. Let's look at the sections and the questions asked in the form itself.
+
+### Domains 
+
+This can also be referred to as the study variable and we have collected data on the following 8 domains of pro-environmental attitude.
+
+-   **Recycling(abbv. as REC)**: Recycling is the process of converting waste materials into new materials and objects. The recovery of energy of waste material is often included in this concept. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to "conventional" waste disposal that can save material and help lower greenhouse gas emission.
+    It can also prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, reducing energy use, air pollution (from incineration) and water pollution (from landfiling).
+
+    Recycling is a key component of modern waste reduction and is the third component of the "Reduce, Reuse, and Recycle" waste hierarchy. It promotes environmental sustainability by removing raw material input and redirecting waste output in the economic system.
+
+-   **Environmental Safety(SA)**: Environmental safety is defined by the guidance, policies, and practices
+    enforced in order to ensure that the surrounding environment is free from hazards that will warrant the safety and well-being of workers and employees, residents near industrial operations, as well as the prevention of accidental environmental damage. The surrounding areas include industrial facilities, work areas, and laboratories. Environmental safety is a crucial issue for any industrial
+    activity as negligence and non-compliance heighten the risk resulting in injuries, illnesses, and accidental environmental releases.
+
+-   **Perceived Control(PC)**: An individual's perceived control is the degree to which they believe that they have control over themselves and the place, people, things, feelings and activities surrounding them.
+
+-   **Social Support(SS)**: Social support is the perception and actuality of someone being supported by the society, i.e. friends, family and other people, to attain or fulfill certain goals. Here it refers to the support of the society as a whole to protect the environment.
+
+-   **Environmental Reductionism(ER)**: Environmental Reductionism is a set of processes and practices intended to reduce the amount of waste produced. By reducing or eliminating the generation of harmful and persistent wastes, environmental reductionism supports efforts to promote a more sustainable society. It involves redesigning products and processes and/or changing societal patterns of consmption and production.
+
+-   **Environmental Sensitivity(ES)**: Environmental Sensitivity describes the ability of an individual to perceive and process information about their environment. It is a basic trait found in many organisms that enables an individual to adapt to different environmental conditions. Levels of Environmental
+    Sensitivity often vary considerably from individual to individual, with some being more and others less sensitive to the same conditions.
+
+-   **Reuse(RES)**: **Reuse** is the action or practice of using an item, whether for its original purpose (conventional reuse) or to fulfill a different function (creative reuse or repurposing). It should be distinguished from recycling, which is the breaking down of used items to make raw materials for the manufacture of new products. Reuse -- by taking, but not reprocessing, previously used items -- helps save time, money, energy and resources. In broader economic terms, it can make quality products
+    available to people and organizations with limited means, while protecting environmental load.
+
+-   **Conservation(CON)**: Conservation is the act of protecting over-exploitation of natural resources which may lead to environmental load of sustaining the further human generations. It may refer to the act of saving the natural resources as much as possible.
+
+### Questions
+
+Here we will see the actual questions asked in the Survey Questionaire Form.
+
+-   **REC**
+
+    -   **REC1**: I think recycling of products is important.
+
+    -   **REC2**: I upcycle old products into new and useful items.
+
+    -   **REC3**: I believe recycling reduces the consumption of new raw materials.
+
+    -   **REC4**: I like to learn more about product recycling.
+
+    -   **REC5**: I believe recycling is truly beneficial for the environment.
+
+    -   **REC6**: I believe recycling reduces waste production.
+
+    -   **REC7**: I believe recycling promotes sustainable living.
+
+```{=html}
+<!-- -->
+```
+-   **SA**
+
+    -   **SA1**: Safe disposal of waste products is costly.
+
+    -   **SA2**: I believe there should be a fine imposed on people who don't follow proper protocols.
+
+    -   **SA3**: Strict policies should be put into place to conserve the environment.
+
+    -   **SA4**: I believe proper precaution should be taken when dealing with toxic chemicals.
+
+    -   **SA5**: Precautionary measures should be undertaken in a firm manner with regard to natural disasters.
+
+    -   **SA6**: I feel policies should be put in place to increase environmental safety.
+
+```{=html}
+<!-- -->
+```
+-   **PC**
+
+    -   **PC1**: I feel I am adept at managing waste around my surroundings.
+
+    -   **PC2**: *I often feel as though one single person cannot change the environment.* *(R)*
+
+    -   **PC3**: *I believe my actions are responsible for climate change.* *(R)*
+
+    -   **PC4**: I think environmental conservation is everyone's responsibility.
+
+    -   **PC5**: I believe our cumulative efforts can reduce global warming.
+
+    -   **PC6**: I believe that I can control environmental pollution.
+
+```{=html}
+<!-- -->
+```
+-   **SS**
+
+    -   **SS1**: *I believe that an individual alone cannot help in conserving the environment without social support. (R)*
+
+    -   **SS2**: I prefer participating in mass clean-up drives to reduce pollution.
+
+    -   **SS3**: Creating nature clubs can help generate awareness about environmental issues.
+
+    -   **SS4**: I like volunteering my services for habitat management work.
+
+    -   **SS5**: I believe in social support for environment protection through the local clubs and NGOs.
+
+```{=html}
+<!-- -->
+```
+-   **ER**
+
+    -   **ER1**: I believe closing the taps when we brush can help save water.
+
+    -   **ER2**: I feel the Earth has plenty of natural resources if we just learn how to effectively use them.
+
+    -   **ER3**: I firmly support closing the lights and fans in a room before leaving it.
+
+    -   **ER4**: I feel all products (like shampoo and soap) should be used till the very end.
+
+    -   **ER5**: I feel everyone should switch to eco-friendly methods more frequently.
+
+```{=html}
+<!-- -->
+```
+-   **ES**
+
+    -   **ES1**: I like working in well-illuminated, airy places.
+
+    -   **ES2**: Disordered surroundings make me anxious.
+
+    -   **ES3**: Crowded places make me feel uneasy.
+
+    -   **ES4**: Very loud noise or music makes me uncomfortable.
+
+    -   **ES5**: I feel irritated when I see garbage thrown on the road and the roadside.
+
+```{=html}
+<!-- -->
+```
+-   **RES**
+
+    -   **RES1**: I find new ways to use waste products.
+
+    -   **RES2**: Items should be repaired before deciding to throw them away.
+
+    -   **RES3**: I like buying products that can be used again, rather than disposable items.
+
+    -   **RES4**: Reuse preserves natural resources.
+
+    -   **RES5**: I look for new ways to reuse old products.
+
+```{=html}
+<!-- -->
+```
+-   **CON**
+
+    -   **CON1**: Regular awareness programs can help conserve the natural environment.
+
+    -   **CON2**: I try to find ways to conserve natural resources in daily life.
+
+    -   **CON3**: Conservation can help create a greener planet for the future.
+
+    -   **CON4**: I feel social media platforms can be used to promote nature conservation.
+
+    -   **CON5**: I intend to save natural resources whenever possible.
+
+Note: *(R)* Indicates the Items which are reverse-scored.
+
+### Response
+
+All the items accepted response in the form of a Likert Scale having 5 levels, which are
+
+-   **Strongly Disagree**(Score: 1, Reverse Score: 5)
+
+-   **Disagree**(Score: 2, Reverse Score: 4)
+
+-   **Neutral**(Score: 3, Reverse Score: 3)
+
+-   **Strongly Agree**(Score: 4, Reverse Score: 2)
+
+-   **Agree**(Score: 5, Reverse Score: 1)
+
+We also asked the same question in different manner to check the consistency of individual towards pro-environmental attitude.
+
+### Population
+
+The Data is collected from only the college and university students of India, who are in the age range of approimately 18 to 25. We have students participating from various colleges and universities and various majors or areas of study fill this Survey Questionaire Form. We are hence, targeting to study the pro-environmental behavior of this population using our sample.
+
+### Data
+
+Here we present the collected data from \`r nrow(data)\` college students.
+
+```{r display_raw_data}
+kable(head(data), caption = "First few rows of the Pro-Environmental Attitude Survey Response Data") %>%
+  kable_styling(position = "center") %>%
+  scroll_box(width = "100%", height = "500px")
+```
+
+Since, we are going to conduct statistical analysis with this data, we proceed with the above data after converting each column to their respected score i.e. numerical in nature and hence makes sense to carry forward with all sorts of statistical tools.
+
+The data collected for the study is available on the github repository for this project.
