@@ -162,7 +162,7 @@ sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
 lin_mod_cats_on_tot %>%
   map(~summary(.))
 
-data_net_tot_score %>%
+sig_lin_mod_cats_on_tot_plot <- data_net_tot_score %>%
   gather(REC, SA, PC, SS, ER, ES, RES, CON, key = "Domains", value = "Score") %>%
   ggplot(aes(TOT, Score, color = Domains)) +
   geom_point() +
@@ -183,6 +183,19 @@ data_net_tot_score %>%
     strip.background = element_blank()
   ) +
   scale_fill_viridis(discrete = TRUE)
+
+R.2.table <- present_R.2(sig_lin_mod_cats_on_tot)
+Resid.table <- present_ssr(sig_lin_mod_cats_on_tot)
+
+Models <- ggarrange(R.2.table, Resid.table, nrow = 2, ncol = 1)
+
+p <- ggarrange(sig_lin_mod_cats_on_tot_plot, Models, ncol = 2, nrow = 1, widths = c(8, 4))
+
+annotate_figure(
+  p,
+  top = text_grob("Linear Model for Dependence of Each Domain Scores on Total Score", face = "bold", size = 16)
+)
+
 
 # Linear Model Dependence for each item to the Category net score
 

@@ -652,7 +652,7 @@ for (i in seq_along(Qsn_Name1)) {
       axis.line = element_line(colour = "black"),
       strip.background = element_blank()
     ) +
-    scale_fill_viridis(discrete = TRUE)
+    scale_color_viridis(discrete = TRUE)
 } +
   labs(
     x = NULL,
@@ -700,7 +700,7 @@ for (i in seq_along(Qsn_Name1)) {
       axis.line = element_line(colour = "black"),
       strip.background = element_blank()
     ) +
-    scale_fill_viridis(discrete = TRUE)
+    scale_color_viridis(discrete = TRUE)
 } +
   labs(
     x = NULL,
@@ -720,10 +720,9 @@ annotate_figure(
 )
 ```
 
--   Finally, we take a look on the same analysis we saw above for items conducted on domain level awareness and overall pro-environment score. We breakdown the predicted composition of the total pro-environmental attitude(overall score) in terms of the domain scores. We see that **students have higher contribution in their overall pro-environmental attitude from the domain awareness of environmental reductionism**. Apart from Environment Reductionism all the other domain scores maxes out at around 90% when the total score is 100%(i.e. all the domain scores should be nearer to 100%). Hence, **we need awareness focusing on all the other domains of recycling, environmental safety, perceived control, social support, environmental sensitivity, reuse and conservation**. It is observed that **students scored lesser in social support, environmental safety and perceived control compared to other domains**.
+-   Finally, we take a look on the same analysis we saw above for items conducted on domain level awareness and overall pro-environment score. We breakdown the predicted composition of the total pro-environmental attitude(overall score) in terms of the domain scores. We see that **students have higher contribution in their overall pro-environmental attitude from the domain awareness of environmental reductionism**. Apart from Environment Reductionism all the other domain scores maxes out at around 90% when the total score is 100%(i.e. all the domain scores should be nearer to 100%). Hence, **we need awareness focusing on all the other domains of recycling, environmental safety, perceived control, social support, environmental sensitivity, reuse and conservation**. It is observed that **students scored lesser in social support, environmental safety and perceived control compared to other domains**. The R-squared plots also confirms that the student's overall **pro-environmental attitude is mainly contributed by RES, PC, REC, CON, ER and we need to work more on the domains of SS, ES and SA**.
 
-```{r domain_on_overall_LR, fig.asp=0.618, fig.width=14}
-# Linear Model Dependence of the Catgories with Total Score
+```{r domain_on_overall_LR, fig.asp=0.618, fig.width=16}
 data_net_tot_score <- data_net_score %>%
   add_column(TOT = data_tot_score$Score)
 
@@ -737,7 +736,7 @@ sig_lin_mod_cats_on_tot <- lin_mod_cats_on_tot %>%
 sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
   map(~summary(.))
 
-data_net_tot_score %>%
+sig_lin_mod_cats_on_tot_plot <- data_net_tot_score %>%
   gather(REC, SA, PC, SS, ER, ES, RES, CON, key = "Domains", value = "Score") %>%
   ggplot(aes(TOT, Score, color = Domains)) +
   geom_point() +
@@ -757,27 +756,39 @@ data_net_tot_score %>%
     axis.line = element_line(colour = "black"),
     strip.background = element_blank()
   ) +
-  scale_fill_viridis(discrete = TRUE)
+  scale_color_viridis(discrete = TRUE)
+
+R.2.table <- present_R.2(sig_lin_mod_cats_on_tot)
+Resid.table <- present_ssr(sig_lin_mod_cats_on_tot)
+
+Models <- ggarrange(R.2.table, Resid.table, nrow = 2, ncol = 1)
+
+p <- ggarrange(sig_lin_mod_cats_on_tot_plot, Models, ncol = 2, nrow = 1, widths = c(8, 4))
+
+annotate_figure(
+  p,
+  top = text_grob("Linear Model for Dependence of Each Domain Scores on Total Score", face = "bold", size = 16)
+)
 ```
 
 -   So, as a result to see how the dependence of total scores are on the domain scores, mainly the slope will be important for us to analyse and increasing the slope would be a goal though our environmental education. It is again focused that the total score maxes out at about 90% even when all domain scores are 100%, which implies further awareness in all the domains is required. The slopes of SS and ES are low in among students so education is very important so as to increase the slope for these domains on total score is needed
 
-```{r overall_on_domain_LR, fig.asp=0.618, fig.width=14}
+```{r overall_on_domain_LR, fig.asp=0.618, fig.width=16}
 # Linear Model Dependence of the Catgories with Total Score
 data_net_tot_score <- data_net_score %>%
   add_column(TOT = data_tot_score$Score)
 
-lin_mod_cats_on_tot <- Qsn_Name_Cont %>%
-  map(~str_c("TOT~",.)) %>%
+lin_mod_tot_on_cats <- Qsn_Name_Cont %>%
+  map(~str_c(.,"~TOT")) %>%
   map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
 
-sig_lin_mod_cats_on_tot <- lin_mod_cats_on_tot %>%
+sig_lin_mod_tot_on_cats <- lin_mod_tot_on_cats %>%
   map(~step(., direction = "both", trace = 0))
 
-sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
+sig_lin_mod_tot_on_cats_summ <- sig_lin_mod_tot_on_cats %>%
   map(~summary(.))
 
-data_net_tot_score %>%
+sig_lin_mod_tot_on_cats_plot <- data_net_tot_score %>%
   gather(REC, SA, PC, SS, ER, ES, RES, CON, key = "Domains", value = "Score") %>%
   ggplot(aes(Score, TOT, color = Domains)) +
   geom_point() +
@@ -797,5 +808,17 @@ data_net_tot_score %>%
     axis.line = element_line(colour = "black"),
     strip.background = element_blank()
   ) +
-  scale_fill_viridis(discrete = TRUE)
+  scale_color_viridis(discrete = TRUE)
+
+R.2.table <- present_R.2(sig_lin_mod_tot_on_cats)
+Resid.table <- present_ssr(sig_lin_mod_tot_on_cats)
+
+Models <- ggarrange(R.2.table, Resid.table, nrow = 2, ncol = 1)
+
+p <- ggarrange(sig_lin_mod_tot_on_cats_plot, Models, ncol = 2, nrow = 1, widths = c(8, 4))
+
+annotate_figure(
+  p,
+  top = text_grob("Linear Model for Dependence of Total Score on Each Domain Scores", face = "bold", size = 16)
+)
 ```
