@@ -17,7 +17,7 @@ data_opinion <- data[,3:ncol(data)] %>%
   map_df(~factor(.,levels = levels))
 
 # Converting the columns of reverse scored ones to factors(i.e. change the level ordering of them)
-rev_order <- c("SS1", "PC2", "PC3")
+rev_order <- c("SA1")
 
 for (rev_col in rev_order) {
   data_opinion[[rev_col]] <- fct_rev(data_opinion[[rev_col]])

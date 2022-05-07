@@ -1,4 +1,5 @@
 library(jtools)
+library(modelr)
 
 present_R.2 <- function(mods, table_theme = "mBlue", footnote = "Model R-squared", visual = TRUE) {
   mods_summ <- mods %>%
@@ -236,3 +237,15 @@ annotate_figure(
   bottom = text_grob("Total Score(In %)"),
   top = text_grob("Regression Fit of Item Scores on Domain Score", face = "bold", size = 16)
 )
+
+# Some idea on left over residual explained by the last added domain
+
+lin_mod_tot_on_cats_ex_one <- Qsn_Name_Cont %>%
+  map(~str_c("TOT~.-",.)) %>%
+  map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
+
+sig_lin_mod_tot_on_cats_ex_one <- lin_mod_tot_on_cats_ex_one %>%
+  map(~step(., direction = "both", trace = 0))
+
+sig_lin_mod_tot_on_cats_ex_one_summ <- sig_lin_mod_tot_on_cats_ex_one %>%
+  map(~summary(.))

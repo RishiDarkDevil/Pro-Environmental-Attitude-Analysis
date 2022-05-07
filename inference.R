@@ -120,3 +120,35 @@ annotate_figure(
   p,
   top = text_grob("Pro-Environmental Category Scores and Total Scores", face = "bold", size = 16)
 )
+
+# CI for Mean Pro-Environmental Score
+bootstrap_dist <- data_net_tot_score %>%
+  specify(response = TOT) %>%
+  generate(reps = 5000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+
+percentile_ci <- bootstrap_dist %>%
+  get_confidence_interval(level = 0.95, type = "percentile")
+
+visualise(bootstrap_dist) +
+  labs(
+    x = "Average Pro-Environmental Attitude Score",
+    y = "Count"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank(),
+    legend.position = "none"
+  ) + 
+  ggtitle("95% C.I.-Bootstrap Distribution of Mean Pro-Environmental Attitude Score") +
+  shade_ci(endpoints = percentile_ci, color = "hotpink", fill = "khaki") +
+  geom_text(
+    aes(Inf, Inf, label = paste("lower ci:",round(percentile_ci$lower_ci, digits = 2), ", upper ci:",round(percentile_ci$upper_ci, digits = 2))),
+    vjust = "top", hjust = "right", size = 5
+  )

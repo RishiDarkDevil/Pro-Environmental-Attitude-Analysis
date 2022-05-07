@@ -190,7 +190,7 @@ We will also estimate several statistical measures like mean, give confidence in
 
 **In the following analysis, quite obviously higher score implies more inclined towards Pro-Environmental Attitude and lower score implies the opposite i.e. less inclined to Pro-Environmental Attitude**.
 
--   We have already seen in the previous section how our sample shows inclination pro-environmental attitude i.e. the larger proportion of people agreeing to pro-environmental items. Even though mean and median give good amount of information of the average behavior of the population using the sample, a good fit of probability density functions would reveal the behavior of the entire population and what overall shape of response histogram we can expect. We see that **weibull distribution fit all the scores the best out of our choice of probability density functions**. Weibull distribution is similar to normal distribution but it accounts for the skewness or bias seen in the data whereas normal distribution is symmetric. **The fact that Weibull fits better than normal is an evidence that the underlying distribution of the population is skewed towards higher score i.e. our population shows tendency towards high pro-environmental attitude**. One important thing to note is that **the observed skewness of all the domain net scores is negative implying that most of the data is skewed towards higher scores and hence higher pro-environmental attitude**. We also observe **high average and median score**. The QQ-Plot shown beside the data histogram agrees with our fit.
+-   We have already seen in the previous section how our sample shows inclination pro-environmental attitude i.e. the larger proportion of people agreeing to pro-environmental items. Even though mean and median give good amount of information of the average behavior of the population using the sample, a good fit of probability density functions would reveal the behavior of the entire population and what overall shape of response histogram we can expect. We see that **weibull distribution fit all the scores the best out of our choice of probability density functions**.(Best fit is decided by Kolmogorov-Smirnov Goodness of Fit) Weibull distribution is similar to normal distribution but it accounts for the skewness or bias seen in the data whereas normal distribution is symmetric. **The fact that Weibull fits better than normal is an evidence that the underlying distribution of the population is skewed towards higher score i.e. our population shows tendency towards high pro-environmental attitude**. One important thing to note is that **the observed skewness of all the domain net scores is negative implying that most of the data is skewed towards higher scores and hence higher pro-environmental attitude**. We also observe **high average and median score**. The QQ-Plot shown beside the data histogram agrees with our fit.
 
 ```{r fit_pdfs, fig.asp=3.2, fig.width=16, warning=FALSE}
 ev_finder <- function(transform = identity) {
@@ -482,9 +482,9 @@ Cat_Score_aov <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova fo
 Cat_Score_aov2 <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
                        gather(everything(), key = "Category", value = "Score") %>%
                        mutate(Category = as.factor(Category)) %>%
-                       filter(Category %in% c("SA", "ER", "REC")))
+                       filter(Category %in% c("ER", "REC", "ES", "CON")))
 
-Cat_Score_aov2 <- present_aov.test(Cat_Score_aov2, footnote = "One-Factor Anova for SA, ER, REC Scores", digs = 2)
+Cat_Score_aov2 <- present_aov.test(Cat_Score_aov2, footnote = "One-Factor Anova for  ER, REC, ES, CON Scores", digs = 2)
 
 Cat_Score_aov3 <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
                        gather(everything(), key = "Category", value = "Score") %>%
@@ -807,7 +807,7 @@ annotate_figure(
 )
 ```
 
--   So, as a result to see how the dependence of total scores are on the domain scores, mainly the slope will be important for us to analyse and increasing the slope would be a goal though our environmental education. It is again focused that the total score maxes out at about 90% even when all domain scores are 100%, which implies further awareness in all the domains is required. The slopes of SS and ES are low in among students so education is very important so as to increase the slope for these domains on total score is needed
+-   So, as a result to see how the dependence of total scores are on the domain scores, mainly the slope will be important for us to analyse and increasing the slope would be a goal though our environmental education. It is again focused that the total score maxes out at about 90% even when all domain scores are 100%, which implies further **awareness in all the domains is required**. The slopes of SS and ES are low in among students so education is very important so as to increase the slope for these domains on total score.
 
 ```{r overall_on_domain_LR, fig.asp=0.618, fig.width=16}
 # Linear Model Dependence of the Catgories with Total Score
@@ -857,4 +857,163 @@ annotate_figure(
   p,
   top = text_grob("Linear Model for Dependence of Total Score on Each Domain Scores", face = "bold", size = 16)
 )
+```
+
+This section provided lots of insight on the areas we need more stress in the environmental education and we also identified some problems or lacking in the students. Now, we move on to testing the reliability of the response.
+
+## Reliability
+
+In this section, we will conduct reliability analysis of the survey response data.Reliability analysis allows you to study the properties of measurement scales and the items that compose the scales. The Reliability Analysis procedure calculates a number of commonly used measures of scale reliability and also provides information about the relationships between individual items in the scale.
+
+Hence, we will here get an overall index of the repeatability or internal consistency of the scale as a whole, and you can identify problem items that should be excluded from the scale
+
+-   We will start from SA Domain and then will move on sequentially as the structure of Questionnaire and will obtain the reliability indices using the Cronbach's α. We detect that there is a problem with the SA1 item with the rest of the item in this domain. The r.drop value for SA1 is very low which implies this item doesn't correlate well with the other items in this domain. Even the raw_alpha increases substantially if SA1 is dropped. **SA1 doesn't fit reliably in the SA domain and it might be a reason we saw it score low among the students in the previous section**.
+
+```{r rel_SA, fig.asp=0.8, fig.width=14, warning=FALSE}
+# Split Data into the respective categories
+data_cat_wise <- Qsn_Name %>%
+  map(~select(data_enc, matches(.)))
+
+# Reliability Testing
+rel_tests <- data_cat_wise %>%
+  map(~alpha(., check.keys = TRUE))
+
+# Present the Result of Reliability Test
+conv_to_tibble <- function(data) {
+  data <- as_tibble(data) %>%
+    mutate(Qsn = rownames(data)) %>%
+    select(Qsn, everything())
+  return(data)
+}
+
+conv_to_tile <- function(data, omit = NULL, title = NULL, x_lab = NULL, y_lab = NULL) {
+  p <- data %>%
+    select(-all_of(omit)) %>%
+    gather(everything(), key = "key", value = "value", -one_of("Qsn")) %>%
+    ggplot(aes(Qsn, key, fill = value, color = value)) +
+    geom_tile() +
+    geom_text(aes(label = round(value, digits = 2)), color = "pink", size = 5) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(title) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank(),
+      legend.position = "none"
+    ) + 
+    labs(
+      x = y_lab,
+      y = x_lab
+    ) + 
+    coord_flip()
+  return(p)
+}
+
+conv_to_line <- function(data, omit = NULL, title = NULL, x_lab = NULL, y_lab = NULL) {
+  p <- data %>%
+    select(-all_of(omit)) %>%
+    gather(everything(), key = "key", value = "value", -one_of("Qsn")) %>%
+    ggplot(aes(Qsn, value, color = key, group = key)) +
+    geom_line(size = 2) +
+    geom_point(size = 2.5) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(title) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank()
+    ) + 
+    labs(
+      x = x_lab,
+      y = y_lab,
+      fill = "Metric"
+    )
+  return(p)
+}
+
+present_alpha <- function(alpha_mod, heading = NULL, visual = TRUE) {
+  t1 <- as_tibble(alpha_mod$total) %>% 
+    mutate(across(where(is.numeric), ~ round(., digits = 2)))
+  t2 <- conv_to_tibble(alpha_mod$alpha.drop)
+  t3 <- conv_to_tibble(alpha_mod$item.stats)
+  t4 <- conv_to_tibble(alpha_mod$response.freq)
+  
+  p1 <- ggtexttable(t1, theme = ttheme("mBlue"), rows = NULL) %>%
+    tab_add_footnote(text = "Current Reliability Test Scores", size = 10, face = "italic")
+  
+  if (!visual) {
+    p2 <- conv_to_tile(t2, title =  "Alpha after Question Drop", y_lab = "Question Dropped", x_lab = "Reliability Measures")
+    p3 <- conv_to_tile(t3, "n", title = "Item Statistics", y_lab = "Question Codes", x_lab = "Item-Correlation Measures, Mean(If Dropped) & SD(If Dropped)")
+    p4 <- conv_to_tile(t4, "miss", "Response Frequency", "Options", "Question Code")
+  } else {
+    p2 <- conv_to_line(t2,"S/N" , title =  "Alpha after Question Drop", x_lab = "Question Dropped", y_lab = "Reliability Measures")
+    p3 <- conv_to_line(t3, c("n", "mean", "sd"), title = "Item Statistics", x_lab = "Question Codes", y_lab = "Item-Correlation Measures")
+    p4 <- conv_to_tile(t4, "miss", "Response Frequency", "Options", "Question Code")
+  }
+  
+  p <- ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
+  
+  p <- annotate_figure(
+    p,
+    top = text_grob(heading, face = "bold", size = 16)
+  )
+  
+  return(p)
+}
+
+reliability_plot_names <- str_c("Reliability Analysis of ", Plot_Nmaes1)
+
+present_all_cat_alpha <- pmap(list(heading = reliability_plot_names, alpha_mod = rel_tests), present_alpha)
+
+present_all_cat_alpha[[1]]
+```
+
+-   Let's look at the REC domain. The reliability score is very good(i.e. raw_alpha above 0.7). **REC2 seems to be not correlating good with the other items in this domain. It might be because of the students are not much aware about upcycling or don't do it. Hence, education and awareness regarding this need to be imparted.**
+
+```{r rel_REC, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[2]]
+```
+
+-   The reliability of PC domain's response is very bad. All the items except PC4 and PC5 also doesn't correlate very well with the scale overall.
+
+```{r rel_PC, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[3]]
+```
+
+-   The reliability of the SS Domain's response is good. The first item SS1 doesn't seem to correlate very well with the overall scale.
+
+```{r rel_SS, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[4]]
+```
+
+-   The reliability of the ER Domain's response is very good. All the items correlate with the overall score very well.
+
+```{r rel_ER, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[5]]
+```
+
+-   The ES Domain's repsonse reliability is good. Though we can achieve better r.drop scores by maybe re-framing the items. The items fit the overall scale good.
+
+```{r rel_ES, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[6]]
+```
+
+-   The RES Domain's response has good reliability. All items fit good to the overall scale.
+
+```{r rel_RES, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[7]]
+```
+
+-   The CON Domain's response is reliable. All the items fit well in the overall scale.
+
+```{r rel_CON, fig.asp=0.8, fig.width=14, warning=FALSE}
+present_all_cat_alpha[[8]]
 ```
