@@ -100,3 +100,5 @@ reliability_plot_names <- str_c("Reliability Analysis of ", Plot_Nmaes1)
 
 present_all_cat_alpha <- pmap(list(heading = reliability_plot_names, alpha_mod = rel_tests), present_alpha)
 
+all_item_alpha <- present_alpha(alpha(data_enc[,3:ncol(data_enc)], check.keys = TRUE))
+all_item_alpha

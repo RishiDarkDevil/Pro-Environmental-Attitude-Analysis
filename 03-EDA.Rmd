@@ -1017,3 +1017,35 @@ present_all_cat_alpha[[7]]
 ```{r rel_CON, fig.asp=0.8, fig.width=14, warning=FALSE}
 present_all_cat_alpha[[8]]
 ```
+
+-   Now, if we look at the **overall reliability of the entire questionnaire for finding the pro-environmental attitude**. It turns out that **it has excellent reliability**. **Most the items fit in the scale very well given the goal is mainstream and we need to decide about the pro-environmental attitude as a whole**. But if each part of the survey on different domains are seen, then it turns out that **few items for few domains don't fit in well in reliably finding the domain-level environmental attitude**. We however see, as the domain's item statistics shows, that some items doesn't fit well with the other items very well which are ES1, ES3, SA1, SS1 which stood for preference of working in well-illuminated, airy areas, crowded places making one feel uneasy, safe disposal of waste is costly and thoughts on one individual can't help in conserving environment without social support.
+
+```{r rel_CON, fig.asp=1.2, fig.width=16, warning=FALSE}
+present_alpha <- function(alpha_mod, heading = NULL, visual = TRUE) {
+  t1 <- as_tibble(alpha_mod$total) %>% 
+    mutate(across(where(is.numeric), ~ round(., digits = 2)))
+  t2 <- conv_to_tibble(alpha_mod$alpha.drop)
+  t3 <- conv_to_tibble(alpha_mod$item.stats)
+  
+  p1 <- ggtexttable(t1, theme = ttheme("mBlue"), rows = NULL) %>%
+    tab_add_footnote(text = "Current Reliability Test Scores", size = 10, face = "italic")
+    p2 <- conv_to_line(t2,"S/N" , title =  "Alpha after Question Drop", x_lab = "Question Dropped", y_lab = "Reliability Measures") + 
+      theme(legend.position = "bottom") + 
+      guides(color=guide_legend(nrow=1,byrow=TRUE))
+    p3 <- conv_to_line(t3, c("n", "mean", "sd"), title = "Item Statistics", x_lab = "Question Codes", y_lab = "Item-Correlation Measures") + 
+      theme(legend.position = "bottom") + 
+      guides(color=guide_legend(nrow=1,byrow=TRUE))
+  
+  p <- ggarrange(p2, p3, ncol = 1, nrow = 2)
+  p <- ggarrange(p1, p, ncol = 1, nrow = 2, heights = c(1, 11))
+  
+  annotate_figure(
+    p,
+    top = text_grob(heading, face = "bold", size = 16)
+  )
+}
+all_item_alpha <- present_alpha(alpha(data_enc[,3:ncol(data_enc)], check.keys = TRUE), "Reliability Analysis of Pro-Environmental Attitude Response Data")
+all_item_alpha
+```
+
+This ends the reliability analysis of our response data and the reliability of all the domains are good except one i.e. PC. The overall survey for pro-environmental attitude measure is excellent.
