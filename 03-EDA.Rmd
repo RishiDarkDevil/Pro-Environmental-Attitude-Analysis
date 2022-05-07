@@ -473,7 +473,7 @@ With this we conclude the inference section of our study. We will use the insigh
 
 ## Modeling
 
-In this section, we will see the dependence of one domain score on the other domain scores, the item scores on the domain scores and domain scores on the total scores. This will help us identify which domain score is the most differentiating so as to get higher pro-environmental scores. It is important because those are the domains we need to improve so as to achieve better total scores.
+In this section, we will see the dependence of one domain score on the other domain scores, the item scores on the domain scores and domain scores on the total scores. This will help us identify which domain score is the most differentiating so as to get higher pro-environmental scores. It is important because those are the domains we need to improve so as to achieve better total scores. We won't be fitting complicated black box models as our goal is not to predict the pro-environmental attitude of a student rather we want to draw inferences from the models. Linear Models fit perfectly in that sense.
 
 -   First, we start by looking at the domain score's dependence on the other domain scores. This will help us get an idea of how knowing that one person scores in all the domains except one will perform in the left out domain. From the coefficient forest plot below we see that most of the coefficients in the significant linear model have high positive values except one(which on inspecting the 95% C.I. indicated by the horizontal line across each estimate reveals it to be insignificant with high p-value). Thus, **if a person has high scores in all the domains, it is expected and observed that he will have high scores in the rest of the domain**. We also observe all the other domain scores explains the variability of RES, REC, CON and ER domain score(looking at the model R-squared values, these are above 60%) very well. It also gives us important information that **if we can foster education among students on the domains they are less aware of we can expect them to have improved pro-environmental score on the other domains as well**. Thus, **improving the awareness with special focus on SS, ES, SA and PC is needed because improving awareness on REC, REC, CON and ER won't improve pro-environmental attitude in these domains**(with low model R-square).
 
@@ -624,8 +624,178 @@ annotate_figure(
 )
 ```
 
--   Let's look at the dependence of the item scores on the domain score. It will help us find out which items(independent of all the other items in other and same domain) influence the domain score more. Hence, education improving the take on those items will help in increasing the attitude of a person about that domain.
+-   Let's look at the dependence of the item scores on the domain score. We will look at it in two ways to better understand what's going on. We below fit a linear regression model of each item on the domain score, so as to understand given a particular total pro-environmental score in a particular domain, what is the expected scores in each of the items of that domain. We observe **increase in any item score increases the overall score in that domain**(from the correlation graphs among items we know one item score increases implies other scores are likely to be high too). We observe an issue with 3 items i.e. REC2, PC1, SA1 as even when the domain score is 100%(which means all item scores for that individual must be 5) our fitted regression line predicts that item score to be 4 or slightly less than 4 this means that the students even with high pro-environmental attitude find it difficult to agree with these items and on looking at these items we understand that **there is need for education and awareness on these items i.e. imparting education on upcycling old products into new and useful items(REC2), on the cost and issues of safe disposal of waste products(SA1) and managing waste around an individuals surroundings(PC1)**. We also get an idea of which items are generally agreed by most of the people(even the ones with lower pro-environmental score) i.e. if we draw a vertical line in each of the plots we will get the score of each item predicted at that level of domain awareness. All the items in SS and ES have same predicted scores whereas in REC, REC1 is the highest scored; in SA, SA4 is highest scored; in PC, PC4 is highest scored; in ER, ER1 is highest scored; In RES, RES4 is highest scored and in CON, CON3 is highest scored. So, **most of the students at all level of domain awareness(domain pro-environmental score) agrees that recycling is useful, proper precaution for safe disposal of waste/toxic chemical should be taken, environmental conservation is everyone's responsibility, we can save water by closing the taps when we brush and conservation can help in creating a greener planet for future**.
 
-```{r}
+```{r item_on_domain_LR, fig.asp=1.2, fig.width=14}
+# Linear Model Dependence for each item to the Category net score
 
+data_enc_1 <- data_enc %>%
+  bind_cols(data_net_score[,3:ncol(data_net_score)])
+
+lin_mod_items_on_cats <- list()
+Qsn_Name1 <- c("^REC", "^SA", "^PC", "^SS", "^ER", "^ES", "^RES", "^CON")
+for (i in seq_along(Qsn_Name1)) {
+  lin_mod_items_on_cats[[i]] <- data_enc_1[,3:ncol(data_enc_1)] %>%
+    select(matches(Qsn_Name1[i])) %>%
+    gather(everything(), key = "Items", value = "Score", -one_of(Qsn_Name_Cont[i])) %>%
+    ggplot(aes(.data[[Qsn_Name_Cont[[i]]]], Score, color = Items)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = "y~x", se = FALSE, size = 2) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(Plot_Nmaes[i]) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank()
+    ) +
+    scale_fill_viridis(discrete = TRUE)
+} +
+  labs(
+    x = NULL,
+    y = NULL
+  )
+
+lin_mod_items_on_cats <- ggarrange(
+  plotlist = lin_mod_items_on_cats, 
+  ncol = 2, nrow = 4
+)
+
+annotate_figure(
+  lin_mod_items_on_cats,
+  left = text_grob("Item Score", rot = 90),
+  bottom = text_grob("Total Score(In %)"),
+  top = text_grob("Regression Fit of Item Scores on Domain Score", face = "bold", size = 16)
+)
+```
+
+-   After we have seen the above insight, it is quite natural to ask how can we improve on the overall domain score by imparting education particular to each item. We will answer that now by looking at the dependence of Total Score in each domain on the item scores that compose it. Obviously, we see as expected that there is positive slope as increasing item score increases domain score trivially. One important thing to notice is that agreeing completely or scoring even full in one item doesn't imply that the overall domain score is near full, it maxes out at about 90% for almost all the domains, which reinforces the fact that **better broad knowledge regarding all sorts of items that comprises a domain is needed to improve the domain level awareness to near 100%**. We see that is the slope of REC2, SA1, PC1, PC2, PC3, PC6, SS1 are lower compared to rest of the items which implies as of now(from our sample's level of environmental education) that improving the take on these items would show very less increase in domain score. Thus, **we need to focus in imparting education regarding upcyling, cost of disposal of waste, maintaining our surroundings to be waste free, believing in individual actions can improve climate**.
+
+```{r domain_on_item_LR, fig.asp=1.2, fig.width=14}
+# Linear Model Dependence for each item to the Category net score
+
+data_enc_1 <- data_enc %>%
+  bind_cols(data_net_score[,3:ncol(data_net_score)])
+
+lin_mod_items_on_cats <- list()
+Qsn_Name1 <- c("^REC", "^SA", "^PC", "^SS", "^ER", "^ES", "^RES", "^CON")
+for (i in seq_along(Qsn_Name1)) {
+  lin_mod_items_on_cats[[i]] <- data_enc_1[,3:ncol(data_enc_1)] %>%
+    select(matches(Qsn_Name1[i])) %>%
+    gather(everything(), key = "Items", value = "Score", -one_of(Qsn_Name_Cont[i])) %>%
+    ggplot(aes(Score, .data[[Qsn_Name_Cont[[i]]]], color = Items)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = "y~x", se = FALSE, size = 2) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle(Plot_Nmaes[i]) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank()
+    ) +
+    scale_fill_viridis(discrete = TRUE)
+} +
+  labs(
+    x = NULL,
+    y = NULL
+  )
+
+lin_mod_items_on_cats <- ggarrange(
+  plotlist = lin_mod_items_on_cats, 
+  ncol = 2, nrow = 4
+)
+
+annotate_figure(
+  lin_mod_items_on_cats,
+  left = text_grob("Total Score(In %)", rot = 90),
+  bottom = text_grob("Item Score"),
+  top = text_grob("Regression Fit of Domain Score on Item Scores", face = "bold", size = 16)
+)
+```
+
+-   Finally, we take a look on the same analysis we saw above for items conducted on domain level awareness and overall pro-environment score. We breakdown the predicted composition of the total pro-environmental attitude(overall score) in terms of the domain scores. We see that **students have higher contribution in their overall pro-environmental attitude from the domain awareness of environmental reductionism**. Apart from Environment Reductionism all the other domain scores maxes out at around 90% when the total score is 100%(i.e. all the domain scores should be nearer to 100%). Hence, **we need awareness focusing on all the other domains of recycling, environmental safety, perceived control, social support, environmental sensitivity, reuse and conservation**. It is observed that **students scored lesser in social support, environmental safety and perceived control compared to other domains**.
+
+```{r domain_on_overall_LR, fig.asp=0.618, fig.width=14}
+# Linear Model Dependence of the Catgories with Total Score
+data_net_tot_score <- data_net_score %>%
+  add_column(TOT = data_tot_score$Score)
+
+lin_mod_cats_on_tot <- Qsn_Name_Cont %>%
+  map(~str_c("TOT~",.)) %>%
+  map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
+
+sig_lin_mod_cats_on_tot <- lin_mod_cats_on_tot %>%
+  map(~step(., direction = "both", trace = 0))
+
+sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
+  map(~summary(.))
+
+data_net_tot_score %>%
+  gather(REC, SA, PC, SS, ER, ES, RES, CON, key = "Domains", value = "Score") %>%
+  ggplot(aes(TOT, Score, color = Domains)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = "y~x", se = FALSE, size = 2) +
+  labs(
+    x = "Total Score(In %)",
+    y = "Domain Score(In %)"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  ggtitle("Regression Fit of Domain Scores on Total Score") +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank()
+  ) +
+  scale_fill_viridis(discrete = TRUE)
+```
+
+-   So, as a result to see how the dependence of total scores are on the domain scores, mainly the slope will be important for us to analyse and increasing the slope would be a goal though our environmental education. It is again focused that the total score maxes out at about 90% even when all domain scores are 100%, which implies further awareness in all the domains is required. The slopes of SS and ES are low in among students so education is very important so as to increase the slope for these domains on total score is needed
+
+```{r overall_on_domain_LR, fig.asp=0.618, fig.width=14}
+# Linear Model Dependence of the Catgories with Total Score
+data_net_tot_score <- data_net_score %>%
+  add_column(TOT = data_tot_score$Score)
+
+lin_mod_cats_on_tot <- Qsn_Name_Cont %>%
+  map(~str_c("TOT~",.)) %>%
+  map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
+
+sig_lin_mod_cats_on_tot <- lin_mod_cats_on_tot %>%
+  map(~step(., direction = "both", trace = 0))
+
+sig_lin_mod_cats_on_tot_summ <- sig_lin_mod_cats_on_tot %>%
+  map(~summary(.))
+
+data_net_tot_score %>%
+  gather(REC, SA, PC, SS, ER, ES, RES, CON, key = "Domains", value = "Score") %>%
+  ggplot(aes(Score, TOT, color = Domains)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = "y~x", se = FALSE, size = 2) +
+  labs(
+    x = "Domain Score(In %)",
+    y = "Total Score(In %)"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  ggtitle("Regression Fit of Total Score on Domain Scores") +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank()
+  ) +
+  scale_fill_viridis(discrete = TRUE)
 ```
