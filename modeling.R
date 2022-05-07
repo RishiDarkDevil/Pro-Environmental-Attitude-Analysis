@@ -67,17 +67,6 @@ data_net_tot_score %>%
   scale_fill_viridis(discrete = TRUE)
 
 # Linear Model Dependence for each item to the Category net score
-data_enc_1 <- data_enc
-for (i in 1:7) {
-  data_enc_1[[i+2]] <- data_enc_1[[i+2]]/7
-}
-for (i in 10:15) {
-  data_enc_1[[i]] <- data_enc_1[[i]]/6
-}
-data_enc_1[,16:ncol(data_enc_1)] <- data_enc_1[,16:ncol(data_enc_1)]/5
-
-data_enc_1 <- data_enc_1 %>%
-  bind_cols(data_net_score[,3:ncol(data_net_score)])
 
 lin_mod_items_on_cats <- list()
 Qsn_Name1 <- c("^REC", "^SA", "^PC", "^SS", "^ER", "^ES", "^RES", "^CON")
@@ -101,7 +90,6 @@ for (i in seq_along(Qsn_Name1)) {
     ) +
     scale_fill_viridis(discrete = TRUE)
 }
-lin_mod_items_on_cats[[1]]
 
 lin_mod_items_on_cats <- ggarrange(
   plotlist = lin_mod_items_on_cats, 

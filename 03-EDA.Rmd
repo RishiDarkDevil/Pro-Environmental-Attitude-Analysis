@@ -93,7 +93,7 @@ suppressMessages(data_enc[,3:ncol(data_enc)] %>%
   ggtitle("Correlation Plot for All Items"))
 ```
 
--   We now look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender's domain scores correlate. Since, **all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall** (see later for verification of this claim from the sample) **and hence have high scores in the other domains too.** Thus, **we see all the domain scores are highly correlated and the correlation strength are similar for both the genders**. The regression line fit also reveals positive slope. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.
+-   We now look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender's domain scores correlate. Since, **all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall** (see later for verification of this claim from the sample) **and hence have high scores in the other domains too.** Thus, **we see all the domain scores are highly correlated and the correlation strength are similar for both the genders**. The regression line fit also reveals positive slope, which means **higher score in one domain is likely to imply higher score in other domains and hence overall higher pro-environmental attitude**(check further in the study to see this idea explored more). Some disparity in few lines is solely due to limited sample. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.
 
 ```{r pair_plot, fig.asp=0.8, fig.width=14}
 # Generate Pair Plots for Net Score of Items
@@ -178,14 +178,13 @@ fit_distribution <- function(data, title_name = "Model & Data", qqtitle = NULL){
   fit_l <<- invisible(fitdistrplus::fitdist(data, "lnorm"))
   fit_w <<- invisible(fitdistrplus::fitdist(data, "weibull"))
   fit_n <<- invisible(fitdistrplus::fitdist(data, "norm"))
-  fit_e <<- invisible(fitdistrplus::fitdist(data, "exp"))
   
-  plot.legend <- c("gamma", "lognormal", "weibull", "normal", "exponential")
-  gof <<- fitdistrplus::gofstat(list(fit_g, fit_l, fit_w, fit_n, fit_e), fitnames = plot.legend)
+  plot.legend <- c("gamma", "lognormal", "weibull", "normal")
+  gof <<- fitdistrplus::gofstat(list(fit_g, fit_l, fit_w, fit_n), fitnames = plot.legend)
   
-  p1 <- fitdistrplus::denscomp(list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, fitlwd = c(2,2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") #, fit_e), legendtext = plot.legend, fitlwd = c(3,3.5,4,4.5,1), xlegend = 0.007)
+  p1 <- fitdistrplus::denscomp(list(fit_g, fit_l, fit_w, fit_n), legendtext = plot.legend, fitlwd = c(2,2,2,2), xlegend = 0.007, plotstyle = "ggplot") #, fit_e), legendtext = plot.legend, fitlwd = c(3,3.5,4,4.5,1), xlegend = 0.007)
 
-  p2 <- fitdistrplus::qqcomp  (list(fit_g, fit_l, fit_w, fit_n, fit_e), legendtext = plot.legend, plotstyle = "ggplot")
+  p2 <- fitdistrplus::qqcomp  (list(fit_g, fit_l, fit_w, fit_n), legendtext = plot.legend, plotstyle = "ggplot")
   
   p1 <- p1 +
     theme(legend.justification = c(1, 1), legend.position = c(1, 1)) + ggtitle(title_name) + theme(axis.title.x = element_blank(), axis.title.y = element_blank())
@@ -201,14 +200,11 @@ proper_fit_distribution <- function(data, heading = "Model & Data"){
   
   invisible(capture.output(p <- fit_distribution(data, heading)))
   
-  tf <<- (map_df(list(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
+  tf <<- (map_df(list(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$estimate), tidy)) %>%
     spread(key = names, value = x) %>% 
     mutate(across(where(is.numeric), ~ round(., digits = 2)))
   
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
-    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]))), theme = ttheme("mCyan"), rows = NULL)
-  else
-    table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
+  table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
   
   if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "weibull")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
@@ -277,7 +273,7 @@ for (i in seq_along(Qsn_Name)) {
     theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
     ggtitle(Plot_Nmaes1[[i]]) +
-    geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
+    geom_text(aes(Qsn, mean, label=paste0("mean= ",round(mean, 2)," ,se= ",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
     theme(
       panel.border = element_blank(),
       panel.grid.major = element_blank(),
@@ -304,7 +300,7 @@ annotate_figure(
 )
 ```
 
--   We see similar results as the above one from the net score in each domain. We see that that the average net score in each domain is just 5 less than than the total score that can be obtained in that domain. The small 95% confidence interval makes us believe more that the sample average is very good standing at above 80% of the total score. Hence, in **every domain we see high levels of awareness and hence high pro-environmental attitude.**
+-   We see similar results as the above one from the net score in each domain. We see that that the average net score in each domain is just 5 less than than the total score that can be obtained in that domain. The small 95% confidence interval makes us believe more that the sample average is very good standing at above 75% of the total score. Hence, in **every domain we see high levels of awareness and hence high pro-environmental attitude.**
 
 ```{r each_domain, fig.asp=0.618, fig.width=14}
 # Mean and CI Bar Plot for Net Scores
@@ -325,7 +321,7 @@ desc_score_sum %>%
   theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
   ggtitle("Average Response and Confidence Intervals for Each Category") +
-  geom_text(aes(Qsn, mean, label=paste("mean=",round(mean, 2),",se=",round(se, 2))), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
+  geom_text(aes(Qsn, mean, label=paste0("mean= ",round(mean, 2),"% ,se=",round(se, 2), "%")), position=position_dodge(width=0.9), hjust = 1.5, color = "black", size = 5) +
   theme(
     panel.border = element_blank(),
     panel.grid.major = element_blank(),
@@ -338,9 +334,9 @@ desc_score_sum %>%
   coord_flip()
 ```
 
--   We will now see whether the males and females have different take on pro-environmental attitude. To do this analysis we frame our null hypothesis that males and females on an average don't differ in pro-environmental attitude. We test this null against a two-sided alternative. We carried a two-sample t-test and found out that we are not able to reject the null hypothesis. Hence, we conclude that **there is not enough statistical evidence that male and female differ on their take in pro-environmental attitude**. So, just as were doing from the start, we won't differentiate between male and female scores. We also test the null hypothesis of the people living in joint family and nuclear family having same pro-environmental attitude against the two-sided alternative. We again find that **there is not enough statistical evidence that people belonging to joint family and nuclear family differ on their take in pro-environmental attitude**. We find that the average pro-environmental score of most of the domains are almost similar i.e. carrying the one-factor anova test for equality of means we find that **there is not enough statistical evidence to reject the fact that the means of SS, RES, CON, ES are different and there is not enough statistical evidence to reject that PC and SA have mean pro-environmental scores that are different**. **I strongly believe that these tests are limited by the sample size and if we had access to a bigger sample the means of SS, ER, ES, RES, CON would not be significantly different and similarly the means of PC and SA would not be statistically significant**. The REC scores are higher cause REC had 7 items in it. Similarly PC and SA scores are higher than rest except REC as they had 6 items in it. Rest had 5 items in it.
+-   We will now see whether the males and females have different take on pro-environmental attitude. To do this analysis we frame our null hypothesis that males and females on an average don't differ in pro-environmental attitude. We test this null against a two-sided alternative. We carried a two-sample t-test and found out that we are not able to reject the null hypothesis. Hence, we conclude that **there is not enough statistical evidence that male and female differ on their take in pro-environmental attitude**. So, just as were doing from the start, we won't differentiate between male and female scores. We also test the null hypothesis of the people living in joint family and nuclear family having same pro-environmental attitude against the two-sided alternative. We again find that **there is not enough statistical evidence that people belonging to joint family and nuclear family differ on their take in pro-environmental attitude**. We find that the average pro-environmental score of most of the domains are almost similar i.e. conducting the one-factor ANOVA test for equality of means we find that **there is not enough statistical evidence to reject the fact that the means of all the domain scores are different**. **I strongly believe that these tests are limited by the sample size and if we had access to a bigger sample the means of all the domain scores in a single one-factor ANOVA test would come out to be same**.
 
-```{r boxplots, fig.asp=0.75, fig.width=14}
+```{r boxplots, fig.asp=0.8, fig.width=14}
 # Boxplots
 
 # Gender Boxplot of Total Score
@@ -443,21 +439,28 @@ boxplot3 <- data_net_score[,3:ncol(data_net_score)] %>%
 Cat_Score_aov <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
                        gather(everything(), key = "Category", value = "Score") %>%
                        mutate(Category = as.factor(Category)) %>%
-                       filter(Category %in% c("SS", "RES", "CON", "ES")))
+                       filter(Category %in% c("SA", "REC", "ES", "CON", "PC")))
 
-Cat_Score_aov <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova for SS, RES, CON, ES Scores", digs = 2)
+Cat_Score_aov <- present_aov.test(Cat_Score_aov, footnote = "One-Factor Anova for SA, REC, ES, CON, PC Scores", digs = 2)
 
 Cat_Score_aov2 <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
                        gather(everything(), key = "Category", value = "Score") %>%
                        mutate(Category = as.factor(Category)) %>%
-                       filter(Category %in% c("SA", "PC")))
+                       filter(Category %in% c("SA", "ER", "REC")))
 
-Cat_Score_aov2 <- present_aov.test(Cat_Score_aov2, footnote = "One-Factor Anova for SA, PC Scores", digs = 2)
+Cat_Score_aov2 <- present_aov.test(Cat_Score_aov2, footnote = "One-Factor Anova for SA, ER, REC Scores", digs = 2)
+
+Cat_Score_aov3 <- aov(Score ~ Category, data = data_net_score[,3:ncol(data_net_score)] %>%
+                       gather(everything(), key = "Category", value = "Score") %>%
+                       mutate(Category = as.factor(Category)) %>%
+                       filter(Category %in% c("PC", "SS", "RES")))
+
+Cat_Score_aov3 <- present_aov.test(Cat_Score_aov3, footnote = "One-Factor Anova for PC, SS, RES Scores", digs = 2)
 
 
-tests <- ggarrange(gen_v_tot_score_t_test, fam_v_tot_score_t_test, Cat_Score_aov, Cat_Score_aov2, ncol = 1, nrow = 4)
+tests <- ggarrange(gen_v_tot_score_t_test, fam_v_tot_score_t_test, Cat_Score_aov, Cat_Score_aov2, Cat_Score_aov3, ncol = 1, nrow = 5)
 
-p <- ggarrange(boxplot1, boxplot2, boxplot3, tests, ncol = 2, nrow = 2)
+p <- ggarrange(boxplot1, boxplot2, boxplot3, tests, ncol = 2, nrow = 2, heights = c(5, 7))
 
 annotate_figure(
   p,
