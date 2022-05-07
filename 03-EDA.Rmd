@@ -78,6 +78,42 @@ gen_stacked_barplots <- function(plot_data = data_long, title = "") {
 gen_stacked_barplots(title = "Response Proportions for Each Item")
 ```
 
+Before Looking into anything else, we see what the average pro-environmental score of the students is and looking at the 95% confidence interval it seems the overall performance is very good standing at above 80%.
+
+```{r mean_tot_score_ci, fig.asp=0.618, fig.width=14}
+# CI for Mean Pro-Environmental Score
+bootstrap_dist <- data_net_tot_score %>%
+  specify(response = TOT) %>%
+  generate(reps = 5000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+
+percentile_ci <- bootstrap_dist %>%
+  get_confidence_interval(level = 0.95, type = "percentile")
+
+visualise(bootstrap_dist) +
+  labs(
+    x = "Average Pro-Environmental Attitude Score",
+    y = "Count"
+  ) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    strip.background = element_blank(),
+    legend.position = "none"
+  ) + 
+  ggtitle("95% C.I.-Bootstrap Distribution of Mean Pro-Environmental Attitude Score") +
+  shade_ci(endpoints = percentile_ci, color = "hotpink", fill = "khaki") +
+  geom_text(
+    aes(Inf, Inf, label = paste("lower ci:",round(percentile_ci$lower_ci, digits = 2), ", upper ci:",round(percentile_ci$upper_ci, digits = 2))),
+    vjust = "top", hjust = "right", size = 5
+  )
+```
+
 We will now look at the correlation between several variables in our data i.e. the correlation between the items and the correlation between the domains and will draw necessary insight from them. **After going through the questionnaire one can think that the questions all revolve around the same topic of environmental attitude so, we expect that the items and domains should be having strong correlation among themselves**. We will see the validity of this in the analysis below.
 
 -   We take a look at the correlation between all the item's response. We observe that there is a **high positive correlation between all the items from all the domains.** It means that people who Agree on one item are likely to Agree with most of the other items and vice-versa. The negatively correlated items(the darker cells) are very few in number and even if they are negatively correlated the strength is very low maxing out at -0.25(only one or two items) mostly between -0.1 and 0.
