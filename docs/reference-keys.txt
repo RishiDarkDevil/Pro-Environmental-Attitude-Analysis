@@ -10,3 +10,4 @@ data
 results
 visualization
 inference
+modeling
