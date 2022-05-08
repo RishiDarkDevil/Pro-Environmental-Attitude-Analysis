@@ -21,6 +21,8 @@ library(broom.mixed)
 library(jtools)
 library(modelr)
 library(lavaan)
+library(pheatmap)
+library(gplots)
 library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
 ```

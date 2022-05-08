@@ -5,10 +5,14 @@ fa.parallel(data_enc[,3:ncol(data_enc)])
 
 fa.parallel(data_enc[,10:ncol(data_enc)])
 
+fa.parallel(data_net_score[,2:ncol(data_net_score)])
+
+vss(data_enc[,3:ncol(data_enc)], n.obs=N, rotate="varimax")
+
 # Two-Factor seems to be fitting good as we can attribute one factor to Pro-Environmental Mindset and another to Self-Care(Personal Behaviour) Mindset
 
 # Fit Factor
-fit_efa <- factanal(data_enc[,3:ncol(data_enc)], 2, rotation="promax")
+fit_efa <- factanal(data_enc[,3:ncol(data_enc)], 5, rotation="promax")
 fit_efa
 
 fa.diagram(fit_efa$loadings)

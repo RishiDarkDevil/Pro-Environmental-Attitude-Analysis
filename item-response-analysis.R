@@ -27,4 +27,8 @@ cat_char_curves <- mirt_mods %>%
             theta_lim = c(-3, 3), 
             main = ""))
 
-plot(mirt_mods[[8]])
+plot(mirt_mods[[4]], type='trace', which.item = c(1,2,3,4,5,6), facet_items=T, 
+     as.table = TRUE, auto.key=list(points=F, lines=T, columns=4, space = 'top', cex = .8), 
+     theta_lim = c(-3, 3), 
+     main = "")
+plot(mirt_mods[[4]])
