@@ -18,11 +18,13 @@ We found several key fact and results from our analysis about the college studen
 
 -   Students are less aware about seeking social support for environmental protection and somewhat have little belief that their individual contribution can bring about significant change in the betterment of climate and environment.
 
+-   Studentss are highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution.
+
 ## Suggestions
 
 After we have understood the areas of pro-environmental attitude where the students lack. I provide some important suggestions as follows:
 
--   Even though the overall average pro-environmental score is above, students didn't knew much or showed less pro-environemental attitude in few domains compared to the others and necessary steps need to be taken to provide them with necessary knowledge and inculcate good practice in them in those domains i.e. Social Support, Environmental Sensitivity, Environmental Safety and Perceived Control.
+-   Even though the overall average pro-environmental score is above, students didn't knew much or showed less pro-environmental attitude in few domains compared to the others and necessary steps need to be taken to provide them with necessary knowledge and inculcate good practice in them in those domains i.e. Social Support, Environmental Sensitivity, Environmental Safety and Perceived Control.
 
 -   Education and good practices about managing waste around in the surroundings is very important and students lacked it.
 
@@ -35,4 +37,4 @@ After we have understood the areas of pro-environmental attitude where the stude
 ```
 -   There is an immense need for proper knowledge about the ways to conserve natural resources and reduction of use of natural resources in everyday life.
 
-Since, this study was conducted on college students of India. I have gotten some results and areas to work upon still. But it is very important to understand that if proper care and necessary stress on domains ,that the college students are unaware of, is given right from the childhood and school of a child's education, I believe we can see much better results in terms of their environmental education and they would grow up into responsible citizen who are concerned and work upon to protect the environment.
+Since, this study was conducted on college students of India. There is still further study required to ensure variations all across India. But it is very important to understand that if proper care and necessary stress on domains ,that the college students are unaware of, is given right from the childhood and school of a child's education, I believe we can see much better results in terms of their environmental education and they would grow up into responsible citizen who are concerned and work upon to protect the environment.
