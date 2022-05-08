@@ -48,3 +48,9 @@ I didn't to much resources for the analysis section of this study. So, the work 
 -   LITERATURE REVIEW ON THE "CORRELATES OF THE PROENVIRONMENTAL BEHAVIOR" - A Dissertation by Dr. Arpita Chatterjee, under supervision of Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute dated January, 2021.
 
 -   Questionnaire form has been made by Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute.
+
+# Tools & Code
+
+The entire analysis was done in R, with the help of the freely available IDE, RStudio. This Report was written using RMarkdown.
+
+The relevant code and the data used for this study and all necessary informations are available at the GitHub Repository for this study (Pro-Environmental-Attitude-Analysis)[<https://github.com/RishiDarkDevil/Pro-Environmental-Attitude-Analysis>].

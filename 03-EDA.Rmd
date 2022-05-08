@@ -12,7 +12,7 @@ For analyzing the response data, drawing inferences about the underlying distrib
 
 -   **PCA**: Principle Component Analysis was used to provide low dimensional summary of the data collected and understand the spread and inclination in the response data.
 
--   **Reliability Testing**: It was used to find out the reliability of the response data we habe collected.
+-   **Reliability Testing**: It was used to find out the reliability of the response data we have collected.
 
 # Results
 
@@ -145,7 +145,7 @@ suppressMessages(data_enc[,3:ncol(data_enc)] %>%
   ggtitle("Correlation Plot for All Items"))
 ```
 
--   We now look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender's domain scores correlate. Since, **all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall** (see later for verification of this claim from the sample) **and hence have high scores in the other domains too.** Thus, **we see all the domain scores are highly correlated and the correlation strength are similar for both the genders**. The regression line fit also reveals positive slope, which means **higher score in one domain is likely to imply higher score in other domains and hence overall higher pro-environmental attitude**(check further in the study to see this idea explored more). Some disparity in few lines is solely due to limited sample. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.
+-   We now look at the pairwise correlation between the domain scores of individuals, we look at the results based on the gender to see how each gender's domain scores correlate. Since, **all the domains are closely related to environmental attitude of an individual it is natural to expect that if a person scores high in any one domain he is likely to have higher pro-environmental attitude overall** (see this section called [Modeling]) **and hence have high scores in the other domains too.** Thus, **we see all the domain scores are highly correlated and the correlation strength are similar for both the genders**. The regression line fit also reveals positive slope, which means **higher score in one domain is likely to imply higher score in other domains and hence overall higher pro-environmental attitude**(check further in the study to see this idea explored more). Some disparity in few lines is solely due to limited sample. Hence, our sample adheres to what we believe. The purple denotes Female and yellow denotes Male.
 
 ```{r pair_plot, fig.asp=0.8, fig.width=14}
 # Generate Pair Plots for Net Score of Items
