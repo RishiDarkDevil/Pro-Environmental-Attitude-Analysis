@@ -1,9 +1,13 @@
 ---
-title: "Pro-Environmental Attitude Analysis"
+title: "Pro-Environmental Attitude Analysis among College Students of India"
 author: "Rishi Dey Chowdhury"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
+
+# Abstract
+
+Data collected from college students of India, composed mainly of students of Indian Statistical Institute and few other colleges like Indian Institute of Technology, National Institute of Technology and few other colleges spreading mostly around West Bengal, Andra Pradesh and Maharastra, was analyzed for their inclination towards pro-environmental attitude based on their response in a Pro-Environmental Attitude Questionnaire Survey. Several interesting relation between the environmental variables and domains were found out. Suggestions for improvement of the environmental awareness and current areas of poor pro-environmental score among the students were identified.
 
 # Introduction
 
@@ -14,7 +18,7 @@ behavior. Pro-environmental behavior is a behavior that harms the environment as
 
 In this Data Analysis Project, I have analyzed the **pro-environmental attitude among the college students of India**. I have used several Statistical and Psychometric Tools to conduct Exploratory Data Analysis, Inference and Modeling of the Survey Data to come to a valid conclusion.
 
-## Motive
+## Objective
 
 The motive of conducting this study is mentioned below-
 
@@ -25,3 +29,19 @@ The motive of conducting this study is mentioned below-
 -   Understanding the underlying correlation between the different domains of pro-environmental attitude.
 
 -   Finding out the domains, we need to impart knowledge on to improve on the overall pro-environmental attitude among college students of India.
+
+-   Observing the trend in the response like the composition of the overall pro-environmental score.
+
+## Importance
+
+Studies like this is very important in understanding the pro-environmental attitude in psychology. Some reasons of why such studies are of great importance are as follows-
+
+-   Environmental Education is effective to it's fullest extent and constitutes an important part of a child's development into a responsible human being.
+
+-   Understanding the domains where the college students lack good perception or idea on would help us frame better study plans, coursework and activities for school students to nurture better environmental attitude.
+
+-   Helps in understanding human-nature interaction.
+
+-   Measuring a country's overall education index as an important part of a student's education is environmental education.
+
+-   Better understand the variables involved in study which can be as complex as social support, perceived control, etc.

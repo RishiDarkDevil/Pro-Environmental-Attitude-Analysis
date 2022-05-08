@@ -1,6 +1,6 @@
 # Conclusion
 
-After an in-depth analysis of the response data on pro-environmental attitude among college students of India, this section will mark the end of this study. I will conclude the study by presenting a summary of findings and explanations. I would also provide necessary and important suggestions. Further research and study on this pro-environmental attitude analysis of students, in context of India is very important and is welcomed.
+After an in-depth analysis of the response data on pro-environmental attitude among college students of India, this section will mark the end of this study. I will conclude the study by presenting a summary of findings and explanations. I would also provide necessary and important suggestions. One limitation that posed difficulty in analysing the data was it's small sample size. Further research and study on this pro-environmental attitude analysis of students, in context of India is very important and is welcomed.
 
 ## Summary
 
@@ -19,6 +19,8 @@ We found several key fact and results from our analysis about the college studen
 -   Students are less aware about seeking social support for environmental protection and somewhat have little belief that their individual contribution can bring about significant change in the betterment of climate and environment.
 
 -   Studentss are highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution.
+
+-   The overall pro-environmental attitude of the students is constituted mainly by their attitude towards recycling, reuse, conservation and environmental reductionism
 
 ## Suggestions
 

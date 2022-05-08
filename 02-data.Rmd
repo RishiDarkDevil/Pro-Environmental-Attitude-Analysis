@@ -106,7 +106,7 @@ To conduct the pro-environmental attitude study, we circulated a survey form amo
 
 ### Domains
 
-This can also be referred to as the study variable and we have collected data on the following 8 domains of pro-environmental attitude.
+**These can also be referred to as the study variables** and we have collected data on the following 8 domains of pro-environmental attitude. These domains comprise of the overall pro-environmental attitude of an individual. The domains are as follow:
 
 -   **Recycling(abbv. as REC)**: Recycling is the process of converting waste materials into new materials and objects. The recovery of energy of waste material is often included in this concept. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to "conventional" waste disposal that can save material and help lower greenhouse gas emission. It can also prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, reducing energy use, air pollution (from incineration) and water pollution (from landfiling).
 
@@ -128,7 +128,7 @@ This can also be referred to as the study variable and we have collected data on
 
 ### Questions
 
-Here we will see the actual questions asked in the Survey Questionnaire Form.
+Here we will see the actual questions asked in the Survey Questionnaire Form. Each of these items club together to form the study variables, which further club together to form the overall pro-environmental attitude.
 
 -   **REC**
 
@@ -254,7 +254,11 @@ We also asked the same question in different manner to check the consistency of 
 
 ## Population
 
-The Data is collected from only the college and university students of India, who are in the age range of approimately 18 to 25. We have students participating from various colleges and universities and various majors or areas of study fill this Survey Questionaire Form. We are hence, targeting to study the pro-environmental behavior of this population using our sample.
+The Data is collected from only the college and university students of India, who are in the age range of approximately 18 to 25. We have students participating from various colleges and universities and various majors or areas of study fill this Survey Questionnaire Form. We are hence, targeting to study the pro-environmental behavior of this population using our sample.
+
+## Collection
+
+The data was collected from the `r nrow(data)` college students of India via google forms. The sample is not a random sample and we used a method known as the snowball sampling to gather more students to fill the Survey form. The survey form had sections referring to each domain and data was stored in Google Sheets from where it was obtained as a CSV file to conduct our analysis.
 
 ## Data
 
