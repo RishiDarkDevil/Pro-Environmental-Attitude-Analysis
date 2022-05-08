@@ -861,6 +861,10 @@ annotate_figure(
 
 This section provided lots of insight on the areas we need more stress in the environmental education and we also identified some problems or lacking in the students. Now, we move on to testing the reliability of the response.
 
+## Clustering
+
+Pro-Environmental Attitude Score consists of 8 domain scores as per our Questionnaire Survey. So, we are interested in taking a look at the clusters of similar items from all the domains as obtained from the observations and we are also interested in what composes the high-scorers(higher inclination towards pro-environmental ideas) overall pro-environmental attitude. What are the domains students lack an idea about and how the items group together to convey similar ideas are some of the areas we will focus on in this section of the study.
+
 ## Reliability
 
 In this section, we will conduct reliability analysis of the survey response data.Reliability analysis allows you to study the properties of measurement scales and the items that compose the scales. The Reliability Analysis procedure calculates a number of commonly used measures of scale reliability and also provides information about the relationships between individual items in the scale.
@@ -1049,3 +1053,5 @@ all_item_alpha
 ```
 
 This ends the reliability analysis of our response data and the reliability of all the domains are good except one i.e. PC. The overall survey for pro-environmental attitude measure is excellent.
+
+Hence, we have covered almost all aspects of the response data and have provi
