@@ -6,37 +6,45 @@ After an in-depth analysis of the response data on pro-environmental attitude am
 
 We found several key fact and results from our analysis about the college students of India on their positive attitude towards the environment. These findings are summarized as follows:
 
--   Overall average pro-environmental attitude score on our questionnaire is above 80% with 95% confidence. The students are highly concerned about the environment. Even the distribution of pro-environmental attitude score is skewed peaking around above average score.
+-   **Overall average pro-environmental attitude score on our questionnaire is above 80% with 95% confidence**. The **students are highly concerned about the environment on an average**. Even the **distribution of pro-environmental attitude score is skewed peaking around above average score**.
 
--   The average percentage attained in all domains i.e. Recycling, Environmental Safety, Perceived Control, Social Support, Environmental Reductionism, Environmental Sensitivitiy, Reuse and Environmental Conservation that constituted our pro-environmental score of an individuals, are same.
+-   The **average percentage attained in all domains i.e. Recycling, Environmental Safety, Perceived Control, Social Support, Environmental Reductionism, Environmental Sensitivitiy, Reuse and Environmental Conservation that constituted our pro-environmental score of an individuals, are more or less the same**.
 
--   Students have good knowledge and showed similarity as expected in the domains of Environmental Reductionism and Conservation; Recycling and Reuse.
+-   Students have good knowledge and **showed similarity as expected in the domains of Environmental Reductionism and Conservation; Recycling and Reuse**.
 
--   The students had confusion or lack of idea on few domains like ways to conserve natural resources, ways to upcycle old products.
+-   The students had **confusion or lack of idea on few domains like ways to conserve natural resources, ways to upcycle old products**.
 
--   The students are also found to be having difficulties in managing waste around them and recycling.
+-   The students are also found to be **having difficulties in managing waste around them and recycling**.
 
--   Students are less aware about seeking social support for environmental protection and somewhat have little belief that their individual contribution can bring about significant change in the betterment of climate and environment.
+-   Students are **less aware about seeking social support for environmental protection** and somewhat **have little belief that their individual contribution can bring about significant change in the betterment of climate and environment**.
 
--   Studentss are highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution.
+-   Studentss are **highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution**.
 
--   The overall pro-environmental attitude of the students is constituted mainly by their attitude towards recycling, reuse, conservation and environmental reductionism
+-   The **overall pro-environmental attitude of the students is constituted mainly by their attitude towards recycling, reuse, conservation and environmental reductionism** and less contribution from the other domains.
 
 ## Suggestions
 
 After we have understood the areas of pro-environmental attitude where the students lack. I provide some important suggestions as follows:
 
--   Even though the overall average pro-environmental score is above, students didn't knew much or showed less pro-environmental attitude in few domains compared to the others and necessary steps need to be taken to provide them with necessary knowledge and inculcate good practice in them in those domains i.e. Social Support, Environmental Sensitivity, Environmental Safety and Perceived Control.
+-   Even though the overall average pro-environmental score is above, **students didn't knew much or showed less pro-environmental attitude in few domains** compared to the others and **necessary steps need to be taken to provide them with necessary knowledge and inculcate good practice** in them in those domains i.e. **Social Support, Environmental Sensitivity, Environmental Safety and Perceived Control**.
 
--   Education and good practices about managing waste around in the surroundings is very important and students lacked it.
+-   **Education and good practices** about **managing waste around in the surroundings** is very important and **students lacked it**.
 
--   Similarly, proper information and idea about upcycling and reuse of old or waste products needs to be inculcated among the students.
+-   Similarly, **proper information and idea about upcycling and reuse of old or waste products** needs to be inculcated among the students.
 
--   Students should be motivated to believe that their individual efforts can help in slowing down climate change and can help in environmental protection. They should also be motivated to be socially active in seeking support and participating in clubs and events regarding environmental protection.
+-   Students should be **motivated to believe that their individual efforts can help in slowing down climate change and can help in environmental protection**. They should also be **motivated to be socially active in seeking support** and **participating in clubs and events regarding environmental protection**.
 
 ```{=html}
 <!-- -->
 ```
--   There is an immense need for proper knowledge about the ways to conserve natural resources and reduction of use of natural resources in everyday life.
+-   There is an **immense need for proper knowledge** about the **ways to conserve natural resources** and **reduction of use of natural resources in everyday life**.
 
-Since, this study was conducted on college students of India. There is still further study required to ensure variations all across India. But it is very important to understand that if proper care and necessary stress on domains ,that the college students are unaware of, is given right from the childhood and school of a child's education, I believe we can see much better results in terms of their environmental education and they would grow up into responsible citizen who are concerned and work upon to protect the environment.
+Since, this study was conducted on college students of India. There is **still further study required to capture variations all across India** with large sample size. But it is very important to understand that **if proper care and necessary stress on domains ,that the college students are unaware of, is given right from the childhood and school of a child's education**, I believe **we can see much better results in terms of their environmental awareness** and they would grow up into **responsible citizen who are concerned and work upon to protect the environment**.
+
+# Bibliograpy
+
+I didn't to much resources for the analysis section of this study. So, the work is mostly original. Some resources that helped me get started on this project and provide background information on the variables are as follows-
+
+-   LITERATURE REVIEW ON THE "CORRELATES OF THE PROENVIRONMENTAL BEHAVIOR" - A Dissertation by Dr. Arpita Chatterjee, under supervision of Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute dated January, 2021.
+
+-   Questionnaire form has been made by Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute.

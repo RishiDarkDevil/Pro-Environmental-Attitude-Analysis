@@ -9,6 +9,18 @@ site: bookdown::bookdown_site
 
 Data collected from college students of India, composed mainly of students of Indian Statistical Institute and few other colleges like Indian Institute of Technology, National Institute of Technology and few other colleges spreading mostly around West Bengal, Andra Pradesh and Maharastra, was analyzed for their inclination towards pro-environmental attitude based on their response in a Pro-Environmental Attitude Questionnaire Survey. Several interesting relation between the environmental variables and domains were found out. Suggestions for improvement of the environmental awareness and current areas of poor pro-environmental score among the students were identified.
 
+# Acknowledgement
+
+This study is a project as a part of Pro-Environmental Attitude Study, using statistical techniques, in my psychology course. It wouldn't have been possible without the constant support of my friends and resources to turn the idea I had in mind into a finished detailed report. I would also like to thank my psychology Prof. Debdulal Dutta Roy, for choosing such an important topic for this project which has great essence in today's world, where climate change and environmental pollution is at it's peak.
+
+Finally, I would also say that it was the outcome of constant efforts and dedication of proper time from my side that played the pivotal and most important role in completing this thorough detailed study.
+
+By,
+
+Rishi Dey Chowdhury(BS2044)
+
+Indian Statistical Institute, Kolkata
+
 # Introduction
 
 The environment is one of the most important component for mankind. Interactions between humans\
@@ -22,26 +34,32 @@ In this Data Analysis Project, I have analyzed the **pro-environmental attitude 
 
 The motive of conducting this study is mentioned below-
 
--   Finding out the overall pro-environmental attitude and behavior among the college students of India and visualizing the results.
+-   Finding out the **overall pro-environmental attitude and behavior among the college students of India** and visualizing the results.
 
--   Understanding the underlying correlation between the items(or questions asked) by different domains or aspects of pro-environmental attitude(see next section).
+-   Understanding the underlying **correlation between the items(or questions asked) by different domains or aspects of pro-environmental attitude**(see next section).
 
--   Understanding the underlying correlation between the different domains of pro-environmental attitude.
+-   Understanding the underlying **correlation between the different domains of pro-environmental attitude**.
 
--   Finding out the domains, we need to impart knowledge on to improve on the overall pro-environmental attitude among college students of India.
+-   Finding out the domains, we **need to impart knowledge on to improve on the overall pro-environmental attitude** among college students of India.
 
--   Observing the trend in the response like the composition of the overall pro-environmental score.
+-   Observing the trend in the response like the **composition of the overall pro-environmental score**.
 
 ## Importance
 
 Studies like this is very important in understanding the pro-environmental attitude in psychology. Some reasons of why such studies are of great importance are as follows-
 
--   Environmental Education is effective to it's fullest extent and constitutes an important part of a child's development into a responsible human being.
+-   **Environmental Education** is effective to it's fullest extent and constitutes an important part of a **child's development into a responsible human being**.
 
--   Understanding the domains where the college students lack good perception or idea on would help us frame better study plans, coursework and activities for school students to nurture better environmental attitude.
+-   Understanding the **domains where the college students lack good perception or idea** on would **help us frame better study plans, coursework and activities for school students** to nurture better environmental attitude.
 
--   Helps in understanding human-nature interaction.
+-   Helps in understanding **human-nature interaction**.
 
--   Measuring a country's overall education index as an important part of a student's education is environmental education.
+-   Measuring a country's **overall education index** as an important part of a student's education is environmental education.
 
--   Better understand the variables involved in study which can be as complex as social support, perceived control, etc.
+-   Better **understand the variables involved in study** which can be as complex as social support, perceived control, etc.
+
+# Literature Review
+
+Pro-environmental behaviour is a set of behaviours practiced by individuals that seek to take measured actions to promote positive changes in the environment and limit the effects of human negligence (Carmiet al., 2015). In promoting pro-environmental behaviour, colleges, universities, and training centres lay anessential role, since individual behavioural change can be easily fostered among young generations (Massaroet al., 2018; Ting and Cheng, 2017). Additionally, in the context of education, organizations are interestedin having pro-environmental shifts due to their sustainability goals and implications towards student enrolment (Meyer, 2016). Pro-environmental behaviour includes recycling (e.g., reusing paper, plastic, glass,containers), conserving water (e.g., limiting the use of water when taking a shower or washing hands),saving electricity (e.g., turning off lights when not needed), reusing (e.g., disposable cups), using public transportations or riding bikes or even walking, properly disposing of non-recyclable waste, using less paper when printing (e.g., double-sided printing), and buying and/or consuming green products (Bissing-Olsonet al., 2016). Unfortunately, pro-environmental behaviours can be more expensive, more time-consuming, and less pleasurable than their environmental-harmful alternatives (Steg et al., 2014). Hence, acting pro-environmentally tends to (but does not always) oppose one's self-interest; at least in the short run. Vicente-Molina et al. (2018) opined, pro-environmental behaviour can be changed by public-sphere behaviour (e.g., public policies). Pro-environmental behaviour can be directly affected by the private and public spheres, with examples including consumption of green products, use of public transportation, and recycling. Individuals' intention to practice responsible environmental behaviour is not only influenced by personal beliefs but by others' behaviours and actions. In the university setting, as Vicente-Molina et al. (2018) presumed, pro-environmental behaviour among students can be promoted by university' plans and actions, such as providing disposable containers or offering environmental-related subjects. In the modern world, the global ecological crisis is becoming increasingly serious, and the contradiction between humans and nature is unprecedentedly intensified. Atmospheric warming, rising sea levels, extreme natural disasters, environmental pollution and other environmental problems are devastating human life and affecting economic and social development. Given that almost all environmental issues are caused directly or indirectly by humans, scholars and policymakers urge individuals to take responsibility for environmental protection (Fielding et al., 2008; Urien and Kilbourne, 2011; Vlek and Steg, 2007; Vilella-Vila and Costa-Font, 2008). The Rio Declaration, issued by the United Nations, states that solving environmental problems requires the participation of every member of the public. Therefore, inducing individual proenvironmental behaviors (PEBs) is an important challenge in the path of sustainable development (Williams and Cary, 2002; Gifford, 2011). As the unprecedented scale and cumulative impact of human actions on the natural environment threatens the balance of the world's ecosystem, the accumulated evidence confirming large-scale environmental problems is undeniable. Since these environmental problems can be traced back to human behaviour, scholars have championed the role of psychological science to help understand and address global environmental change (Oskamp, 2000; Schmuck and Schultz, 2002; Swim et al., 2011; Van Lange et al., 2018). Contributing to this, research in environmental psychology has focused on identifying socio-psychological determinants of pro-environmental attitudes and behaviours (for meta-analytical reviews) (Bamberg and Moser, 2007; Hines et al., 1986, 1987; Klockner, 2013; Milfont et al., 2012).Pro-environmental behaviour is a set of behaviours practiced by individuals that seek to take measured actions to promote positive changes in the environment and limit the effects of human negligence (Carmi et al., 2015). In promoting pro-environmental behaviour, colleges, universities, and training centres play an essential role, since individual behavioural change can be easily fostered among young generations (Massaro et al., 2018; Ting and Cheng, 2017). Additionally, in the context of education, organizations are interested in having pro-environmental shifts due to their sustainability goals and implications towards student enrolment (Meyer, 2016).
+
+
