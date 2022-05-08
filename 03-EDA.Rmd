@@ -1009,6 +1009,126 @@ heatmap_dendo_plot("maximum")
 
 This section was very useful in understanding the underlying clustered behavior of the items and domains. It helped us further pin-point lacking of awareness of which domains led to less pro-environmental attitude.
 
+### PCA
+
+With so many items of 5 scale rating, exploring the directions of the data that summarizes the overall response reasonably may give us an idea of which items and domain decides mainly the pro-environmental attitude of the students.
+
+-   Firstly, we see on the Domain Level PCA. The loading contribution of the first principal component has more weight on Strongly Disagree, Strongly Agree and Neutral with lesser but still comparable weight on Disagree. As expected the directions of Disagree, Neutral and Strongly Disagree are almost the same i.e. in the direction of PC, RES, SS, ES and hence they are correlated. The direction of Strongly Agree is around REC, SA, ER, CON. Whereas the second principal component puts maximum weight on Disagree and Agree in the directions of REC and little bit of weight on Disagree. We must understand that these are the directions around which the data varies the most. So, Strongly Agree doesn't vary much in all the domains except SA and same goes for the the other responses. The mean Strongly Agree is high and hence, overall we see large number of consistent Strongly Agrees with less variations and consistently large score of Agrees in all the directions.
+
+```{r pca_dom_level, fig.asp=1, fig.width=14}
+data_long_spread <- data_long %>% 
+  count(Qsn, Resp) %>% 
+  pivot_wider(names_from=Resp, values_from=n, values_fill=0)
+data_long_spread_df <- as.data.frame(data_long_spread[,2:6])
+rownames(data_long_spread_df) <- data_long_spread$Qsn
+
+data_long_spread2 <- data_long_spread %>%
+  mutate(Domain = sub("^([[:alpha:]]*).*", "\\1", data_long_spread$Qsn)) %>%
+  select(-Qsn) %>%
+  select(Domain, everything()) %>%
+  group_by(Domain) %>%
+  summarise(
+    `Strongly Disagree` = sum(`Strongly Disagree`), 
+    Disagree = sum(Disagree),
+    Neutral = sum(Neutral),
+    Agree = sum(Agree),
+    `Strongly Agree` = sum(`Strongly Agree`)
+  )
+
+data_long_spread2_df <- as.data.frame(data_long_spread2[,2:6])
+rownames(data_long_spread2_df) <- data_long_spread2$Domain
+
+PCA_plot <- function(data, grp_names = "black", heading = "") { # Pass Data Frame with rownames
+  res.pca <- PCA(data, scale.unit = TRUE, ncp = 5, graph = FALSE)
+  p1 <- fviz_eig(res.pca, addlabels = TRUE) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank(),
+      legend.position = "none"
+    )
+  
+  var <- get_pca_var(res.pca)
+  
+  load_contrib <- as_tibble(var$cos2) %>%
+    add_column(Response = rownames(var$cos2))
+  
+  load_contrib <- load_contrib %>%
+    gather(everything(), key = "Dim", value = "Contrib", -one_of("Response"))
+  
+  p2 <- load_contrib %>%
+    ggplot(aes(Dim, Response, fill = Contrib, color = Contrib)) +
+    geom_tile() +
+    geom_text(aes(label = round(Contrib, digits = 2)), color = "pink", size = 5) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    ggtitle("Loading Contributions") +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank(),
+      legend.position = "none"
+    ) + 
+    labs(
+      x = "Dimensions",
+      y = "Contribution"
+    )
+  
+  d <- as.data.frame(res.pca$ind$coord)
+  d <- as_tibble(d) %>%
+    add_column(Domain = rownames(d))
+  
+  p3 <- fviz_pca_biplot(res.pca, 
+                  # Individuals
+                  geom.ind = "point",
+                  fill.ind = grp_names, col.ind = "black",
+                  pointshape = 21, pointsize = 2,
+                  repel = TRUE,
+                  palette = "jco",
+                  # Variables
+                  col.var = "contrib",
+                  legend.title = list(fill = "Domain", color = "Contrib",
+                                      alpha = "Contrib"),
+                  title = "PCA Biplot on All Items"
+  ) +
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),strip.background = element_blank()) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(colour = "black"),
+      strip.background = element_blank()
+    ) +
+    geom_text(data = d, aes(x = Dim.1, y = Dim.2, label = Domain), hjust = -.1, vjust =-.1)
+  
+  p <- ggarrange(p1, p2, ncol = 2, nrow = 1)
+  p <- ggarrange(p3, p, ncol = 1, nrow = 2, heights = c(8, 4))
+  p <- annotate_figure(
+    p,
+    top = text_grob(heading, face = "bold", size = 16)
+  )
+  return(p)
+}
+
+PCA_plot(data_long_spread2_df, heading = "Domain Level PCA")
+```
+
+-   We will finish this PCA analysis with item level PCA. We get the directions of maximum variance of the responses. We see that the students vary in their Strongly Agree attitude towards items like ER1, ES5, REC1, etc. Strongly Disagree has very less variance explanation mainly because very few student gave that. Disagree and Neutral are in the same direction as expected, with the most variance near SS2, PC6, RES1, etc.
+
+```{r pca_item_level, fig.asp=1, fig.width=14}
+PCA_plot(data_long_spread_df, grp_names, "Item Level PCA")
+```
+
 ## Reliability
 
 In this section, we will conduct reliability analysis of the survey response data.Reliability analysis allows you to study the properties of measurement scales and the items that compose the scales. The Reliability Analysis procedure calculates a number of commonly used measures of scale reliability and also provides information about the relationships between individual items in the scale.
