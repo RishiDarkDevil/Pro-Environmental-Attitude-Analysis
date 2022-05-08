@@ -1,12 +1,16 @@
+abstract
 introduction
-motive
+objective
+importance
 data-overview
 survey-form
 domains
 questions
 response
 population
+collection
 data
+methods
 results
 visualization
 inference
