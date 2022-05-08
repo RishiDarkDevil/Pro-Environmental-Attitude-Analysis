@@ -11,4 +11,9 @@ results
 visualization
 inference
 modeling
+clustering
+pca
 reliability
+conclusion
+summary
+suggestions

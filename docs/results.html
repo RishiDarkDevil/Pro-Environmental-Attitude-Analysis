@@ -23,7 +23,7 @@
 <meta name="author" content="Rishi Dey Chowdhury" />
 
 
-<meta name="date" content="2022-05-07" />
+<meta name="date" content="2022-05-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="data-overview.html"/>
-
+<link rel="next" href="conclusion.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -94,7 +94,16 @@
 <li class="chapter" data-level="3.1" data-path="results.html"><a href="results.html#visualization"><i class="fa fa-check"></i><b>3.1</b> Visualization</a></li>
 <li class="chapter" data-level="3.2" data-path="results.html"><a href="results.html#inference"><i class="fa fa-check"></i><b>3.2</b> Inference</a></li>
 <li class="chapter" data-level="3.3" data-path="results.html"><a href="results.html#modeling"><i class="fa fa-check"></i><b>3.3</b> Modeling</a></li>
-<li class="chapter" data-level="3.4" data-path="results.html"><a href="results.html#reliability"><i class="fa fa-check"></i><b>3.4</b> Reliability</a></li>
+<li class="chapter" data-level="3.4" data-path="results.html"><a href="results.html#clustering"><i class="fa fa-check"></i><b>3.4</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="results.html"><a href="results.html#pca"><i class="fa fa-check"></i><b>3.4.1</b> PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="results.html"><a href="results.html#reliability"><i class="fa fa-check"></i><b>3.5</b> Reliability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="conclusion.html"><a href="conclusion.html#summary"><i class="fa fa-check"></i><b>4.1</b> Summary</a></li>
+<li class="chapter" data-level="4.2" data-path="conclusion.html"><a href="conclusion.html#suggestions"><i class="fa fa-check"></i><b>4.2</b> Suggestions</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -190,8 +199,41 @@
 <p><img src="bookdownproj_files/figure-html/overall_on_domain_LR-1.png" width="1536" /></p>
 <p>This section provided lots of insight on the areas we need more stress in the environmental education and we also identified some problems or lacking in the students. Now, we move on to testing the reliability of the response.</p>
 </div>
-<div id="reliability" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Reliability<a href="results.html#reliability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="clustering" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Clustering<a href="results.html#clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pro-Environmental Attitude Score consists of 8 domain scores as per our Questionnaire Survey. Since, our questionnaire captures the opinion or attitude of the students, we might expect some students to have similar opinions on few items or domains and some have different opinions. Based on these opinions the items will also have different clusters capturing the similar trends in what the students believe. So, we are interested in taking a look at the clusters of similar items from all the domains as obtained from the observations and we are also interested in what composes the high-scorers(higher inclination towards pro-environmental ideas) overall pro-environmental attitude. What are the domains students lack an idea about and how the items group together to convey similar ideas are some of the areas we will focus on in this section of the study.</p>
+<ul>
+<li>We will first take a look at correlation-distance based clustering of items. The way we interpret the dendrogram is the items that fuse further up in the dendrogram are more disimilar(based on correlation) to the items that fuse below. This reveals the underlying similarity of the items very well and also sheds light of the items that don’t go very well with the rest of the items. For example we see as also observed before <strong>SA1, PC2, SS1 doesn’t go well with almost the entire questionnaire</strong> and hence it fuses way up in the dendrogram, PC2 and SS1 are very similar(where PC2 is I often feel single person cannot change the environment and SS1 is I believe that an individual alone cannot help in conserving environment without social support), we see same for PC4 and ER5; REC2 and RES1; CON2 and RES5; PC1 and ES2; and so on. Hence, we see <strong>many items are repeated in a slightly different manner to check whether the students give similar answer to similar questions.</strong> <strong>Students have very similar ideas about recycling(REC) and reuse(RES)</strong> as seen from the fact that they tend to cluster together. Many items of SA are in same cluster together, same goes for SS as well as REC.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/corr_dendo_only-1.png" width="1344" /></p>
+<ul>
+<li>Now, we will look at the clustering of items along with the clustering of students based on Jaccard Distance(which best separated the classes of students based on their scores from low overall pro-environmental scorers to high overall pro-environmental scorers and also separated the items on which the students performed worst to best). Looking at the heatmap distribution, we see that most of the students stayed neutral or even disagreed and strongly disagreed to the blue clustered items in the dendrogram below, even the students who are highly inclined towards pro-environmental attitude chose to merely agree rather than strongly agree to these items. This means <strong>there is immense need for environmental education on good practices and awareness on importance and ways to conserve natural resources(even in everyday life), on maintaining environment and waste around them in the surroundings, on importance of individual in stopping climate change and protection of environment, on methods and ideas about reusing old or waste products and finally taking social support and bringing more people together for protection and nurture of environment</strong>(these are all the blue clustered items). The <strong>students who have less inclination towards pro-environmental attitude need proper education in all the domains as they disagreed or even stayed neutral to most well known and good practices of environmental protection</strong>(as can be seen from the right side of the heatmap).</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/jacc_qsn_per-1.png" width="1344" /><img src="bookdownproj_files/figure-html/jacc_qsn_per-2.png" width="1344" /></p>
+<ul>
+<li>We now turn our attention to domain level analysis. Clustering based on correlation-distance as before revels which domain are similar to the other domains. If some domain is not similar to the other domain education specially for those domains are important. We see social support, environmental sensitivity are different from the main-stream domains of RES, CON, REC, ER. SA and PC are less similar to these four domains as well.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/corr_dendo_only_dom-1.png" width="1344" /></p>
+<ul>
+<li>We see reinforcement of the same fact as before i.e. students even the high pro-environmentally inclined didn’t score very well in the domains of SS, ES, PC, CON, RES. Hence, <strong>more focus on building social support, conservation, reusing and conservation needs to be given in context on environmental education</strong>.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/max_qsn_euc_per-1.png" width="1344" /></p>
+<p>This section was very useful in understanding the underlying clustered behavior of the items and domains. It helped us further pin-point lacking of awareness of which domains led to less pro-environmental attitude.</p>
+<div id="pca" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> PCA<a href="results.html#pca" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With so many items of 5 scale rating, exploring the directions of the data that summarizes the overall response reasonably may give us an idea of which items and domain decides mainly the pro-environmental attitude of the students.</p>
+<ul>
+<li>Firstly, we see on the Domain Level PCA. The loading contribution of the first principal component has more weight on Strongly Disagree, Strongly Agree and Neutral with lesser but still comparable weight on Disagree. As expected the directions of Disagree, Neutral and Strongly Disagree are almost the same i.e. in the direction of PC, RES, SS, ES and hence they are correlated. The direction of Strongly Agree is around REC, SA, ER, CON. Whereas the second principal component puts maximum weight on Disagree and Agree in the directions of REC and little bit of weight on Disagree. We must understand that these are the directions around which the data varies the most. So, Strongly Agree doesn’t vary much in all the domains except SA and same goes for the the other responses. The mean Strongly Agree is high and hence, overall we see large number of consistent Strongly Agrees with less variations and consistently large score of Agrees in all the directions.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/pca_dom_level-1.png" width="1344" /></p>
+<ul>
+<li>We will finish this PCA analysis with item level PCA. We get the directions of maximum variance of the responses. We see that the students vary in their Strongly Agree attitude towards items like ER1, ES5, REC1, etc. Strongly Disagree has very less variance explanation mainly because very few student gave that. Disagree and Neutral are in the same direction as expected, with the most variance near SS2, PC6, RES1, etc.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/pca_item_level-1.png" width="1344" /></p>
+</div>
+</div>
+<div id="reliability" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Reliability<a href="results.html#reliability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this section, we will conduct reliability analysis of the survey response data.Reliability analysis allows you to study the properties of measurement scales and the items that compose the scales. The Reliability Analysis procedure calculates a number of commonly used measures of scale reliability and also provides information about the relationships between individual items in the scale.</p>
 <p>Hence, we will here get an overall index of the repeatability or internal consistency of the scale as a whole, and you can identify problem items that should be excluded from the scale</p>
 <ul>
@@ -226,6 +268,12 @@
 <li>The CON Domain’s response is reliable. All the items fit well in the overall scale.</li>
 </ul>
 <p><img src="bookdownproj_files/figure-html/rel_CON-1.png" width="1344" /></p>
+<ul>
+<li>Now, if we look at the <strong>overall reliability of the entire questionnaire for finding the pro-environmental attitude</strong>. It turns out that <strong>it has excellent reliability</strong>. <strong>Most the items fit in the scale very well given the goal is mainstream and we need to decide about the pro-environmental attitude as a whole</strong>. But if each part of the survey on different domains are seen, then it turns out that <strong>few items for few domains don’t fit in well in reliably finding the domain-level environmental attitude</strong>. We however see, as the domain’s item statistics shows, that some items doesn’t fit well with the other items very well which are ES1, ES3, SA1, SS1 which stood for preference of working in well-illuminated, airy areas, crowded places making one feel uneasy, safe disposal of waste is costly and thoughts on one individual can’t help in conserving environment without social support.</li>
+</ul>
+<p><img src="bookdownproj_files/figure-html/rel_All-1.png" width="1536" /></p>
+<p>This ends the reliability analysis of our response data and the reliability of all the domains are good except one i.e. PC. The overall survey for pro-environmental attitude measure is excellent.</p>
+<p>Hence, we have covered almost all aspects of the response data and have explored the breadth and depth of the data. The summary of findings and suggestions drawn as a conclusion of the above analysis is presented in the Conclusion section of my study.</p>
 
 </div>
 </div>
@@ -234,8 +282,8 @@
           </div>
         </div>
       </div>
-<a href="data-overview.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="data-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
