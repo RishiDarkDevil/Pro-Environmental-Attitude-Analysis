@@ -1288,7 +1288,7 @@ present_all_cat_alpha[[8]]
 
 -   Now, if we look at the **overall reliability of the entire questionnaire for finding the pro-environmental attitude**. It turns out that **it has excellent reliability**. **Most the items fit in the scale very well given the goal is mainstream and we need to decide about the pro-environmental attitude as a whole**. But if each part of the survey on different domains are seen, then it turns out that **few items for few domains don't fit in well in reliably finding the domain-level environmental attitude**. We however see, as the domain's item statistics shows, that some items doesn't fit well with the other items very well which are ES1, ES3, SA1, SS1 which stood for preference of working in well-illuminated, airy areas, crowded places making one feel uneasy, safe disposal of waste is costly and thoughts on one individual can't help in conserving environment without social support.
 
-```{r rel_CON, fig.asp=1.2, fig.width=16, warning=FALSE}
+```{r rel_All, fig.asp=1.2, fig.width=16, warning=FALSE}
 present_alpha <- function(alpha_mod, heading = NULL, visual = TRUE) {
   t1 <- as_tibble(alpha_mod$total) %>% 
     mutate(across(where(is.numeric), ~ round(., digits = 2)))
@@ -1318,4 +1318,4 @@ all_item_alpha
 
 This ends the reliability analysis of our response data and the reliability of all the domains are good except one i.e. PC. The overall survey for pro-environmental attitude measure is excellent.
 
-Hence, we have covered almost all aspects of the response data and have provi
+Hence, we have covered almost all aspects of the response data and have explored the breadth and depth of the data. The summary of findings and suggestions drawn as a conclusion of the above analysis is presented in the Conclusion section of my study.
