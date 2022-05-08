@@ -863,7 +863,151 @@ This section provided lots of insight on the areas we need more stress in the en
 
 ## Clustering
 
-Pro-Environmental Attitude Score consists of 8 domain scores as per our Questionnaire Survey. So, we are interested in taking a look at the clusters of similar items from all the domains as obtained from the observations and we are also interested in what composes the high-scorers(higher inclination towards pro-environmental ideas) overall pro-environmental attitude. What are the domains students lack an idea about and how the items group together to convey similar ideas are some of the areas we will focus on in this section of the study.
+Pro-Environmental Attitude Score consists of 8 domain scores as per our Questionnaire Survey. Since, our questionnaire captures the opinion or attitude of the students, we might expect some students to have similar opinions on few items or domains and some have different opinions. Based on these opinions the items will also have different clusters capturing the similar trends in what the students believe. So, we are interested in taking a look at the clusters of similar items from all the domains as obtained from the observations and we are also interested in what composes the high-scorers(higher inclination towards pro-environmental ideas) overall pro-environmental attitude. What are the domains students lack an idea about and how the items group together to convey similar ideas are some of the areas we will focus on in this section of the study.
+
+-   We will first take a look at correlation-distance based clustering of items. The way we interpret the dendrogram is the items that fuse further up in the dendrogram are more disimilar(based on correlation) to the items that fuse below. This reveals the underlying similarity of the items very well and also sheds light of the items that don't go very well with the rest of the items. For example we see as also observed before **SA1, PC2, SS1 doesn't go well with almost the entire questionnaire** and hence it fuses way up in the dendrogram, PC2 and SS1 are very similar(where PC2 is I often feel single person cannot change the environment and SS1 is I believe that an individual alone cannot help in conserving environment without social support), we see same for PC4 and ER5; REC2 and RES1; CON2 and RES5; PC1 and ES2; and so on. Hence, we see **many items are repeated in a slightly different manner to check whether the students give similar answer to similar questions.** **Students have very similar ideas about recycling(REC) and reuse(RES)** as seen from the fact that they tend to cluster together. Many items of SA are in same cluster together, same goes for SS as well as REC.
+
+```{r corr_dendo_only, fig.asp=0.618, fig.width=14}
+# Pairwise correlation between samples (columns)
+cols.cor <- cor(data_enc[,3:ncol(data_enc)], use = "pairwise.complete.obs", method = "pearson")
+# Pairwise correlation between rows (Qsns)
+rows.cor <- cor(data_enc_trans[,2:ncol(data_enc_trans)], use = "pairwise.complete.obs", method = "pearson")
+
+## Row- and column-wise clustering using correlation 
+hclust.col <- hclust(as.dist(1-cols.cor)) 
+hclust.row <- hclust(as.dist(1-rows.cor))
+
+A2Rplot(
+  hclust.col,
+  k = 9,
+  boxes = F,
+  col.up = "gray50",
+  col.down = c("#ff9900", "#4ECDC4", "#556270", "#ff66ff", "#00cc00", "#cc0000", "#cccc00", "#ADFF2F", "#000080"),
+  show.labels=T,
+  main="Correlation Based Similar Item Clustering"
+)
+```
+
+-   Now, we will look at the clustering of items along with the clustering of students based on Jaccard Distance(which best separated the classes of students based on their scores from low overall pro-environmental scorers to high overall pro-environmental scorers and also separated the items on which the students performed worst to best). Looking at the heatmap distribution, we see that most of the students stayed neutral or even disagreed and strongly disagreed to the blue clustered items in the dendrogram below, even the students who are highly inclined towards pro-environmental attitude chose to merely agree rather than strongly agree to these items. This means **there is immense need for environmental education on good practices and awareness on importance and ways to conserve natural resources(even in everyday life), on maintaining environment and waste around them in the surroundings, on importance of individual in stopping climate change and protection of environment, on methods and ideas about reusing old or waste products and finally taking social support and bringing more people together for protection and nurture of environment**(these are all the blue clustered items). The **students who have less inclination towards pro-environmental attitude need proper education in all the domains as they disagreed or even stayed neutral to most well known and good practices of environmental protection**(as can be seen from the right side of the heatmap).
+
+```{r jacc_qsn_per, fig.asp=1, fig.width=14}
+# Trying Jaccard Similarity Distance based Clustering on Questions
+sim.jac <- matrix(0, nrow=nrow(data_enc_trans), ncol=nrow(data_enc_trans))
+rownames(sim.jac) <- data_enc_trans$Qsn
+colnames(sim.jac) <- data_enc_trans$Qsn
+
+pairs <- t(combn(1:nrow(data_enc_trans), 2))
+
+for (i in 1:nrow(pairs)){
+  num <- sum(data_enc_trans[pairs[i,1],2:ncol(data_enc_trans)]==data_enc_trans[pairs[i,2],2:ncol(data_enc_trans)], na.rm=T)
+  den <- length(union(which(!is.na(data_enc_trans[pairs[i,1],2:ncol(data_enc_trans)])), which(!is.na(data_enc_trans[pairs[i,2],2:ncol(data_enc_trans)]))))
+  sim.jac[pairs[i,1],pairs[i,2]] <- num/den
+  sim.jac[pairs[i,2],pairs[i,1]] <- num/den  
+}
+
+sim.jac[which(is.na(sim.jac))] <- 0
+diag(sim.jac) <- 1
+
+data.dist <- sim2dist(sim.jac)
+
+hc2 <- hclust(data.dist, method = "ward.D2")
+
+# Trying Jaccard Similarity Distance based Clustering on Persons
+sim.jac <- matrix(0, nrow=nrow(data_enc), ncol=nrow(data_enc))
+rownames(sim.jac) <- str_c("P", 1:(ncol(data_enc_trans)-1))
+colnames(sim.jac) <- str_c("P", 1:(ncol(data_enc_trans)-1))
+
+pairs <- t(combn(1:nrow(data_enc), 2))
+
+for (i in 1:nrow(pairs)){
+  num <- sum(data_enc[pairs[i,1],3:ncol(data_enc)]==data_enc[pairs[i,2],3:ncol(data_enc)], na.rm=T)
+  den <- length(union(which(!is.na(data_enc[pairs[i,1],3:ncol(data_enc)])), which(!is.na(data_enc[pairs[i,2],3:ncol(data_enc)]))))
+  sim.jac[pairs[i,1],pairs[i,2]] <- num/den
+  sim.jac[pairs[i,2],pairs[i,1]] <- num/den  
+}
+
+sim.jac[which(is.na(sim.jac))] <- 0
+diag(sim.jac) <- 1
+
+data.dist <- sim2dist(sim.jac)
+
+hc3 <- hclust(data.dist, method = "ward.D2")
+
+# clustering visualization
+mat <- as.matrix(data_enc_trans[,2:ncol(data_enc_trans)])
+colnames(mat) <- str_c("P", 1:(ncol(data_enc_trans)-1))
+rownames(mat) <- data_enc_trans$Qsn
+
+heatmap.2(mat, col = bluered(100), 
+          trace = "none", density.info = "none",
+          Colv = as.dendrogram(hc3),
+          Rowv = as.dendrogram(hc2),
+          main = "Jaccard Distance Based Clustering of Items and Students"
+)
+
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+# colored dendrogram
+par(bg = "#EFEFEF")
+
+A2Rplot(
+  hc2,
+  k = 2,
+  boxes = F,
+  col.up = "gray50",
+  col.down = c("#ff9900", "#4ECDC4", "#556270", "#ff66ff", "#00cc00", "#cc0000", "#cccc00", "#ADFF2F", "#000080"),
+  show.labels=T,
+  main="Jaccard Distance Based Clustered Items Dendrogram"
+)
+```
+
+-   We now turn our attention to domain level analysis. Clustering based on correlation-distance as before revels which domain are similar to the other domains. If some domain is not similar to the other domain education specially for those domains are important. We see social support, environmental sensitivity are different from the main-stream domains of RES, CON, REC, ER. SA and PC are less similar to these four domains as well.
+
+```{r corr_dendo_only_dom, fig.asp=0.618, fig.width=14}
+# Pairwise correlation between samples (columns)
+cols.cor <- cor(data_net_score[,3:ncol(data_net_score)], use = "pairwise.complete.obs", method = "pearson")
+
+## Row- and column-wise clustering using correlation 
+hclust.col <- hclust(as.dist(1-cols.cor)) 
+
+A2Rplot(
+  hclust.col,
+  k = 4,
+  boxes = F,
+  col.up = "gray50",
+  col.down = c("#ff9900", "#4ECDC4", "#556270", "#ff66ff", "#00cc00", "#cc0000", "#cccc00", "#ADFF2F", "#000080"),
+  show.labels=T,
+  main="Correlation Based Similar Domain Clustering"
+)
+```
+
+-   We see reinforcement of the same fact as before i.e. students even the high pro-environmentally inclined didn't score very well in the domains of SS, ES, PC, CON, RES. Hence, **more focus on building social support, conservation, reusing and conservation needs to be given in context on environmental education**.
+
+```{r max_qsn_euc_per, fig.asp=1, fig.width=14}
+# Domain Clustering
+# Trying Euclidean Distance based clustering
+data_net_score_trans <- as_tibble(t(data_net_score[,3:ncol(data_net_score)])) %>%
+  add_column("Domain" = colnames(data_net_score[,3:ncol(data_net_score)])) %>%
+  select(Domain, everything())
+
+mat <- as.matrix(data_net_score_trans[,2:ncol(data_net_score_trans)])
+colnames(mat) <- str_c("P", 1:(ncol(data_net_score_trans)-1))
+rownames(mat) <- data_net_score_trans$Domain
+
+heatmap_dendo_plot <- function(qsn_dist = "euclidean", per_dist = "euclidean") {
+  hclust.col <<- hclust(dist(data_net_score_trans[,2:ncol(data_net_score_trans)], method = qsn_dist)) # clustering of columns(qsns)
+  hclust.row <- hclust(dist(data_net_score[,3:ncol(data_net_score)], method = per_dist)) # clustering of persons(rows)
+  heatmap.2(mat, col = bluered(100), 
+            trace = "none", density.info = "none",
+            Colv = as.dendrogram(hclust.row),
+            Rowv = as.dendrogram(hclust.col),
+          main = "Maximum & L2 Distance Based Clustering of Domains and Students"
+  )
+}
+
+heatmap_dendo_plot("maximum")
+```
+
+This section was very useful in understanding the underlying clustered behavior of the items and domains. It helped us further pin-point lacking of awareness of which domains led to less pro-environmental attitude.
 
 ## Reliability
 
