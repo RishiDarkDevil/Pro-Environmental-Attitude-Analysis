@@ -1,7 +1,9 @@
 abstract
+acknowledgement
 introduction
 objective
 importance
+literature-review
 data-overview
 survey-form
 domains
@@ -21,3 +23,5 @@ reliability
 conclusion
 summary
 suggestions
+bibliograpy
+tools-code
