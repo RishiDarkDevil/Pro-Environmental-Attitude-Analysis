@@ -898,6 +898,8 @@ rows.cor <- cor(data_enc_trans[,2:ncol(data_enc_trans)], use = "pairwise.complet
 hclust.col <- hclust(as.dist(1-cols.cor)) 
 hclust.row <- hclust(as.dist(1-rows.cor))
 
+source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+
 A2Rplot(
   hclust.col,
   k = 9,
@@ -966,7 +968,7 @@ heatmap.2(mat, col = bluered(100),
           main = "Jaccard Distance Based Clustering of Items and Students"
 )
 
-source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
+
 # colored dendrogram
 A2Rplot(
   hc2,
