@@ -262,15 +262,15 @@ proper_fit_distribution <- function(data, heading = "Model & Data"){
   
   table <- ggtexttable(tibble(Fit = c(colnames(tf)[1], as.character(tf[1]),colnames(tf)[2], as.character(tf[2])[1])), theme = ttheme("mCyan"), rows = NULL)
   
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "weibull")
+  if(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$distname == "weibull")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dweibull, scale = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "lnorm")
+  if(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$distname == "lnorm")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(exp(as.numeric(tf[1]) + 0.5*as.numeric(tf[2])^2), digits = 2), "Var", round(exp(as.numeric(tf[1])*2 + 0.5*4*as.numeric(tf[2])^2) - (exp(as.numeric(tf[1])*1 + 0.5*as.numeric(tf[2])^2))^2, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "gamma")
+  if(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$distname == "gamma")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dgamma, rate = as.numeric(tf[1]), shape = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "norm")
+  if(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$distname == "norm")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(find_mean(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2), "Var", round(find_variance(dnorm, mean = as.numeric(tf[1]), sd = as.numeric(tf[2]))$value, digits = 2))), theme = ttheme("mBlue"), rows = NULL)
-  if(list(fit_g, fit_l, fit_w, fit_n, fit_e)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
+  if(list(fit_g, fit_l, fit_w, fit_n)[as.numeric(which.min(gof$ks))][[1]]$distname == "exp")
     tablea <-  ggtexttable(tibble(Moments = c("Mean", round(1/as.numeric(tf[1]), digits = 2), "Var", round(1/(as.numeric(tf[1]))^2, digits = 2))), theme = ttheme("mGreen"), rows = NULL)
   
   table <- ggarrange(table, tablea, nrow = 1, ncol = 2)
