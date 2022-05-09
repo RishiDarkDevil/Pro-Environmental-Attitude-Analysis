@@ -1,6 +1,6 @@
 # Conclusion
 
-After an in-depth analysis of the response data on pro-environmental attitude among college students of India, this section will mark the end of this study. I will conclude the study by presenting a summary of findings and explanations. I would also provide necessary and important suggestions. One limitation that posed difficulty in analysing the data was it's small sample size. Further research and study on this pro-environmental attitude analysis of students, in context of India is very important and is welcomed.
+After an in-depth analysis of the response data on pro-environmental attitude among college students of India, this section will mark the end of this study. I will conclude the study by presenting a summary of findings and explanations. I would also provide necessary and important suggestions. One limitation that posed difficulty in analyzing the data was it's small sample size. Further research and study on this pro-environmental attitude analysis of students, in context of India is very important and is welcomed.
 
 ## Summary
 
@@ -18,7 +18,7 @@ We found several key fact and results from our analysis about the college studen
 
 -   Students are **less aware about seeking social support for environmental protection** and somewhat **have little belief that their individual contribution can bring about significant change in the betterment of climate and environment**.
 
--   Studentss are **highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution**.
+-   Students are **highly aware of their responsibilities like closing tap, switching off fans when not in use and supports taking stricter actions and norms against environmental pollution**.
 
 -   The **overall pro-environmental attitude of the students is constituted mainly by their attitude towards recycling, reuse, conservation and environmental reductionism** and less contribution from the other domains.
 
@@ -34,23 +34,20 @@ After we have understood the areas of pro-environmental attitude where the stude
 
 -   Students should be **motivated to believe that their individual efforts can help in slowing down climate change and can help in environmental protection**. They should also be **motivated to be socially active in seeking support** and **participating in clubs and events regarding environmental protection**.
 
-```{=html}
-<!-- -->
-```
 -   There is an **immense need for proper knowledge** about the **ways to conserve natural resources** and **reduction of use of natural resources in everyday life**.
 
 Since, this study was conducted on college students of India. There is **still further study required to capture variations all across India** with large sample size. But it is very important to understand that **if proper care and necessary stress on domains ,that the college students are unaware of, is given right from the childhood and school of a child's education**, I believe **we can see much better results in terms of their environmental awareness** and they would grow up into **responsible citizen who are concerned and work upon to protect the environment**.
 
-# Bibliograpy
+# Bibliography
 
 I didn't to much resources for the analysis section of this study. So, the work is mostly original. Some resources that helped me get started on this project and provide background information on the variables are as follows-
 
--   LITERATURE REVIEW ON THE "CORRELATES OF THE PROENVIRONMENTAL BEHAVIOR" - A Dissertation by Dr. Arpita Chatterjee, under supervision of Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute dated January, 2021.
+-   [LITERATURE REVIEW ON THE "CORRELATES OF THE PROENVIRONMENTAL BEHAVIOR"](http://hdl.handle.net/10263/7131) - A Dissertation by Dr. Arpita Chatterjee, under supervision of Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute dated January, 2021.
 
--   Questionnaire form has been made by Dr. Debdulal Dutta Roy, Psychology Research Unit, Indian Statistical Institute.
+-   Questionnaire form has been made by [Dr. Debdulal Dutta Roy](https://www.isical.ac.in/~ddroy/), [Psychology Research Unit](https://pru.isical.ac.in/content/psychology-research-unit-0), [Indian Statistical Institute](https://www.isical.ac.in/).
 
 # Tools & Code
 
 The entire analysis was done in R, with the help of the freely available IDE, RStudio. This Report was written using RMarkdown.
 
-The relevant code and the data used for this study and all necessary informations are available at the GitHub Repository for this study (Pro-Environmental-Attitude-Analysis)[<https://github.com/RishiDarkDevil/Pro-Environmental-Attitude-Analysis>].
+The relevant code and the data used for this study and all necessary information are available at the GitHub Repository for this study [Pro-Environmental-Attitude-Analysis](https://github.com/RishiDarkDevil/Pro-Environmental-Attitude-Analysis).

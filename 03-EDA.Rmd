@@ -963,8 +963,6 @@ heatmap.2(mat, col = bluered(100),
 
 source("http://addictedtor.free.fr/packages/A2R/lastVersion/R/code.R")
 # colored dendrogram
-par(bg = "#EFEFEF")
-
 A2Rplot(
   hc2,
   k = 2,

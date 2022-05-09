@@ -272,4 +272,4 @@ kable(data, caption = "Collected Response of College Students of India on Pro-En
 
 Since, we are going to conduct statistical analysis with this data, we proceed with the above data after converting each column to their respected score i.e. numerical in nature and hence makes sense to carry forward with all sorts of statistical tools.
 
-The data collected for the study is available on the github repository for this project([here](<https://github.com/RishiDarkDevil/Pro-Environmental-Attitude-Analysis/blob/main/PEAData.csv>)).
+The data collected for the study is available on the github repository for this project([here](https://github.com/RishiDarkDevil/Pro-Environmental-Attitude-Analysis/blob/main/PEAData.csv)).
