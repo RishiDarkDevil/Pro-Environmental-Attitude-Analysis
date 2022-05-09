@@ -94,9 +94,13 @@ gen_stacked_barplots <- function(plot_data = data_long, title = "") {
 gen_stacked_barplots(title = "Response Proportions for Each Item")
 ```
 
-Before Looking into anything else, we see what the average pro-environmental score of the students is and looking at the 95% confidence interval it seems the overall performance is very good standing at above 80%.
+Before Looking into anything else, we see what the **average pro-environmental score of the students is and looking at the 95% confidence interval** it seems the overall performance is very good standing at above 80%.
 
 ```{r mean_tot_score_ci, fig.asp=0.618, fig.width=14}
+
+data_net_tot_score <- data_net_score %>%
+  add_column(TOT = data_tot_score$Score)
+
 # CI for Mean Pro-Environmental Score
 bootstrap_dist <- data_net_tot_score %>%
   specify(response = TOT) %>%
@@ -775,9 +779,6 @@ annotate_figure(
 -   Finally, we take a look on the same analysis we saw above for items conducted on domain level awareness and overall pro-environment score. We breakdown the predicted composition of the total pro-environmental attitude(overall score) in terms of the domain scores. We see that **students have higher contribution in their overall pro-environmental attitude from the domain awareness of environmental reductionism**. Apart from Environment Reductionism all the other domain scores maxes out at around 90% when the total score is 100%(i.e. all the domain scores should be nearer to 100%). Hence, **we need awareness focusing on all the other domains of recycling, environmental safety, perceived control, social support, environmental sensitivity, reuse and conservation**. It is observed that **students scored lesser in social support, environmental safety and perceived control compared to other domains**. The R-squared plots also confirms that the student's overall **pro-environmental attitude is mainly contributed by RES, REC, CON, ER and we need to work more on the domains of PC, SS, ES and SA**.
 
 ```{r domain_on_overall_LR, fig.asp=0.618, fig.width=16}
-data_net_tot_score <- data_net_score %>%
-  add_column(TOT = data_tot_score$Score)
-
 lin_mod_cats_on_tot <- Qsn_Name_Cont %>%
   map(~str_c("TOT~",.)) %>%
   map(~lm(as.formula(.), data = data_net_tot_score[,3:ncol(data_net_tot_score)]))
