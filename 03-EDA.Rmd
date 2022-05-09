@@ -1147,6 +1147,10 @@ PCA_plot(data_long_spread2_df, heading = "Domain Level PCA")
 -   We will finish this PCA analysis with item level PCA. We get the directions of maximum variance of the responses. We see that the students vary in their Strongly Agree attitude towards items like ER1, ES5, REC1, etc. Strongly Disagree has very less variance explanation mainly because very few student gave that. **Disagree and Neutral are in the same direction as expected, Strongly Disagree also vary in similar direction**, with the most variance near SS2, PC6, RES1, etc. Looking at the projection of 5-dimensional items on the two-dimensional plane spanned by the two leading principal component's direction shows that most of the item's response lie on an diagonal ellipse with items like REC2, RES1 and PC1 whose position is far away from the mass of the data cloud. Looking at the previous analysis we saw that **it is indeed the case that REC2, RES1 and PC1 got worse response than other items**. REC7 is not an outlier sort of data as there are items REC3, REC6 situated near. **SA4, PC4, REC1, ER3, ER1 are the most strongly agreed items which seem to cluster together**.
 
 ```{r pca_item_level, fig.asp=1, fig.width=14}
+grp_names <- data_long_spread_df %>%
+  mutate(Domain = sub("^([[:alpha:]]*).*", "\\1", data_long_spread$Qsn))
+grp_names <- grp_names$Domain
+
 PCA_plot(data_long_spread_df, grp_names, "Item Level PCA")
 ```
 
