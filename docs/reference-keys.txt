@@ -23,6 +23,5 @@ reliability
 conclusion
 summary
 suggestions
-future-study
 bibliography
 tools-code
