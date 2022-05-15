@@ -23,7 +23,7 @@
 <meta name="author" content="Rishi Dey Chowdhury" />
 
 
-<meta name="date" content="2022-05-09" />
+<meta name="date" content="2022-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -213,6 +213,10 @@
 <ul>
 <li>We will first take a look at correlation-distance based clustering of items. The way we interpret the dendrogram is the items that fuse further up in the dendrogram are more disimilar(based on correlation) to the items that fuse below. This reveals the underlying similarity of the items very well and also sheds light of the items that don’t go very well with the rest of the items. For example we see as also observed before <strong>SA1, PC2, SS1 doesn’t go well with almost the entire questionnaire</strong> and hence it fuses way up in the dendrogram, PC2 and SS1 are very similar(where PC2 is I often feel single person cannot change the environment and SS1 is I believe that an individual alone cannot help in conserving environment without social support), we see same for PC4 and ER5; REC2 and RES1; CON2 and RES5; PC1 and ES2; and so on. Hence, we see <strong>many items are repeated in a slightly different manner to check whether the students give similar answer to similar questions.</strong> <strong>Students have very similar ideas about recycling(REC) and reuse(RES)</strong> as seen from the fact that they tend to cluster together. Many items of SA are in same cluster together, same goes for SS as well as REC.</li>
 </ul>
+<pre><code>## Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
+## Using compatibility `.name_repair`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="bookdownproj_files/figure-html/corr_dendo_only-1.png" width="1344" /></p>
 <ul>
 <li>Now, we will look at the clustering of items along with the clustering of students based on Jaccard Distance(which best separated the classes of students based on their scores from low overall pro-environmental scorers to high overall pro-environmental scorers and also separated the items on which the students performed worst to best). Looking at the heatmap distribution, we see that most of the students stayed neutral or even disagreed and strongly disagreed to the blue clustered items in the dendrogram below, even the students who are highly inclined towards pro-environmental attitude chose to merely agree rather than strongly agree to these items. This means <strong>there is immense need for environmental education on good practices and awareness on importance and ways to conserve natural resources(even in everyday life), on maintaining environment and waste around them in the surroundings, on importance of individual in stopping climate change and protection of environment, on methods and ideas about reusing old or waste products and finally taking social support and bringing more people together for protection and nurture of environment</strong>(these are all the blue clustered items). The <strong>students who have less inclination towards pro-environmental attitude need proper education in all the domains as they disagreed or even stayed neutral to most well known and good practices of environmental protection</strong>(as can be seen from the right side of the heatmap).</li>
